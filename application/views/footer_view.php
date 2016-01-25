@@ -121,8 +121,11 @@
     <script src="<?php echo $url;?>plugins/input-mask/jquery.inputmask.extensions.js"></script>
     <!-- Custom -->
     <script src="<?php echo $url;?>dist/js/custom.js"></script>
-    <script src="<?php echo $url;?>dist/js/examen/examen.js"></script>
-    <script src="<?php echo $url;?>dist/js/alumno.js"></script>
+    <?php if(isset($js_custom)){
+      echo $js_custom;
+    } ?>
+    <!--<script src="<?php echo $url;?>dist/js/examen/examen.js"></script>
+    <script src="<?php echo $url;?>dist/js/alumno.js"></script>-->
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo $url;?>dist/js/demo.js"></script>
     <!-- page script -->

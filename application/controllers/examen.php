@@ -9,20 +9,23 @@ class Examen extends CI_Controller {
 				 $this->header['url']= base_url();
 				 $this->load->model("Alumno_model","Alumno");
 				 $this->load->model("Aula_model","Aula");
+				 $this->load->model("Evaluacion_model","Evaluacion");
 				 $this->header['lactantes'] = $this->Aula->CargarMenu(1);
 				 $this->header['andantes'] = $this->Aula->CargarMenu(2);
 				 $this->header['infantes'] = $this->Aula->CargarMenu(3);
 				 $this->header['jardin'] = $this->Aula->CargarMenu(4);
+
+				 $this->footer['js_custom'] = '<script src="'.base_url().'dist/js/examen/examen.js"></script>';
+
 				 $this->load->helper(array('form'));
+				 //$this->output->enable_profiler(TRUE);
     }
-
-
 
 	public function index()
 	{
 		$this->load->view('header_view', $this->header);
 		$this->load->view('examen_view');
-		$this->load->view('footer_view');
+		$this->load->view('footer_view', $this->footer);
 	}
 
 	public function ejecutar()
@@ -124,67 +127,136 @@ class Examen extends CI_Controller {
 				$data['color3'] = 'red';
 				$data['porcentaje3'] = '30';
 			}
-			//	echo $diagnostico;
-			//$data['resultados'] = TRUE;
-//$data['r3'] = $diagnostico;
+
+				$edad = explode(".",$TallaEdad[0]->edad);
+				$edad2 = $edad[0].':'.(int)$edad[1];
+
+				$tabla1 = '';
+				$tabla1 .= '<tr><td>'.$edad2.'</td>';
+				$tabla1 .= '<td>'.$TallaEdad[0]->meses.'</td>';
+				$tabla1 .= '<td>'.$TallaEdad[0]->DE3menos.'</td>';
+				$tabla1 .= '<td>'.$TallaEdad[0]->DE2menos.'</td>';
+				$tabla1 .= '<td>'.$TallaEdad[0]->DE1menos.'</td>';
+				$tabla1 .= '<td>'.$TallaEdad[0]->Mediana.'</td>';
+				$tabla1 .= '<td>'.$TallaEdad[0]->DE1.'</td>';
+				$tabla1 .= '<td>'.$TallaEdad[0]->DE2.'</td>';
+				$tabla1 .= '<td>'.$TallaEdad[0]->DE3.'</td></tr>';
+				$data['tabla1'] = $tabla1;
+
+				$tabla2 = '';
+				$tabla2 .= '<tr><td>'.$PesoTalla[0]->cm.'</td>';
+				$tabla2 .= '<td>'.$PesoTalla[0]->DE3menos.'</td>';
+				$tabla2 .= '<td>'.$PesoTalla[0]->DE2menos.'</td>';
+				$tabla2 .= '<td>'.$PesoTalla[0]->DE1menos.'</td>';
+				$tabla2 .= '<td>'.$PesoTalla[0]->Mediana.'</td>';
+				$tabla2 .= '<td>'.$PesoTalla[0]->DE1.'</td>';
+				$tabla2 .= '<td>'.$PesoTalla[0]->DE2.'</td>';
+				$tabla2 .= '<td>'.$PesoTalla[0]->DE3.'</td></tr>';
+				$data['tabla2'] = $tabla2;
 
 
-$edad = explode(".",$TallaEdad[0]->edad);
-$edad2 = $edad[0].':'.(int)$edad[1];
+				$edad = explode(".",$PesoEdad[0]->edad);
+				$edad2 = $edad[0].':'.(int)$edad[1];
 
-$tabla1 = '';
-$tabla1 .= '<tr><td>'.$edad2.'</td>';
-$tabla1 .= '<td>'.$TallaEdad[0]->meses.'</td>';
-$tabla1 .= '<td>'.$TallaEdad[0]->DE3menos.'</td>';
-$tabla1 .= '<td>'.$TallaEdad[0]->DE2menos.'</td>';
-$tabla1 .= '<td>'.$TallaEdad[0]->DE1menos.'</td>';
-$tabla1 .= '<td>'.$TallaEdad[0]->Mediana.'</td>';
-$tabla1 .= '<td>'.$TallaEdad[0]->DE1.'</td>';
-$tabla1 .= '<td>'.$TallaEdad[0]->DE2.'</td>';
-$tabla1 .= '<td>'.$TallaEdad[0]->DE3.'</td></tr>';
-$data['tabla1'] = $tabla1;
-
-$tabla2 = '';
-$tabla2 .= '<tr><td>'.$PesoTalla[0]->cm.'</td>';
-$tabla2 .= '<td>'.$PesoTalla[0]->DE3menos.'</td>';
-$tabla2 .= '<td>'.$PesoTalla[0]->DE2menos.'</td>';
-$tabla2 .= '<td>'.$PesoTalla[0]->DE1menos.'</td>';
-$tabla2 .= '<td>'.$PesoTalla[0]->Mediana.'</td>';
-$tabla2 .= '<td>'.$PesoTalla[0]->DE1.'</td>';
-$tabla2 .= '<td>'.$PesoTalla[0]->DE2.'</td>';
-$tabla2 .= '<td>'.$PesoTalla[0]->DE3.'</td></tr>';
-$data['tabla2'] = $tabla2;
-
-
-$edad = explode(".",$PesoEdad[0]->edad);
-$edad2 = $edad[0].':'.(int)$edad[1];
-
-$tabla3 = '';
-$tabla3 .= '<tr><td>'.$edad2.'</td>';
-$tabla3 .= '<td>'.$PesoEdad[0]->meses.'</td>';
-$tabla3 .= '<td>'.$PesoEdad[0]->DE3menos.'</td>';
-$tabla3 .= '<td>'.$PesoEdad[0]->DE2menos.'</td>';
-$tabla3 .= '<td>'.$PesoEdad[0]->DE1menos.'</td>';
-$tabla3 .= '<td>'.$PesoEdad[0]->Mediana.'</td>';
-$tabla3 .= '<td>'.$PesoEdad[0]->DE1.'</td>';
-$tabla3 .= '<td>'.$PesoEdad[0]->DE2.'</td>';
-$tabla3 .= '<td>'.$PesoEdad[0]->DE3.'</td></tr>';
-$data['tabla3'] = $tabla3;
+				$tabla3 = '';
+				$tabla3 .= '<tr><td>'.$edad2.'</td>';
+				$tabla3 .= '<td>'.$PesoEdad[0]->meses.'</td>';
+				$tabla3 .= '<td>'.$PesoEdad[0]->DE3menos.'</td>';
+				$tabla3 .= '<td>'.$PesoEdad[0]->DE2menos.'</td>';
+				$tabla3 .= '<td>'.$PesoEdad[0]->DE1menos.'</td>';
+				$tabla3 .= '<td>'.$PesoEdad[0]->Mediana.'</td>';
+				$tabla3 .= '<td>'.$PesoEdad[0]->DE1.'</td>';
+				$tabla3 .= '<td>'.$PesoEdad[0]->DE2.'</td>';
+				$tabla3 .= '<td>'.$PesoEdad[0]->DE3.'</td></tr>';
+				$data['tabla3'] = $tabla3;
 
 			echo json_encode($data);
 		} //end is_ajax_request
-
-
-
-/*
-	$this->load->view('header_view', $this->header);
-	$this->load->view('examen_view', $data);
-	$this->load->view('footer_view');
-*/
-
-
 	}
 
+	public function evaluacion($idAula){
+		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
+		$this->data['evaluaciones'] = $this->Evaluacion->CargarEvaluaciones($idAula);
+		$this->load->view('header_view', $this->header);
+		$this->load->view('examen/listado_view',$this->data);
+		$this->load->view('footer_view', $this->footer);
+	}
+
+	public function nuevoDetalle($idAula)
+	{
+		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
+		$evaluaciones = $this->Evaluacion->CargarEvaluaciones($idAula);
+		$fecha = (empty($evaluaciones))?'no ha sido realizada':date('d-m-Y', strtotime($evaluaciones[0]->fecha));
+		$this->data['count_eval'] = count($evaluaciones);
+		$this->data['ult_eval'] = $fecha;
+		$this->load->view('header_view', $this->header);
+		$this->load->view('alumno/examen_view',$this->data);
+		$this->load->view('footer_view', $this->footer);
+	}
+
+	public function insertarDetalle()
+	{
+		if($this->input->is_ajax_request()){
+			$result = false;
+			$alumnos = $this->Alumno->CargarAlumnoID($this->input->post('aula'));
+
+			$data['idAula'] = $this->input->post('aula');
+			$data['nombre'] = $this->input->post('titulo');
+			$data['fecha'] = date("Y-m-d");
+			$this->Evaluacion->Crear($data);
+
+			$data['idEvaluacion'] = $this->db->insert_id();
+			$data['fecha'] = $this->input->post('fecha_eval');
+
+			for ($i=0, $len = count($alumnos); $i < $len; $i++) {
+				$fecha_nac = $this->input->post('fecha_'.$alumnos[$i]->id);
+				if($fecha_nac != 0) {
+					list($anio, $mes, $dia) = explode("-",$fecha_nac);
+					$mes = (int)$mes;
+					$dias = (int)$dia;
+					$f1=mktime(0,0,0,$mes,$dias,$anio);
+					$edad_s=time()-$f1;
+					$edad_a=$edad_s/(60*60*24*365);
+					$edad_m=($edad_a-(int)$edad_a)*12; //Multiplicamos la parte decimal de los años por 12 para obtener los meses.
+					$edad_d=($edad_m-(int)$edad_m)*24;//Multiplicamos la parte decimal de los meses por 24 para sacar los días.
+					$edad_meses=($edad_a)*12;//meses totales
+					//Luego debemos coger únicamente la parte entera de cada numero;
+					//$edad=(int)($edad_s/(60*60*24*365)); edad en años
+					$edad_a=(int)$edad_a; //Años
+					$edad_m=(int)$edad_m; //Meses
+					$edad_d=(int)$edad_d; //Dias
+
+					if($edad_a == 0) {
+					  $edad = $edad_m.' meses';
+					} elseif($edad_a > 0) {
+					  $edad = $edad_a.' años y '.$edad_m.' meses';
+					}
+					$meses_totales = (int)$edad_meses;
+					$edad_decimales = $edad_a.'.'.$edad_m;
+				} else {
+					$edad_decimales = 0;
+				}
+
+				$data['idAlumno'] = $alumnos[$i]->id;
+				$data['edad'] = $edad_decimales;
+				$data['peso'] = $this->input->post('peso_'.$alumnos[$i]->id);
+				$data['talla'] = $this->input->post('talla_'.$alumnos[$i]->id);
+				$data['observaciones'] = $this->input->post('observaciones_'.$alumnos[$i]->id);
+				$result = $this->Evaluacion->InsertarDetalle($data);
+			}
+
+			if($result) {
+				$data['rst'] = 1;
+				$data['msj'] = 'Evaluación registrada correctamente';
+				$data['aula'] = $this->input->post('aula');
+			} else {
+				$data['rst'] = 0;
+				$data['msj'] = $this->db->last_query();
+			}
+			echo json_encode($data);
+		}
+		else echo 'Funcion ajax';
+	}
 
 }
 

@@ -20,38 +20,44 @@
 
               <div class="box box-success">
                 <div class="box-header">
-                  <h3 class="box-title">Nómina de Niños<?php //echo $datos_aula[0]->aula; ?></h3>
-                  <button type="button" class="btn btn-primary" onclick="Nuevo();"><i class="fa fa-user-plus"></i> Nuevo</button>
-                  <a href="<?php echo $url;?>examen/evaluacion/<?php echo $datos_aula[0]->id;?>">
-                    <button type="button" class="btn btn-primary">
-                      <i class="fa fa-heartbeat"></i> Evaluaciones</button>
-                  </a>
+                  <h3 class="box-title">Listado de Evaluaciones</h3>
+                  <a href="<?php echo $url;?>examen/nuevoDetalle/<?php echo $datos_aula[0]->id;?>">
+                    <button type="button" class="btn btn-warning">
+                    <i class="fa fa-heartbeat"></i> Nueva Evaluación
+                  </button></a>
                 </div><!-- /.box-header -->
                 <input type="hidden" value="<?php echo $datos_aula[0]->id;?>" id="aula_id">
                 <div class="box-body">
-                  <table id="t_alumnos" class="table table-bordered table-striped">
+                  <table id="t_evaluaciones" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>Nro</th>
-                        <th>Apellidos</th>
-                        <th>Nombres</th>
-                        <th align="center">Sexo</th>
-                        <th>Fecha Nacimiento</th>
-                        <th>Titular</th>
+                        <th>Nombre</th>
+                        <th>Observaciones</th>
                         <th>Estado</th>
                         <th>Opciones</th>
                       </tr>
                     </thead>
-                    <tbody id="tb_alumnos">
+                    <tbody id="tb_evaluaciones">
+                      <?php
+                        $con = 1;
+                        foreach ($evaluaciones as $eval) {
+                          echo '<tr>';
+                          echo '<td>'.$con.'</td>';
+                          echo '<td>'.$eval->nombre.'</td>';
+                          echo '<td>'.$eval->observacion.'</td>';
+                          echo '<td>'.$eval->estado.'</td>';
+                          echo '<td>Editar</td>';
+                          echo '</tr>';
+                          $con++;
+                        }
+                      ?>
                     </tbody>
                     <tfoot>
                       <tr>
                         <th>Nro</th>
-                        <th>Apellidos</th>
-                        <th>Nombres</th>
-                        <th>Sexo</th>
-                        <th>Fecha Nacimiento</th>
-                        <th>Titular</th>
+                        <th>Nombre</th>
+                        <th>Observaciones</th>
                         <th>Estado</th>
                         <th>Opciones</th>
                       </tr>
@@ -64,4 +70,3 @@
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 <div id="msj" class="msjAlert"></div>
-<?php $this->load->view('alumno/form_alumno'); ?>

@@ -16,23 +16,6 @@ class Alumno extends CI_Controller {
 				 $this->load->helper(array('form'));
     }
 
-	public function activardesactivar()
-	{
-		$idAlumno = $_POST['idAlumno'];
-		$estado = $_POST['txtestado'];
-
-		if($estado == 0) $data['id'] = $estado;
-		else $data['id'] = $estado;
-
-		$data['id'] = $idAlumno;
-
-		$status = array("STATUS"=>"false");
-		if($this->Alumno->cambiarEstado($data)) {
-			$status = array("STATUS"=>"true");
-		}
-		echo json_encode ($status);
-	}
-
 	public function nuevo()
 	{
 		$this->data['aulas'] = $this->Aula->CargarMenu(0); // con 0 cara todas las aulas
@@ -112,8 +95,7 @@ class Alumno extends CI_Controller {
 		echo json_encode($data);
 	}
 
-
-	public function diagnostico($idAlumno)
+	public function perfil($idAlumno)
 	{
 		$this->load->model("Historial_model","Historial");
 
@@ -121,7 +103,7 @@ class Alumno extends CI_Controller {
 		$data['historial'] = $this->Historial->Cargar($idAlumno);
 
 		$this->load->view('header_view', $this->header);
-		$this->load->view('alumno/diagnostico_view',$data);
+		$this->load->view('alumno/perfil_view',$data);
 		$this->load->view('footer_view');
 	}
 

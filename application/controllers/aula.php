@@ -12,6 +12,7 @@ class Aula extends CI_Controller {
 				 $this->header['andantes'] = $this->Aula->CargarMenu(2);
 				 $this->header['infantes'] = $this->Aula->CargarMenu(3);
 				 $this->header['jardin'] = $this->Aula->CargarMenu(4);
+				 $this->footer['js_custom'] = '<script src="'.base_url().'dist/js/alumno.js"></script>';
     }
 
 	public function index($id)
@@ -22,10 +23,10 @@ class Aula extends CI_Controller {
 		$this->data['id'] = $id;
 		$this->load->view('header_view', $this->header);
 		$this->load->view('alumno/alumno_view',$this->data);
-		$this->load->view('footer_view');
+		$this->load->view('footer_view', $this->footer);
 	}
 
-	/*Lista todos los alumnos del aula id*/	
+	/*Lista todos los alumnos del aula id*/
 	public function listar()
 	{
 		$id = $this->input->post('id');

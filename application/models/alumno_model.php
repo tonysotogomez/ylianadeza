@@ -53,6 +53,16 @@
     return $resultado;
   }
 
+    public function CargarAlumnoID($idAula){
+      $this->db->select('id');
+      $this->db->from('alumno');
+      $this->db->where('idAula', $idAula);
+      $this->db->where('estado', 1);
+      $consulta = $this->db->get();
+      $resultado = $consulta->result();
+      return $resultado;
+    }
+
   public function Editar($data){
     $arr = array(
                'idAula' => $data['aula'],
