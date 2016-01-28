@@ -159,7 +159,7 @@ $(document).ready(function() {
 
     function GuardarEvaluacion(AE){
           var datos=$("#form_datos").serialize().split("txt_").join("");
-          console.log(datos);
+
           var accion="examen/insertarDetalle";
           if(AE==1){
               accion="examen/editarDetalle";
@@ -178,7 +178,7 @@ $(document).ready(function() {
                   if(data.rst==1){
                       $('#t_alumnos').dataTable().fnDestroy();
                       ListarAlumnos();
-                      window.location.replace(url + "examen/evaluacion/"+data.aula);
+                    //  window.location.replace(url + "examen/evaluacion/"+data.aula);
                       mensaje('success', data.msj, 5000);
                     }
                   else{

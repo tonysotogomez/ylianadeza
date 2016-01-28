@@ -3,10 +3,11 @@
         <form id="form_datos" name="form_datos" action="" method="post">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>Evaluación N°<?php echo $count_eval+1; ?>:
+          <h1>Evaluación N°<?php //echo $count_eval+1; ?>:
             <input type="text" name="txt_titulo"
-              placeholder="Nombre de Evaluacion" value="<?php echo date("F");?>">
-            <small>Última evaluación <?php echo  $ult_eval; ?></small>
+              placeholder="Nombre de Evaluacion" value="<?php echo $detalle[0]->evaluacion;?>">
+              <input type="hidden" name="txt_idEval" value="<?php echo $detalle[0]->idEvaluacion;?>">
+            <small>Fecha Evaluación <?php echo  $detalle[0]->fecha; ?></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?php echo $url;?>"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -22,8 +23,8 @@
 
               <div class="box box-success">
                 <div class="box-header">
-                  <h3 class="box-title">La evaluación se registrará cuando de clic en el botón Guardar</h3>
-                  <button type="button" class="btn btn-primary pull-right" value="0" onclick="GuardarEvaluacion(0);"><i class="fa fa-save"></i> Guardar</button>
+                  <h3 class="box-title">La evaluación se actualizará cuando de clic en el botón Guardar</h3>
+                  <button type="button" class="btn btn-primary pull-right" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-save"></i> Editar</button>
                 </div><!-- /.box-header -->
 
                 <div class="box-body">
@@ -41,7 +42,23 @@
                           <th>Obervaciones</th>
                         </tr>
                       </thead>
-                      <tbody id="tb_alumnos">
+                      <tbody>
+                        <?php
+                        $con = 1;
+                        foreach ($detalle as $datos) {
+                          echo '<tr>';
+
+                              echo '<td>'.$con.'</td>';
+                              echo '<td>'.$datos->apellidos.'</td>';
+                              echo '<td>'.$datos->nombres.'</td>';
+                              echo '<td><input type="hidden" class="form-control" name="txt_detalle_'.$datos->idAlumno.'" value="'.$datos->id.'"><input type="text" class="form-control" name="txt_peso_'.$datos->idAlumno.'" value="'.$datos->edad.'"></td>';
+                              echo '<td><input type="text" class="form-control" name="txt_peso_'.$datos->idAlumno.'" value="'.$datos->peso.'"></td>';
+                              echo '<td><input type="text" class="form-control" name="txt_talla_'.$datos->idAlumno.'" value="'.$datos->talla.'"></td>';
+                              echo '<td><input type="text" class="form-control" name="txt_observaciones_'.$datos->idAlumno.'" value="'.$datos->observaciones.'"></td>';
+                          echo '</tr>';
+                          $con++;
+                        }
+                        ?>
                       </tbody>
                       <tfoot>
                         <tr>

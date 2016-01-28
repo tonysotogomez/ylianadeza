@@ -33,6 +33,7 @@
                       <tr>
                         <th>Nro</th>
                         <th>Nombre</th>
+                        <th>Fecha</th>
                         <th>Observaciones</th>
                         <th>Estado</th>
                         <th>Opciones</th>
@@ -42,12 +43,18 @@
                       <?php
                         $con = 1;
                         foreach ($evaluaciones as $eval) {
+                          $estadohtml='<span id="'.$eval->id.'" onClick="CambiarEstadoEval('.$eval->id.','.$eval->estado.')" class="btn btn-danger btn-sm">Inactivo</span>';
+                          if($eval->estado==1){
+                              $estadohtml='<span id="'.$eval->id.'" onClick="CambiarEstadoEval('.$eval->id.','.$eval->estado.')" class="btn btn-success btn-sm">Activo</span>';
+                          }
+
                           echo '<tr>';
                           echo '<td>'.$con.'</td>';
                           echo '<td>'.$eval->nombre.'</td>';
+                          echo '<td>'.date('d-m-Y', strtotime($eval->fecha)).'</td>';
                           echo '<td>'.$eval->observacion.'</td>';
-                          echo '<td>'.$eval->estado.'</td>';
-                          echo '<td>Editar</td>';
+                          echo '<td>'.$estadohtml.'</td>';
+                          echo '<td><a href="'.$url.'examen/cargarDetalle/'.$eval->id.'/'.$datos_aula[0]->id.'"><button type="button" title="Editar" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar Evaluaciones</button></a></td>';
                           echo '</tr>';
                           $con++;
                         }
@@ -57,6 +64,7 @@
                       <tr>
                         <th>Nro</th>
                         <th>Nombre</th>
+                        <th>Fecha</th>
                         <th>Observaciones</th>
                         <th>Estado</th>
                         <th>Opciones</th>
