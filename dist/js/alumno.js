@@ -23,6 +23,7 @@ $(document).ready(function() {
 
 });
 
+
 function Nuevo(){
 //  $("#txt_usuario").val('');
   $('#alumnoModal').find('.modal-title').text('Nuevo Alumno');

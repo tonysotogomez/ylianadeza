@@ -26,6 +26,10 @@
                     <button type="button" class="btn btn-primary">
                       <i class="fa fa-heartbeat"></i> Evaluaciones</button>
                   </a>
+                  <a href="<?php echo $url;?>excel/listado/<?php echo $datos_aula[0]->id;?>">
+                    <button type="button" class="btn btn-success">
+                      <i class="fa fa-download"></i> Descargar</button>
+                  </a>
                 </div><!-- /.box-header -->
                 <input type="hidden" value="<?php echo $datos_aula[0]->id;?>" id="aula_id">
                 <div class="box-body">
