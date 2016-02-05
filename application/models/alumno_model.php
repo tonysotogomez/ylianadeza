@@ -31,7 +31,6 @@
                'idPeso' => 0,
                'idAula' => $data['aula'],
                'idDiagnostico' => 0,
-               'nro' => $data['nro'],
                'nombres' => $data['nombres'],
                'apellidos' => $data['apellidos'],
                'fecha_nacimiento' => $data['fecha'],
@@ -44,7 +43,7 @@
   }
 
   public function CargarAlumno($id){
-    $this->db->select('id, nro, nombres, apellidos, fecha_nacimiento as fecha, genero, titular, estado');
+    $this->db->select('id, nombres, apellidos, fecha_nacimiento as fecha, genero, titular, estado');
     $this->db->from('alumno');
     $this->db->where('id', $id);
     $this->db->limit(1);
@@ -66,7 +65,6 @@
   public function Editar($data){
     $arr = array(
                'idAula' => $data['aula'],
-               'nro' => $data['nro'],
                'nombres' => $data['nombres'],
                'apellidos' => $data['apellidos'],
                'fecha_nacimiento' => $data['fecha'],
@@ -91,13 +89,10 @@
 
 
   public function PerfilAlumno($id){
-    $this->db->select('a.id, a.nro, a.nombres, a.apellidos, a.fecha_nacimiento as fecha, a.genero, a.titular');
-    $this->db->select('e.nombre as edad, t.nombre as talla, p.nombre as peso');
+    $this->db->select('a.id, a.nombres, a.apellidos, a.fecha_nacimiento as fecha, a.genero, a.titular');
     $this->db->from('alumno a');
-    $this->db->join('edad e','a.idEdad = e.id');
-    $this->db->join('talla t','a.idTalla = t.id');
-    $this->db->join('peso p','a.idPeso = p.id');
     $this->db->where('a.id', $id);
+    $this->db->where('a.estado', 1);
     $this->db->limit(1);
     $consulta = $this->db->get();
     $resultado = $consulta->result();
@@ -113,6 +108,14 @@
     $this->db->where('id', $data['idAlumno']);
     $this->db->update('alumno', $arr);
   }
+
+  //contadores
+
+    public function CountAll(){
+      $this->db->where('estado', 1);
+      $resultado = $this->db->count_all_results('alumno');
+      return $resultado;
+    }
 
 
  }

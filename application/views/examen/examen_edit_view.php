@@ -24,7 +24,11 @@
               <div class="box box-success">
                 <div class="box-header">
                   <h3 class="box-title">La evaluación se actualizará cuando de clic en el botón Guardar</h3>
-                  <button type="button" class="btn btn-primary pull-right" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-save"></i> Editar</button>
+                  <button type="button" class="btn btn-primary" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-save"></i> Editar</button>
+                  <a href="<?php echo $url;?>examen/evaluacion/<?php echo $datos_aula[0]->id;?>">
+                    <button type="button" class="btn btn-danger pull-right">
+                    <i class="fa fa-remove"></i> Cancelar
+                  </button></a>
                 </div><!-- /.box-header -->
 
                 <div class="box-body">
@@ -47,7 +51,6 @@
                         $con = 1;
                         foreach ($detalle as $datos) {
                           echo '<tr>';
-
                               echo '<td>'.$con.'</td>';
                               echo '<td>'.$datos->apellidos.'</td>';
                               echo '<td>'.$datos->nombres.'</td>';

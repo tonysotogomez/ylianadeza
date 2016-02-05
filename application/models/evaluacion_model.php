@@ -13,10 +13,11 @@
   }
 
   public function Cargar($idAlumno){
-    $this->db->select('id, idEdad, idTalla, idPeso, fecha, observaciones, diagnosticoTE, diagnosticoPE, diagnosticoPT');
-    $this->db->from('historial');
+    $this->db->select('id, idEvaluacion, idAlumno, edad, peso, talla, fecha, observaciones, diagnosticoTE, diagnosticoPE, diagnosticoPT, observaciones');
+    $this->db->from('detalle_evaluacion');
+    $this->db->where('estado', 1);
     $this->db->where('idAlumno', $idAlumno);
-    $this->db->order_by('id', 'asc');
+    $this->db->order_by('fecha', 'desc');
     $consulta = $this->db->get();
     $resultado = $consulta->result();
     return $resultado;
@@ -38,6 +39,7 @@
       $this->db->select('id, idAula, nombre, fecha, observacion, estado');
       $this->db->from('evaluacion');
       $this->db->where('idAula', $idAula);
+      $this->db->where('estado', 1);
       $this->db->order_by('fecha', 'desc');
       $consulta = $this->db->get();
       $resultado = $consulta->result();
@@ -50,6 +52,7 @@
       $this->db->join('alumno a', 'a.id = d.idAlumno');
       $this->db->join('evaluacion e', 'e.id = d.idEvaluacion');
       $this->db->where('idEvaluacion', $idEvaluacion);
+      $this->db->where('d.estado', 1);
     //  $this->db->order_by('fecha', 'desc');
       $consulta = $this->db->get();
       $resultado = $consulta->result();
@@ -73,6 +76,14 @@
       $this->db->update('evaluacion', $arr);
     }
 
+    public function Eliminar($id){
+      $arr = array(
+                 'estado' => 0
+              );
+      $this->db->where('id', $id);
+      $this->db->update('evaluacion', $arr);
+    }
+
 
     public function InsertarDetalle($data){
       $arr = array(
@@ -82,6 +93,11 @@
                  'peso' => $data['peso'],
                  'talla' => $data['talla'],
                  'fecha' => $data['fecha'],
+                 'diagnosticoTE' => $data['talla_edad'],
+                 'diagnosticoPE' => $data['peso_edad'],
+                 'diagnosticoPT' => $data['peso_talla'],
+                 'created_at' => date("Y-m-d H:i:s"),
+                 //'observaciones' => $data['obs'] //queries
                  'observaciones' => $data['observaciones']
               );
       if ($this->db->insert('detalle_evaluacion', $arr)) return true;
@@ -97,6 +113,15 @@
                  'observaciones' => $data['observaciones']
               );
       $this->db->where('id', $data['idDetalle']);
+      if ($this->db->update('detalle_evaluacion', $arr)) return true;
+      else return false;
+    }
+
+    public function EliminarDetalle($id){
+      $arr = array(
+                 'estado' => 0
+              );
+      $this->db->where('id', $id);
       if ($this->db->update('detalle_evaluacion', $arr)) return true;
       else return false;
     }

@@ -28,6 +28,7 @@ if(!function_exists('convertir_fecha'))
 				$edad = $edad_a.' años y '.$edad_m.' meses';
 			}
 			$meses_totales = (int)$edad_meses;
+			$edad_m = ($edad_m <= 9)?'0'.$edad_m:$edad_m;
 			$edad_decimales = $edad_a.'.'.$edad_m;
 		} else {
 			$edad_decimales = 0;

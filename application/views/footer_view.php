@@ -112,8 +112,7 @@
 		<!-- AdminLTE App -->
     <script src="<?php echo $url;?>dist/js/app.min.js"></script>
     <?php if(isset($js_home)){
-      // /<!-- AdminLTE dashboard demo (This is only for demo purposes)
-      echo $js_home;
+      //echo $js_home;
     } ?>
     <!-- InputMask -->
     <script src="<?php echo $url;?>plugins/input-mask/jquery.inputmask.js"></script>
@@ -129,7 +128,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo $url;?>dist/js/demo.js"></script>
     <!-- page script -->
-        <script>
+        <!--<script>
           $(function () {
             /* ChartJS
              * -------
@@ -276,6 +275,6 @@
 
 
           });
-        </script>
+        </script> -->
   </body>
 </html>

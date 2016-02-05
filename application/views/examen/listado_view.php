@@ -22,8 +22,12 @@
                 <div class="box-header">
                   <h3 class="box-title">Listado de Evaluaciones</h3>
                   <a href="<?php echo $url;?>examen/nuevoDetalle/<?php echo $datos_aula[0]->id;?>">
-                    <button type="button" class="btn btn-warning">
-                    <i class="fa fa-heartbeat"></i> Nueva Evaluación
+                    <button type="button" class="btn btn-primary">
+                    <i class="fa fa-plus-circle"></i> Nueva Evaluación
+                  </button></a>
+                  <a href="<?php echo $url;?>aula/index/<?php echo $datos_aula[0]->id;?>">
+                    <button type="button" class="btn btn-danger">
+                    <i class="fa fa-reply"></i> Regresar
                   </button></a>
                 </div><!-- /.box-header -->
                 <input type="hidden" value="<?php echo $datos_aula[0]->id;?>" id="aula_id">
@@ -35,7 +39,6 @@
                         <th>Nombre</th>
                         <th>Fecha</th>
                         <th>Observaciones</th>
-                        <th>Estado</th>
                         <th>Opciones</th>
                       </tr>
                     </thead>
@@ -53,8 +56,8 @@
                           echo '<td>'.$eval->nombre.'</td>';
                           echo '<td>'.date('d-m-Y', strtotime($eval->fecha)).'</td>';
                           echo '<td>'.$eval->observacion.'</td>';
-                          echo '<td>'.$estadohtml.'</td>';
-                          echo '<td><a href="'.$url.'examen/cargarDetalle/'.$eval->id.'/'.$datos_aula[0]->id.'"><button type="button" title="Editar" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar Evaluaciones</button></a></td>';
+                          echo '<td><a href="'.$url.'examen/cargarDetalle/'.$eval->id.'/'.$datos_aula[0]->id.'"><button type="button" title="Editar" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar</button></a>';
+                          echo ' <button type="button" title="Eliminar" class="btn btn-sm btn-danger" onClick="EliminarEvaluacion('.$eval->id.')"><i class="fa fa-trash"></i> Eliminar</button></td>';
                           echo '</tr>';
                           $con++;
                         }
@@ -66,7 +69,6 @@
                         <th>Nombre</th>
                         <th>Fecha</th>
                         <th>Observaciones</th>
-                        <th>Estado</th>
                         <th>Opciones</th>
                       </tr>
                     </tfoot>

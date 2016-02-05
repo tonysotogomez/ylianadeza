@@ -25,7 +25,12 @@ $(document).ready(function() {
 
 
 function Nuevo(){
-//  $("#txt_usuario").val('');
+  $("#txt_apellidos").val('');
+  $("#txt_nombres").val('');
+  $("#txt_titular").val('');
+  $('input[name="radiogenero"][value="h"]').prop('checked', true);
+  $("#txt_fecha").val('');
+  $("#slct_estado").val('1');
   $('#alumnoModal').find('.modal-title').text('Nuevo Alumno');
   $('#alumnoModal').modal('show');
 }
@@ -87,7 +92,7 @@ function Nuevo(){
             "<td>"+data.titular+"</td>"+
             "<td>"+estadohtml+"</td>"+
             '<td><button type="button" title="Editar" onclick="Cargar('+data.id+')" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></button>'+
-            '<button title="Historial" type="button" class="btn btn-sm btn-warning"><i class="fa fa-area-chart"></i></button></td>';
+            ' <a href="'+url+'alumno/perfil/'+data.id+'"><button title="Historial" type="button" class="btn btn-sm btn-info"><i class="fa fa-area-chart"></i></button></a></td>';
         html+="</tr>";
     });
     $("#tb_alumnos").html(html);

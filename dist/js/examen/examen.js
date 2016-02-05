@@ -4,6 +4,10 @@ $(document).ready(function() {
 });
 
   function examen(){
+
+      var gender = $("input[type='radio'][name='txt_genero']:checked").val();
+      var cond = (gender == 'h')?'45.1':'45';
+      if($("#talla").val() >= cond){
         var datos=$("#form_examen").serialize().split("txt_").join("").split("slct_").join("");
         $.ajax({
             url         : url + 'examen/ejecutar',
@@ -41,8 +45,20 @@ $(document).ready(function() {
                       });
                   }
                   */
+            },
+            error : function(){
+              $(".overlay,.loading-img").remove();
+                $("#msj").html('<div class="alert alert-dismissable alert-danger">'+
+                                        '<i class="fa fa-ban"></i>'+
+                                        '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>'+
+                                        ' <b>Ocurrio un error en el proceso, posible causa: Valores ingresados no tienen lógica</b>'+
+                                    '</div>');
             }
         });
+      } else {
+        var genero = (gender == 'h')?'hombres':'mujeres';
+        mensaje('warning', 'La talla minima de '+genero +' es de '+cond+' cm.', 5000);
+      }//end if
   }
 
 
@@ -93,14 +109,12 @@ $(document).ready(function() {
     function HTMLCargarAlumno(datos){
       var html="";
       var con = 0;
-      var fecha, genero, nombres, estadohtml;
+      var edadf, genero, nombres, estadohtml;
       $('#t_alumnos').dataTable().fnDestroy();
 
       $.each(datos,function(index,data){
           con++;
-          if(data.fecha_nacimiento != null){
-            fecha = data.fecha_nacimiento;
-          } else fecha = 0;
+          var edadf = carcularEdad(data.fecha_nacimiento);
 
           if(data.nombres != null) nombres = data.nombres;
           else nombres = "No registrado";
@@ -112,11 +126,13 @@ $(document).ready(function() {
               "<td>"+con+"</td>"+
               "<td>"+apellidos+"</td>"+
               "<td>"+nombres+"</td>"+
-              "<td>"+fecha+"</td>"+
+              "<td>"+edadf+"</td>"+
               '<td><input type="text" class="form-control" name="txt_peso_'+data.id+'" placeholder="Ingrese el peso"></td>'+
               '<td><input type="text" class="form-control" name="txt_talla_'+data.id+'" placeholder="Ingrese el talla"></td>'+
               '<td><input type="text" class="form-control" name="txt_observaciones_'+data.id+'" placeholder="Observaciones">'+
-              '<input type="hidden" value="'+fecha+'" name="txt_fecha_'+data.id+'"></td>';
+              '<input type="hidden" value="'+data.fecha_nacimiento+'" name="txt_fecha_'+data.id+'">'+
+              '<input type="hidden" value="'+data.genero+'" name="txt_genero_'+data.id+'"></td>'+
+              '<td>'+data.fecha_nacimiento+'</td>';
           html+="</tr>";
       });
       $("#tb_alumnos").html(html);
@@ -178,12 +194,33 @@ $(document).ready(function() {
                   if(data.rst==1){
                       $('#t_alumnos').dataTable().fnDestroy();
                       ListarAlumnos();
-                    //  window.location.replace(url + "examen/evaluacion/"+data.aula);
-                      mensaje('success', data.msj, 5000);
+                      window.location.replace(url + "examen/evaluacion/"+data.aula);
+                      //mensaje('success', data.msj, 5000)
+
                     }
                   else{
                       mensaje('error', data.msj, 5000);
                   }
               }
           });
+    }
+
+    function EliminarEvaluacion(id){
+      if (confirm('¿Estas seguro de eliminar la Evaluación?')){
+          $.ajax({
+              url         : url + "examen/eliminar",
+              type        : 'POST',
+              cache       : false,
+              dataType    : 'json',
+              data        : {id: id},
+              success : function(data) {
+                if(data.rst==1){
+                    location.reload();
+                  }
+                else{
+                    mensaje('error', data.msj, 5000);
+                }
+              }
+          });
+       }
     }

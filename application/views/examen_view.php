@@ -14,9 +14,9 @@
 
         <!-- Main content -->
         <section class="content">
-
-          <div class="row">
-            <div class="col-md-6">
+          <!--  Column 1 -->
+          <div class="col-md-5">
+            <div class="col-md-12">
               <div class="box box-success">
                 <div class="box-header with-boder">
                   <h3 class="box-title">Ingreses los datos</h3>
@@ -41,7 +41,7 @@
                       <div class="form-group">
                         <label for="inputName" class="col-sm-2 control-label">Talla</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" name="txt_talla" placeholder="Talla"
+                          <input type="text" class="form-control" name="txt_talla" placeholder="Talla" id="talla"
                           value="<?php echo (isset($talla))?$talla:'50.5';?>">
                         </div>
                       </div>
@@ -66,7 +66,7 @@
                   </div>
               </div>
             </div><!-- /.col -->
-              <div class="col-md-6">
+              <div class="col-md-12">
                   <div class="box box-primary">
                   <div class="box-header">
                     <h3 class="box-title">Resultados</h3>
@@ -77,12 +77,21 @@
                         <tr>
                           <th>Concepto</th>
                           <th style="width: 140px"></th>
-                          <th style="width: 40px">Label</th>
+                          <th style="width: 40px">Estado</th>
                         </tr>
                       </thead>
                       <tbody id="tb_resultado">
+                        <tr>
+                          <td class="text-aqua">Talla para Edad</td>
+                          <td>
+                            <div class="progress progress-xs progress-striped active" id="barra_talla_edad">
+
+                            </div>
+                          </td>
+                          <td><span id="talla_edad"></span></td>
+                        </tr>
                       <tr>
-                        <td>Peso para Edad</td>
+                        <td class="text-red">Peso para Edad</td>
                         <td>
                           <div class="progress progress-xs progress-striped active" id="barra_peso_edad">
 
@@ -91,7 +100,7 @@
                         <td><span id="peso_edad"></span></td>
                       </tr>
                       <tr>
-                        <td>Peso para Talla</td>
+                        <td class="text-yellow">Peso para Talla</td>
                         <td>
                           <div class="progress progress-xs progress-striped active" id="barra_peso_talla">
 
@@ -99,21 +108,15 @@
                         </td>
                         <td><span id="peso_talla"></span></td>
                       </tr>
-                      <tr>
-                        <td>Talla para Edad</td>
-                        <td>
-                          <div class="progress progress-xs progress-striped active" id="barra_talla_edad">
 
-                          </div>
-                        </td>
-                        <td><span id="talla_edad"></span></td>
-                      </tr>
                     </tbody></table>
                   </div><!-- /.box-body -->
                 </div>
               </div>
-
-              <div class="col-md-6">
+            </div>
+            <!-- Column 2 -->
+            <div class="col-md-7">
+              <div class="col-md-12">
                   <div class="box box-info">
                   <div class="box-header">
                     <h3 class="box-title" id="talla_edad_titulo">Talla para la edad</h3>
@@ -122,7 +125,15 @@
                     <table class="table table-hover">
                     	<thead>
                         <tr>
-                    	     <th>Edad</th><th>Meses</th><th>-3 DE</th><th>-2 DE</th><th>-1 DE</th><th>Mediana</th><th>1 DE</th><th>2 DE</th><th>3 DE</th>
+                    	     <th style="text-align: center;">Edad</th>
+                           <th style="text-align: center;">Meses</th>
+                           <th style="text-align: center;">-3 DE</th>
+                           <th style="text-align: center;">-2 DE</th>
+                           <th style="text-align: center;">-1 DE</th>
+                           <th style="text-align: center;">Mediana</th>
+                           <th style="text-align: center;">1 DE</th>
+                           <th style="text-align: center;">2 DE</th>
+                           <th style="text-align: center;">3 DE</th>
                     	  </tr>
                       </thead>
                       <tbody id="talla_edad_reglas">
@@ -132,7 +143,7 @@
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-12">
                   <div class="box box-warning">
                   <div class="box-header">
                     <h3 class="box-title" id="peso_talla_titulo">Peso para la Talla</h3>
@@ -141,7 +152,14 @@
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                           <th>cm</th><th>-3 DE</th><th>-2 DE</th><th>-1 DE</th><th>Mediana</th><th>1 DE</th><th>2 DE</th><th>3 DE</th>
+                           <th style="text-align: center;">cm</th>
+                           <th style="text-align: center;">-3 DE</th>
+                           <th style="text-align: center;">-2 DE</th>
+                           <th style="text-align: center;">-1 DE</th>
+                           <th style="text-align: center;">Mediana</th>
+                           <th style="text-align: center;">1 DE</th>
+                           <th style="text-align: center;">2 DE</th>
+                           <th style="text-align: center;">3 DE</th>
                         </tr>
                       </thead>
                       <tbody id="peso_talla_reglas">
@@ -151,7 +169,7 @@
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-12">
                   <div class="box box-danger">
                   <div class="box-header">
                     <h3 class="box-title" id="talla_peso_titulo">Peso para la edad</h3>
@@ -160,7 +178,15 @@
                     <table class="table table-hover">
                       <thead>
                         <tr>
-                           <th>Edad</th><th>Meses</th><th>-3 DE</th><th>-2 DE</th><th>-1 DE</th><th>Mediana</th><th>1 DE</th><th>2 DE</th><th>3 DE</th>
+                           <th style="text-align: center;">Edad</th>
+                           <th style="text-align: center;">Meses</th>
+                           <th style="text-align: center;">-3 DE</th>
+                           <th style="text-align: center;">-2 DE</th>
+                           <th style="text-align: center;">-1 DE</th>
+                           <th style="text-align: center;">Mediana</th>
+                           <th style="text-align: center;">1 DE</th>
+                           <th style="text-align: center;">2 DE</th>
+                           <th style="text-align: center;">3 DE</th>
                         </tr>
                       </thead>
                       <tbody id="talla_peso_reglas">
@@ -169,7 +195,9 @@
                   </div><!-- /.box-body -->
                 </div>
               </div>
+            </div>
           </div><!-- /.row -->
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
+      <div id="msj" class="msjAlert"></div>

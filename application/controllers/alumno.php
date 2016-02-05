@@ -9,6 +9,7 @@ class Alumno extends CI_Controller {
 				 $this->header['url']= base_url();
 				 $this->load->model("Alumno_model","Alumno");
 				 $this->load->model("Aula_model","Aula");
+				 $this->load->model("Evaluacion_model","Evaluacion");
 				 $this->header['lactantes'] = $this->Aula->CargarMenu(1);
 				 $this->header['andantes'] = $this->Aula->CargarMenu(2);
 				 $this->header['infantes'] = $this->Aula->CargarMenu(3);
@@ -27,7 +28,6 @@ class Alumno extends CI_Controller {
 	public function crear()
 	{
 		if($this->input->is_ajax_request()){
-			$data['nro'] = $this->input->post('nro');
 			$data['aula'] = $this->input->post('aula');
 			$data['nombres'] = $this->input->post('nombres');
 			$data['apellidos'] = $this->input->post('apellidos');
@@ -59,7 +59,6 @@ class Alumno extends CI_Controller {
 	{
 		if($this->input->is_ajax_request()){
 			$data['id'] = $this->input->post('id');
-			$data['nro'] = $this->input->post('nro');
 			$data['aula'] = $this->input->post('aula');
 			$data['nombres'] = $this->input->post('nombres');
 			$data['apellidos'] = $this->input->post('apellidos');
@@ -97,10 +96,10 @@ class Alumno extends CI_Controller {
 
 	public function perfil($idAlumno)
 	{
-		$this->load->model("Historial_model","Historial");
+		$this->load->model("Evaluacion_model","Evaluacion");
 
 		$data['alumno'] = $this->Alumno->PerfilAlumno($idAlumno);
-		$data['historial'] = $this->Historial->Cargar($idAlumno);
+		$data['historial'] = $this->Evaluacion->Cargar($idAlumno);
 
 		$this->load->view('header_view', $this->header);
 		$this->load->view('alumno/perfil_view',$data);
@@ -143,6 +142,12 @@ class Alumno extends CI_Controller {
 		redirect('alumno/diagnostico/'.$data['idAlumno']);
 	}
 
+
+		public function total()
+		{
+			$data['total'] = $this->Alumno->CountAll();
+			echo json_encode($data);
+		}
 
 }
 

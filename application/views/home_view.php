@@ -19,6 +19,26 @@
         <section class="content">
 
           <section class="col-lg-7 connectedSortable">
+
+            <div class="row">
+              <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                  <div class="inner">
+                    <h3 id="total"></h3>
+
+                    <p>Total de Alumnos</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fa fa-group"></i>
+                  </div>
+                  <a href="#" class="small-box-footer">
+                    Descargar Listado Completo <i class="fa fa-download"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
           </section>
 
           <section class="col-lg-5 connectedSortable">

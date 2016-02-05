@@ -43,7 +43,7 @@ class Excel extends CI_Controller {
       $this->phpexcel->getActiveSheet()->getColumnDimension('A')->setWidth(3);
       $this->phpexcel->getActiveSheet()->getColumnDimension('B')->setWidth(40);
       $this->phpexcel->getActiveSheet()->getColumnDimension('C')->setWidth(5);
-      $this->phpexcel->getActiveSheet()->getColumnDimension('D')->setWidth(10);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
       $this->phpexcel->getActiveSheet()->getColumnDimension('E')->setWidth(10);
       $this->phpexcel->getActiveSheet()->getColumnDimension('F')->setWidth(10);
 
@@ -55,10 +55,10 @@ class Excel extends CI_Controller {
                   ->setCellValue('C'.$fila, 'SEXO')
                   ->setCellValue('D'.$fila, 'EDAD')
                   ->setCellValue('E'.$fila, 'PESO')
-                  ->setCellValue('F'.$fila, 'TALLA')
-                  ->setCellValue('G'.$fila, 'DIAGNOSTICO 1')
+                  ->setCellValue('F'.$fila, 'TALLA');
+              /*    ->setCellValue('G'.$fila, 'DIAGNOSTICO 1')
                   ->setCellValue('H'.$fila, 'DIAGNOSTICO 2')
-                  ->setCellValue('I'.$fila, 'DIAGNOSTICO 3');
+                  ->setCellValue('I'.$fila, 'DIAGNOSTICO 3');*/
 
       $con = 0;
 
@@ -70,10 +70,10 @@ class Excel extends CI_Controller {
                     ->setCellValue('C'.$f2, strtoupper($alumno->genero))
                     ->setCellValue('D'.$f2, calcular_edad($alumno->fecha_nacimiento))
                     ->setCellValue('E'.$f2, '')
-                    ->setCellValue('F'.$f2, '')
-                    ->setCellValue('G'.$f2, '')
+                    ->setCellValue('F'.$f2, '');
+            /*        ->setCellValue('G'.$f2, '')
                     ->setCellValue('H'.$f2, '')
-                    ->setCellValue('I'.$f2, '');
+                    ->setCellValue('I'.$f2, ''); */
         $con++;
         $f2++;
       }
@@ -92,8 +92,8 @@ class Excel extends CI_Controller {
       );
 
       $sheet = $this->phpexcel->getActiveSheet();
-      $sheet->getStyle("A".$fila.":I".($f2-1))->applyFromArray($border_style);
-      $sheet->getStyle("A".$fila.":I".$fila)->applyFromArray($center_style)->getFont()->setBold(true);
+      $sheet->getStyle("A".$fila.":F".($f2-1))->applyFromArray($border_style);
+      $sheet->getStyle("A".$fila.":F".$fila)->applyFromArray($center_style)->getFont()->setBold(true);
       $sheet->getStyle("A".$fila.":A".($f2-1))->applyFromArray($center_style);
       $sheet->getStyle("C".$fila.":C".($f2-1))->applyFromArray($center_style);
 
@@ -109,11 +109,13 @@ class Excel extends CI_Controller {
 
       //redireccionamos la salida al navegador del cliente (Excel2007)
       header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      header('Content-Disposition: attachment;filename="01simple.xlsx"');
+      header('Content-Disposition: attachment;filename="'.$datos_aula[0]->titulo.'.xlsx"');
       header('Cache-Control: max-age=0');
 
       $objWriter = PHPExcel_IOFactory::createWriter($this->phpexcel, 'Excel2007');
       $objWriter->save('php://output');
 
     }
+
+
 }

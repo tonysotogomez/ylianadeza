@@ -52,10 +52,10 @@ $meses_totales = (int)$edad_meses;
                       <b>Edad</b> <a class="pull-right"><?php echo $edad;?></a>
                     </li>
                     <li class="list-group-item">
-                      <b>Peso</b> <a class="pull-right"><?php echo $alumno[0]->peso;?></a>
+                      <b>Peso</b> <a class="pull-right"><?php echo (isset($alumno[0]->peso))?$alumno[0]->peso:'No registrado';?></a>
                     </li>
                     <li class="list-group-item">
-                      <b>Talla</b> <a class="pull-right"><?php echo $alumno[0]->talla;?></a>
+                      <b>Talla</b> <a class="pull-right"><?php echo (isset($alumno[0]->talla))?$alumno[0]->talla:'No registrado';?></a>
                     </li>
                   </ul>
 

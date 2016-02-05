@@ -23,7 +23,11 @@
               <div class="box box-success">
                 <div class="box-header">
                   <h3 class="box-title">La evaluación se registrará cuando de clic en el botón Guardar</h3>
-                  <button type="button" class="btn btn-primary pull-right" value="0" onclick="GuardarEvaluacion(0);"><i class="fa fa-save"></i> Guardar</button>
+                  <a href="<?php echo $url;?>examen/evaluacion/<?php echo $datos_aula[0]->id;?>">
+                    <button type="button" class="btn btn-danger pull-right">
+                    <i class="fa fa-remove"></i> Cancelar
+                  </button></a>
+                  <button type="button" class="btn btn-primary" value="0" onclick="GuardarEvaluacion(0);"><i class="fa fa-save"></i> Guardar</button>
                 </div><!-- /.box-header -->
 
                 <div class="box-body">
@@ -39,6 +43,7 @@
                           <th>Peso</th>
                           <th>Talla</th>
                           <th>Obervaciones</th>
+                          <th>Cumple</th>
                         </tr>
                       </thead>
                       <tbody id="tb_alumnos">
@@ -52,6 +57,7 @@
                           <th>Peso</th>
                           <th>Talla</th>
                           <th>Obervaciones</th>
+                          <th>Cumple</th>
                         </tr>
                       </tfoot>
                     </table>

@@ -23,11 +23,11 @@
                   <h3 class="box-title">Nómina de Niños<?php //echo $datos_aula[0]->aula; ?></h3>
                   <button type="button" class="btn btn-primary" onclick="Nuevo();"><i class="fa fa-user-plus"></i> Nuevo</button>
                   <a href="<?php echo $url;?>examen/evaluacion/<?php echo $datos_aula[0]->id;?>">
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-warning">
                       <i class="fa fa-heartbeat"></i> Evaluaciones</button>
                   </a>
                   <a href="<?php echo $url;?>excel/listado/<?php echo $datos_aula[0]->id;?>">
-                    <button type="button" class="btn btn-success">
+                    <button type="button" class="btn btn-default">
                       <i class="fa fa-download"></i> Descargar</button>
                   </a>
                 </div><!-- /.box-header -->
@@ -41,7 +41,7 @@
                         <th>Nombres</th>
                         <th align="center">Sexo</th>
                         <th>Fecha Nacimiento</th>
-                        <th>Titular</th>
+                        <th style="width: 307px;">Titular</th>
                         <th>Estado</th>
                         <th>Opciones</th>
                       </tr>
@@ -55,7 +55,7 @@
                         <th>Nombres</th>
                         <th>Sexo</th>
                         <th>Fecha Nacimiento</th>
-                        <th>Titular</th>
+                        <th style="width: 307px;">Titular</th>
                         <th>Estado</th>
                         <th>Opciones</th>
                       </tr>

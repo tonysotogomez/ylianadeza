@@ -11,11 +11,6 @@
             <div class="modal-body">
                 <form id="form_alumno" name="form_alumno" action="" method="post">
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Nro:</label>
-                      <input type="text" class="form-control" name="txt_nro" placeholder="Ingrese su N° de Alumno">
-                    </div>
-
-                    <div class="form-group">
                       <label for="exampleInputEmail1">Apellidos:</label>
                       <input type="text" class="form-control" name="txt_apellidos" id="txt_apellidos" placeholder="Ingresa sus apellidos">
                     </div>
