@@ -47,7 +47,7 @@
     }
 
     public function CargarDetalle($idEvaluacion){
-      $this->db->select('d.id, e.fecha, e.nombre as evaluacion, d.idEvaluacion, d.idAlumno, a.nombres, a.apellidos, d.edad, d.peso, d.talla, d.fecha, d.observaciones, d.estado');
+      $this->db->select('d.id, e.fecha, e.nombre as evaluacion, d.idEvaluacion, d.idAlumno, a.nombres, a.apellidos, d.edad, a.genero, d.peso, d.talla, d.fecha, d.observaciones, d.estado, d.diagnosticoTE, d.diagnosticoPE, d.diagnosticoPT');
       $this->db->from('detalle_evaluacion d');
       $this->db->join('alumno a', 'a.id = d.idAlumno');
       $this->db->join('evaluacion e', 'e.id = d.idEvaluacion');
@@ -109,6 +109,10 @@
                 // 'edad' => $data['edad'], edad no se debe actualizar
                  'peso' => $data['peso'],
                  'talla' => $data['talla'],
+                 'diagnosticoTE' => $data['talla_edad'],
+                 'diagnosticoPE' => $data['peso_edad'],
+                 'diagnosticoPT' => $data['peso_talla'],
+                 'updated_at' => date("Y-m-d H:i:s"),
                  //'fecha' => $data['fecha'],
                  'observaciones' => $data['observaciones']
               );

@@ -197,7 +197,6 @@
               </div>
             </div>
           </div><!-- /.row -->
-
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       <div id="msj" class="msjAlert"></div>

@@ -11,7 +11,9 @@
           <ol class="breadcrumb">
             <li><a href="<?php echo $url;?>"><i class="fa fa-dashboard"></i> Inicio</a></li>
             <li><a href="#">Aula</a></li>
-            <li class="active"><?php echo $datos_aula[0]->titulo;?></li>
+            <li><?php echo $datos_aula[0]->titulo;?></li>
+            <li>Evaluaciones</li>
+            <li class="active">Nueva</li>
           </ol>
         </section>
 

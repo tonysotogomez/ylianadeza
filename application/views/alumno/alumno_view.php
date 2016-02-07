@@ -27,7 +27,7 @@
                       <i class="fa fa-heartbeat"></i> Evaluaciones</button>
                   </a>
                   <a href="<?php echo $url;?>excel/listado/<?php echo $datos_aula[0]->id;?>">
-                    <button type="button" class="btn btn-default">
+                    <button type="button" class="btn btn-default" title="Descargar Excel">
                       <i class="fa fa-download"></i> Descargar</button>
                   </a>
                 </div><!-- /.box-header -->
@@ -36,28 +36,28 @@
                   <table id="t_alumnos" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>Nro</th>
+                        <th style="width: 10px;">Nro</th>
                         <th>Apellidos</th>
                         <th>Nombres</th>
-                        <th align="center">Sexo</th>
-                        <th>Fecha Nacimiento</th>
-                        <th style="width: 307px;">Titular</th>
-                        <th>Estado</th>
-                        <th>Opciones</th>
+                        <th style="width: 10px;">Sexo</th>
+                        <th style="width: 100px;">F.Nacimiento</th>
+                        <th style="width: 250px;">Titular</th>
+                        <th style="width: 10px;">Estado</th>
+                        <th style="width: 25px;">Opciones</th>
                       </tr>
                     </thead>
                     <tbody id="tb_alumnos">
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Nro</th>
+                        <th style="width: 10px;">Nro</th>
                         <th>Apellidos</th>
                         <th>Nombres</th>
-                        <th>Sexo</th>
-                        <th>Fecha Nacimiento</th>
-                        <th style="width: 307px;">Titular</th>
-                        <th>Estado</th>
-                        <th>Opciones</th>
+                        <th style="width: 10px;">Sexo</th>
+                        <th style="width: 10px;">F.Nacimiento</th>
+                        <th style="width: 250px;">Titular</th>
+                        <th style="width: 10px;">Estado</th>
+                        <th style="width: 25px;">Opciones</th>
                       </tr>
                     </tfoot>
                   </table>

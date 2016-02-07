@@ -43,21 +43,34 @@
                           <th>Edad</th>
                           <th>Peso</th>
                           <th>Talla</th>
-                          <th>Obervaciones</th>
+                          <th>Observaciones</th>
+                          <th>Talla Edad</th>
+                          <th>Peso Edad</th>
+                          <th>Peso Talla</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php
                         $con = 1;
+                        $CI =& get_instance();
+                        $CI->load->model("Edad_model","Edad");
                         foreach ($detalle as $datos) {
+                          $edad = $CI->Edad->CargarEdad((float)$datos->edad);
                           echo '<tr>';
-                              echo '<td>'.$con.'</td>';
+                              echo '<td>'.$con;
+                              echo '<input type="hidden" class="form-control" name="txt_genero_'.$datos->idAlumno.'" value="'.$datos->genero.'">';
+                              echo '<input type="hidden" class="form-control" name="txt_detalle_'.$datos->idAlumno.'" value="'.$datos->id.'">';
+                              echo '<input type="hidden" class="form-control" name="txt_edad_'.$datos->idAlumno.'" value="'.$datos->edad.'">';
+                              echo '</td>';
                               echo '<td>'.$datos->apellidos.'</td>';
                               echo '<td>'.$datos->nombres.'</td>';
-                              echo '<td><input type="hidden" class="form-control" name="txt_detalle_'.$datos->idAlumno.'" value="'.$datos->id.'"><input type="text" class="form-control" name="txt_peso_'.$datos->idAlumno.'" value="'.$datos->edad.'"></td>';
-                              echo '<td><input type="text" class="form-control" name="txt_peso_'.$datos->idAlumno.'" value="'.$datos->peso.'"></td>';
-                              echo '<td><input type="text" class="form-control" name="txt_talla_'.$datos->idAlumno.'" value="'.$datos->talla.'"></td>';
+                              echo '<td>'.$edad[0]->nombre.'</td>';
+                              echo '<td><input type="text" class="form-control" name="txt_peso_'.$datos->idAlumno.'" value="'.$datos->peso.'" style="width: 75px!important;"></td>';
+                              echo '<td><input type="text" class="form-control" name="txt_talla_'.$datos->idAlumno.'" value="'.$datos->talla.'" style="width: 75px!important;"></td>';
                               echo '<td><input type="text" class="form-control" name="txt_observaciones_'.$datos->idAlumno.'" value="'.$datos->observaciones.'"></td>';
+                              echo '<td>'.$datos->diagnosticoTE.'</td>';
+                              echo '<td>'.$datos->diagnosticoPE.'</td>';
+                              echo '<td>'.$datos->diagnosticoPT.'</td>';
                           echo '</tr>';
                           $con++;
                         }
@@ -71,7 +84,10 @@
                           <th>Edad</th>
                           <th>Peso</th>
                           <th>Talla</th>
-                          <th>Obervaciones</th>
+                          <th>Observaciones</th>
+                          <th>Talla Edad</th>
+                          <th>Peso Edad</th>
+                          <th>Peso Talla</th>
                         </tr>
                       </tfoot>
                     </table>

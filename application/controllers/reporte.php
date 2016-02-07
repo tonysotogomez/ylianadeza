@@ -13,6 +13,8 @@ class Reporte extends CI_Controller {
 				 $this->header['infantes'] = $this->Aula->CargarMenu(3);
 				 $this->header['jardin'] = $this->Aula->CargarMenu(4);
 				 $this->load->helper(array('form'));
+
+				 $this->footer['js_custom'] = '<script src="'.base_url().'dist/js/examen/cred.js"></script>';
     }
 
 
@@ -21,7 +23,7 @@ class Reporte extends CI_Controller {
 	{
 		$this->load->view('header_view', $this->header);
 		$this->load->view('reporte/cred_prueba_view');
-		$this->load->view('footer_view');
+		$this->load->view('footer_view',$this->footer);
 	}
 
 

@@ -3,15 +3,11 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Page Header
-            <small>Optional description</small>
-
-<a data-toggle="modal" href="#example" class="btn btn-primary btn-large">Abrir ventana modal</a>
-
+            Inicio
+            <small>Menu Principal</small>
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-            <li class="active">Here</li>
+            <li><a href="#"><i class="fa fa-dashboard active"></i> Inicio</a></li>
           </ol>
         </section>
 

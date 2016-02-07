@@ -37,7 +37,7 @@ if(!function_exists('evaluar'))
 		//TALLA PARA LA EDAD
 		if(! empty($TallaEdad) && $talla != 0) {
 				if($talla > $TallaEdad[0]->DE3) {
-				$data['diagnostico'] = 'Alto mas';
+				$data['diagnostico'] = 'Alto +';
 				$data['color'] = 'yellow';
 				$data['porcentaje'] = '90';
 			} elseif($talla > $TallaEdad[0]->DE2 && $talla <= $TallaEdad[0]->DE3) {
@@ -49,7 +49,7 @@ if(!function_exists('evaluar'))
 				$data['color'] = 'light-blue';
 				$data['porcentaje'] = '50';
 			}elseif($talla < $TallaEdad[0]->DE3menos) {
-				$data['diagnostico'] = 'Talla Baja mas';
+				$data['diagnostico'] = 'Talla Baja Severa';
 				$data['color'] = 'red';
 				$data['porcentaje'] = '10';
 			} elseif($talla < $TallaEdad[0]->DE2menos && $talla >= $TallaEdad[0]->DE3menos) {

@@ -6,7 +6,7 @@
     <title>Yliana Deza</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="description" content="Sistema de Diagnostico Nutricional">
+    <meta name="description" content="Sistema de Evaluación Nutricional">
     <meta name="author" content="Jesús Soto Gómez">
     <script>
       var url = "<?php echo $url; ?>";
@@ -78,7 +78,7 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>D</b>N</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Diagnostico</b>Nutricional</span>
+          <span class="logo-lg"><b>Evaluación</b>Nutricional</span>
         </a>
 
         <!-- Header Navbar -->
@@ -107,18 +107,6 @@
                       Yliana Deza Asion - Nutricionista
                       <small><?php echo strftime("%B del %Y");?></small>
                     </p>
-                  </li>
-                  <!-- Menu Body -->
-                  <li class="user-body">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Perfil</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Configurar</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
-                    </div>
                   </li>
                   <!-- Menu Footer-->
                   <li class="user-footer">
@@ -157,7 +145,7 @@
             </div>
           </div>
 
-          <!-- search form (Optional) -->
+          <!-- search form (Optional)
           <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
               <input type="text" name="q" class="form-control" placeholder="Buscar...">
@@ -166,13 +154,13 @@
               </span>
             </div>
           </form>
-          <!-- /.search form -->
+         /.search form -->
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
             <li class="header">Examen</li>
 
-            <li><a href="<?php echo $url;?>examen"><i class="fa fa-heartbeat"></i> <span>Calcular Resultado</span></a></li>
+            <li><a href="<?php echo $url;?>examen"><i class="fa fa-heartbeat"></i> <span>Evaluación</span></a></li>
 
             <li class="header">MANTENIMIENTO</li>
             <li><a href="<?php echo $url;?>reporte/cred"><i class="fa fa-home"></i> <span>CRED</span></a></li>

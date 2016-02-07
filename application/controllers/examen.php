@@ -290,9 +290,19 @@ class Examen extends CI_Controller {
 				$data['idDetalle'] = $this->input->post('detalle_'.$alumnos[$i]->id);
 			//	$data['idAlumno'] = $alumnos[$i]->id;
 			//	$data['edad'] = $edad_decimales;
-				$data['peso'] = $this->input->post('peso_'.$alumnos[$i]->id);
-				$data['talla'] = $this->input->post('talla_'.$alumnos[$i]->id);
+			  $data['genero'] = $this->input->post('genero_'.$alumnos[$i]->id);
+			  $data['edad'] = (float)$this->input->post('edad_'.$alumnos[$i]->id);
+				$data['peso'] = (float)$this->input->post('peso_'.$alumnos[$i]->id);
+				$data['talla'] = (float)$this->input->post('talla_'.$alumnos[$i]->id);
 				$data['observaciones'] = $this->input->post('observaciones_'.$alumnos[$i]->id);
+
+
+				/* Evaluacion Nutricional */
+				$resultado = evaluar($data);//edad, peso, talla y genero (h o m)
+				$data['talla_edad'] = $resultado['diagnostico']; //talla_edad
+				$data['peso_edad'] = $resultado['diagnostico3']; //peso_edad
+				$data['peso_talla'] = $resultado['diagnostico2']; //peso_talla
+
 				$result = $this->Evaluacion->EditarDetalle($data);
 			}
 
