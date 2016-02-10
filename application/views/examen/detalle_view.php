@@ -4,8 +4,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>Evaluación N°<?php echo $num; ?>:
-            <input type="text" name="txt_titulo"
-              placeholder="Nombre de Evaluacion" value="<?php echo $detalle[0]->evaluacion;?>">
+            <?php echo $detalle[0]->evaluacion;?>
               <input type="hidden" name="txt_idEval" value="<?php echo $detalle[0]->idEvaluacion;?>">
             <small>Fecha Evaluación <?php echo  $detalle[0]->fecha; ?></small>
           </h1>
@@ -13,8 +12,8 @@
             <li><a href="<?php echo $url;?>"><i class="fa fa-dashboard"></i> Inicio</a></li>
             <li><a href="#">Aula</a></li>
             <li><?php echo $datos_aula[0]->titulo;?></li>
-            <li>Evaluación</li>
-            <li class="active">Editar</li>
+            <li>Evaluacion</li>
+            <li class="active">Ver</li>
           </ol>
         </section>
 
@@ -25,11 +24,11 @@
 
               <div class="box box-success">
                 <div class="box-header">
-                  <h3 class="box-title">La evaluación se actualizará cuando de clic en el botón Guardar</h3>
-                  <button type="button" class="btn btn-primary" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-save"></i> Editar</button>
+                  <h3 class="box-title">Detalle de evaluacion</h3>
+                  <button type="button" class="btn btn-default" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-download"></i> Descargar</button>
                   <a href="<?php echo $url;?>examen/evaluacion/<?php echo $datos_aula[0]->id;?>">
-                    <button type="button" class="btn btn-danger pull-right">
-                    <i class="fa fa-remove"></i> Cancelar
+                    <button type="button" class="btn btn-warning pull-right">
+                    <i class="fa fa-reply"></i> Regresar
                   </button></a>
                 </div><!-- /.box-header -->
 
@@ -45,6 +44,8 @@
                           <th>Edad</th>
                           <th>Peso</th>
                           <th>Talla</th>
+                          <th>C. Talla</th>
+                          <th>C. Peso</th>
                           <th>Observaciones</th>
                           <th>Talla Edad</th>
                           <th>Peso Edad</th>
@@ -58,6 +59,8 @@
                         $CI->load->model("Edad_model","Edad");
                         foreach ($detalle as $datos) {
                           $edad = $CI->Edad->CargarEdad((float)$datos->edad);
+                          $talla_creci = comparar($datos->talla_ant,$datos->talla);
+                          $peso_creci = comparar($datos->peso_ant,$datos->peso);
                           echo '<tr>';
                               echo '<td>'.$con;
                               echo '<input type="hidden" class="form-control" name="txt_genero_'.$datos->idAlumno.'" value="'.$datos->genero.'">';
@@ -67,12 +70,14 @@
                               echo '<td>'.$datos->apellidos.'</td>';
                               echo '<td>'.$datos->nombres.'</td>';
                               echo '<td>'.$edad[0]->nombre.'</td>';
-                              echo '<td><input type="text" class="form-control" name="txt_peso_'.$datos->idAlumno.'" value="'.$datos->peso.'" style="width: 75px!important;"></td>';
-                              echo '<td><input type="text" class="form-control" name="txt_talla_'.$datos->idAlumno.'" value="'.$datos->talla.'" style="width: 75px!important;"></td>';
-                              echo '<td><input type="text" class="form-control" name="txt_observaciones_'.$datos->idAlumno.'" value="'.$datos->observaciones.'"></td>';
-                              echo '<td>'.$datos->diagnosticoTE.'</td>';
-                              echo '<td>'.$datos->diagnosticoPE.'</td>';
-                              echo '<td>'.$datos->diagnosticoPT.'</td>';
+                              echo '<td>'.$datos->peso.'</td>';
+                              echo '<td>'.$datos->talla.'</td>';
+                              echo '<td>'.$datos->talla_ant.': '.$talla_creci.'</td>';
+                              echo '<td>'.$datos->peso_ant.': '.$peso_creci.'</td>';
+                              echo '<td>'.$datos->observaciones.'</td>';
+                              echo '<td>'.diagnostico($datos->diagnosticoTE).'</td>';
+                              echo '<td>'.diagnostico($datos->diagnosticoPE).'</td>';
+                              echo '<td>'.diagnostico($datos->diagnosticoPT).'</td>';
                           echo '</tr>';
                           $con++;
                         }
@@ -86,6 +91,8 @@
                           <th>Edad</th>
                           <th>Peso</th>
                           <th>Talla</th>
+                          <th>C. Talla</th>
+                          <th>C. Peso</th>
                           <th>Observaciones</th>
                           <th>Talla Edad</th>
                           <th>Peso Edad</th>
@@ -101,4 +108,4 @@
         </form>
       </div><!-- /.content-wrapper -->
 <div id="msj" class="msjAlert"></div>
-<?php //$this->load->view('alumno/form_alumno'); ?>
+<?php $this->load->view('alumno/form_alumno'); ?>

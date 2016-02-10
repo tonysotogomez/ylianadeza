@@ -29,6 +29,28 @@
                         <div class="col-sm-10">
                           <input type="text" class="form-control" name="txt_edad" placeholder="Formato 1.01 = 1 año 1 mes"
                           value="<?php echo (isset($edad))?$edad:'0';?>">
+                          <select class="form-control" name="slct_anios" style="width: 75px!important;">
+                            <option value="0">0 años</option>
+                            <option value="1">1 año</option>
+                            <option value="2">2 años</option>
+                            <option value="3">3 años</option>
+                            <option value="4">4 años</option>
+                            <option value="5">5 años</option>
+                          </select>
+                          <select class="form-control" name="slct_meses" style="width: 75px!important;">
+                            <option value="0">0 meses</option>
+                            <option value="01">1 mes</option>
+                            <option value="02">2 meses</option>
+                            <option value="03">3 meses</option>
+                            <option value="04">4 meses</option>
+                            <option value="05">5 meses</option>
+                            <option value="06">6 meses</option>
+                            <option value="07">7 meses</option>
+                            <option value="08">8 meses</option>
+                            <option value="09">9 mes</option>
+                            <option value="10">10 meses</option>
+                            <option value="11">11 meses</option>
+                          </select>
                         </div>
                       </div>
                       <div class="form-group">

@@ -109,6 +109,50 @@ if(!function_exists('evaluar'))
 
 		return $data;
 	}
+
+	//resta los valores y muestra en rojo si disminuyo o verde si aumento
+	if(!function_exists('comparar'))
+	{
+		function comparar($valor_act, $valor_ant)
+		{
+			$talla_dif = ($valor_ant-$valor_act);
+			if( $talla_dif > 0) $talla_creci = '<span class="text-green">+'.$talla_dif.'</span>';
+			elseif ($talla_dif < 0) $talla_creci = '<span class="text-red">'.$talla_dif.'</span>';
+			else $talla_creci = '<span class="text-muted">'.$talla_dif.'</span>';
+			return $talla_creci;
+		}
+	}
+
+	if(!function_exists('diagnostico'))
+	{
+		function diagnostico($resultado)
+		{
+			//TALLA PARA LA EDAD
+			switch ($resultado) {
+				case 'Alto': $color = '<span class="text-yellow">'.$resultado.'</span>';
+					break;
+				case 'Talla Baja': $color = '<span class="text-red">'.$resultado.'</span>';
+					break;
+				case 'Talla Baja Severa': $color = '<span class="text-red">'.$resultado.'</span>';
+						break;
+				case 'Obesidad': $color = '<span class="text-yellow">'.$resultado.'</span>';
+					break;
+				case 'Sobrepeso': $color = '<span class="text-yellow">'.$resultado.'</span>';
+					break;
+				case 'Desnutrición Severa': $color = '<span class="text-red">'.$resultado.'</span>';
+					break;
+				case 'Desnutrición Aguda': $color = '<span class="text-red">'.$resultado.'</span>';
+					break;
+				case 'Desnutrición': $color = '<span class="text-red">'.$resultado.'</span>';
+					break;
+				case 'Normal': $color = '<span class="text-light-blue">'.$resultado.'</span>';
+					break;
+				default: $color = '<span class="text-muted">'.$resultado.'</span>';
+					break;
+			}
+			return $color;
+		}
+	}
 }
 
 

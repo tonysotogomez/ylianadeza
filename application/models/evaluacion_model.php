@@ -40,7 +40,7 @@
       $this->db->from('evaluacion');
       $this->db->where('idAula', $idAula);
       $this->db->where('estado', 1);
-      $this->db->order_by('fecha', 'desc');
+      $this->db->order_by('fecha', 'asc');
       $consulta = $this->db->get();
       $resultado = $consulta->result();
       return $resultado;
@@ -56,6 +56,43 @@
     //  $this->db->order_by('fecha', 'desc');
       $consulta = $this->db->get();
       $resultado = $consulta->result();
+      return $resultado;
+    }
+
+    public function VerDetalle($idEvaluacion, $idEvalAnt){
+      $query = $this->db->query('SELECT
+                              	d.id,
+                              	e.fecha,
+                              	e.nombre AS evaluacion,
+                              	d.idEvaluacion,
+                              	d.idAlumno,
+                              	a.nombres,
+                              	a.apellidos,
+                              	d.edad,
+                              	a.genero,
+                              	 ant.peso as peso_ant,
+                              	d.peso,
+                              	 ant.talla as talla_ant,
+                              	d.talla,
+                              	d.fecha,
+                              	d.observaciones,
+                              	d.estado,
+                              	d.diagnosticoTE,
+                              	d.diagnosticoPE,
+                              	d.diagnosticoPT
+                              FROM
+                              	(detalle_evaluacion d)
+                              JOIN alumno a ON a.id = d.idAlumno
+                              JOIN evaluacion e ON e.id = d.idEvaluacion
+                              INNER JOIN (
+                              		SELECT d2.idAlumno as evalu, d2.talla, d2.peso
+                              		FROM detalle_evaluacion d2
+                              		where d2.idEvaluacion = '.$idEvalAnt.'
+                              		and d2.estado = 1) ant ON ant.evalu = d.idAlumno
+                              WHERE
+                              	idEvaluacion = '.$idEvaluacion.'
+                              AND d.estado = 1');
+      $resultado = $query->result();
       return $resultado;
     }
 

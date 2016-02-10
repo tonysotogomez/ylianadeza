@@ -57,8 +57,16 @@ class Examen extends CI_Controller {
 			$data['peso'] = $peso;
 			$data['genero'] = $this->input->post('genero');
 
-			/*-----------------CALCULOS----------------*/
 
+			//Si es menor de 2 años se buscará en las tablas 1
+			$data['num_tabla'] = ($data['edad'] < 2)?'1':'2';
+			//Cargo las filas correspondientes a los datos ingresados
+			$TallaEdad= $this->TallaEdad->Cargar($data);//edad, genero, num_tabla
+			$PesoTalla= $this->PesoTalla->Cargar($data);//talla, genero, num_tabla
+			$PesoEdad= $this->PesoEdad->Cargar($data); //edad, genero
+			$data = evaluar($data);//edad, peso, talla y genero (h o m)
+			/*-----------------CALCULOS----------------*/
+/*
 			//Si es menor de 2 años se buscará en las tablas 1
 			$data['num_tabla'] = ($data['edad'] < 2)?'1':'2';
 			//Cargo las filas correspondientes a los datos ingresados
@@ -141,7 +149,7 @@ class Examen extends CI_Controller {
 				$data['color3'] = 'red';
 				$data['porcentaje3'] = '30';
 			}
-
+*/
 				$edad = explode(".",$TallaEdad[0]->edad);
 				$edad2 = $edad[0].':'.(int)$edad[1];
 
@@ -208,13 +216,23 @@ class Examen extends CI_Controller {
 		$this->load->view('footer_view', $this->footer);
 	}
 
-	public function cargarDetalle($idEvaluacion, $idAula)
+	public function cargarDetalle($idAula, $idEvaluacion,$num)
 	{
 		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
 		$this->data['detalle'] = $this->Evaluacion->CargarDetalle($idEvaluacion);
-
+		$this->data['num'] = $num;
 		$this->load->view('header_view', $this->header);
 		$this->load->view('examen/examen_edit_view',$this->data);
+		$this->load->view('footer_view', $this->footer);
+	}
+
+	public function verDetalle($idAula, $idEvaluacion,$num)
+	{
+		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
+		$this->data['detalle'] = $this->Evaluacion->VerDetalle($idEvaluacion, 38);
+		$this->data['num'] = $num;
+		$this->load->view('header_view', $this->header);
+		$this->load->view('examen/detalle_view',$this->data);
 		$this->load->view('footer_view', $this->footer);
 	}
 

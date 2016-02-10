@@ -26,8 +26,12 @@
                     <button type="button" class="btn btn-primary">
                     <i class="fa fa-plus-circle"></i> Nueva Evaluación
                   </button></a>
+                  <a href="<?php echo $url;?>reporte/<?php echo $datos_aula[0]->id;?>">
+                    <button type="button" class="btn btn-info">
+                    <i class="fa fa-line-chart"></i> Reporte
+                  </button></a>
                   <a href="<?php echo $url;?>aula/index/<?php echo $datos_aula[0]->id;?>">
-                    <button type="button" class="btn btn-danger">
+                    <button type="button" class="btn btn-warning pull-right">
                     <i class="fa fa-reply"></i> Regresar
                   </button></a>
                 </div><!-- /.box-header -->
@@ -39,7 +43,7 @@
                         <th>Nro</th>
                         <th>Nombre</th>
                         <th>Fecha</th>
-                        <th>Observaciones</th>
+                        <!--<th>Observaciones</th> -->
                         <th>Opciones</th>
                       </tr>
                     </thead>
@@ -56,9 +60,12 @@
                           echo '<td>'.$con.'</td>';
                           echo '<td>'.$eval->nombre.'</td>';
                           echo '<td>'.date('d-m-Y', strtotime($eval->fecha)).'</td>';
-                          echo '<td>'.$eval->observacion.'</td>';
-                          echo '<td><a href="'.$url.'examen/cargarDetalle/'.$eval->id.'/'.$datos_aula[0]->id.'"><button type="button" title="Editar" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar</button></a>';
-                          echo ' <button type="button" title="Eliminar" class="btn btn-sm btn-danger" onClick="EliminarEvaluacion('.$eval->id.')"><i class="fa fa-trash"></i> Eliminar</button></td>';
+                          //echo '<td>'.$eval->observacion.'</td>';
+                          echo '<td>';
+                          echo ' <a href="'.$url.'examen/cargarDetalle/'.$datos_aula[0]->id.'/'.$eval->id.'/'.$con.'"><button type="button" title="Editar" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar</button></a>';
+                          echo ' <button type="button" title="Eliminar" class="btn btn-sm btn-danger" onClick="EliminarEvaluacion('.$eval->id.')"><i class="fa fa-trash"></i> Eliminar</button>';
+                          echo ' <a href="'.$url.'examen/verDetalle/'.$datos_aula[0]->id.'/'.$eval->id.'/'.$con.'"><button type="button" title="Ver" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Ver</button></a>';
+                          echo '</td>';
                           echo '</tr>';
                           $con++;
                         }
@@ -69,7 +76,7 @@
                         <th>Nro</th>
                         <th>Nombre</th>
                         <th>Fecha</th>
-                        <th>Observaciones</th>
+                        <!--<th>Observaciones</th>-->
                         <th>Opciones</th>
                       </tr>
                     </tfoot>
