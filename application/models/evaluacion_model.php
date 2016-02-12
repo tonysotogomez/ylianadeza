@@ -34,7 +34,7 @@
             );
     $this->db->insert('historial', $arr);
   }
-
+  //de la mas antigua a la mas actual
     public function CargarEvaluaciones($idAula){
       $this->db->select('id, idAula, nombre, fecha, observacion, estado');
       $this->db->from('evaluacion');

@@ -49,7 +49,10 @@ class Examen extends CI_Controller {
 			$this->load->model("PesoTalla_model","PesoTalla");
 			$this->load->model("PesoEdad_model","PesoEdad");
 
-			$data['edad'] = (float)$this->input->post('edad');
+			//$data['edad'] = (float)$this->input->post('edad');
+
+			$data['edad'] = (float)($this->input->post('anios').'.'.$this->input->post('meses'));
+
 			$peso = (float)$this->input->post('peso');
 			$talla = (float)$this->input->post('talla');
 
@@ -57,99 +60,13 @@ class Examen extends CI_Controller {
 			$data['peso'] = $peso;
 			$data['genero'] = $this->input->post('genero');
 
-
-			//Si es menor de 2 años se buscará en las tablas 1
-			$data['num_tabla'] = ($data['edad'] < 2)?'1':'2';
-			//Cargo las filas correspondientes a los datos ingresados
-			$TallaEdad= $this->TallaEdad->Cargar($data);//edad, genero, num_tabla
-			$PesoTalla= $this->PesoTalla->Cargar($data);//talla, genero, num_tabla
-			$PesoEdad= $this->PesoEdad->Cargar($data); //edad, genero
+			/*CALCULOS*/
 			$data = evaluar($data);//edad, peso, talla y genero (h o m)
-			/*-----------------CALCULOS----------------*/
-/*
-			//Si es menor de 2 años se buscará en las tablas 1
-			$data['num_tabla'] = ($data['edad'] < 2)?'1':'2';
-			//Cargo las filas correspondientes a los datos ingresados
-			$TallaEdad= $this->TallaEdad->Cargar($data);//edad, genero, num_tabla
-			$PesoTalla= $this->PesoTalla->Cargar($data);//talla, genero, num_tabla
-			$PesoEdad= $this->PesoEdad->Cargar($data); //edad, genero
-			//echo $this->db->last_query();
 
-			$data['talla_edad'] = $TallaEdad;
-			$data['peso_talla'] = $PesoTalla;
-			$data['peso_edad'] = $PesoEdad;
+			$PesoEdad = $data['peso_edad'];
+			$TallaEdad = $data['talla_edad'];
+			$PesoTalla = $data['peso_talla'];
 
-			$data['diagnostico'] = 'ninguno';
-		//	$data['regla'] = $reglas;
-			//TALLA PARA LA EDAD
-			if($talla > $TallaEdad[0]->DE3) {
-				$data['diagnostico'] = 'Alto mas';
-				$data['color'] = 'yellow';
-				$data['porcentaje'] = '90';
-			} elseif($talla > $TallaEdad[0]->DE2 && $talla <= $TallaEdad[0]->DE3) {
-				$data['diagnostico'] = 'Alto';
-				$data['color'] = 'yellow';
-				$data['porcentaje'] = '70';
-			}elseif($talla >= $TallaEdad[0]->DE2menos && $talla <= $TallaEdad[0]->DE2) {
-				$data['diagnostico'] = 'Normal';
-				$data['color'] = 'light-blue';
-				$data['porcentaje'] = '50';
-			}elseif($talla < $TallaEdad[0]->DE3menos) {
-				$data['diagnostico'] = 'Talla Baja mas';
-				$data['color'] = 'red';
-				$data['porcentaje'] = '10';
-			} elseif($talla < $TallaEdad[0]->DE2menos && $talla >= $TallaEdad[0]->DE3menos) {
-				$data['diagnostico'] = 'Talla Baja';
-				$data['color'] = 'red';
-				$data['porcentaje'] = '30';
-			}
-			//PESO PARA LA TALLA
-			$data['diagnostico2'] = 'ninguno';
-			if($peso > $PesoTalla[0]->DE3) {
-				$data['diagnostico2'] = 'Obesidad';
-				$data['color2'] = 'yellow';
-				$data['porcentaje2'] = '90';
-			} elseif($peso > $PesoTalla[0]->DE2 && $peso <= $PesoTalla[0]->DE3) {
-				$data['diagnostico2'] = 'Sobrepeso';
-				$data['color2'] = 'yellow';
-				$data['porcentaje2'] = '70';
-			}elseif($peso >= $PesoTalla[0]->DE2menos && $peso <= $PesoTalla[0]->DE2) {
-				$data['diagnostico2'] = 'Normal';
-				$data['color2'] = 'light-blue';
-				$data['porcentaje2'] = '50';
-			}elseif($peso < $PesoTalla[0]->DE3menos) {
-				$data['diagnostico2'] = 'Desnutrición Severa';
-				$data['color2'] = 'red';
-				$data['porcentaje2'] = '10';
-			} elseif($peso < $PesoTalla[0]->DE2menos && $peso >= $PesoTalla[0]->DE3menos) {
-				$data['diagnostico2'] = 'Desnutrición Aguda';
-				$data['color2'] = 'red';
-				$data['porcentaje2'] = '30';
-			}
-			//PESO PARA LA EDAD
-			$data['diagnostico3'] = 'ninguno';
-			if($peso > $PesoEdad[0]->DE3) {
-				$data['diagnostico3'] = 'Sobrepeso +';
-				$data['color3'] = 'yellow';
-				$data['porcentaje3'] = '90';
-			} elseif($peso > $PesoEdad[0]->DE2 && $peso <= $PesoEdad[0]->DE3) {
-				$data['diagnostico3'] = 'Sobrepeso';
-				$data['color3'] = 'yellow';
-				$data['porcentaje3'] = '70';
-			}elseif($peso >= $PesoEdad[0]->DE2menos && $peso <= $PesoEdad[0]->DE2) {
-				$data['diagnostico3'] = 'Normal';
-				$data['color3'] = 'light-blue';
-				$data['porcentaje3'] = '50';
-			}elseif($peso < $PesoEdad[0]->DE3menos) {
-				$data['diagnostico3'] = 'Desnutrición +';
-				$data['color3'] = 'red';
-				$data['porcentaje3'] = '10';
-			} elseif($peso < $PesoEdad[0]->DE2menos && $peso >= $PesoEdad[0]->DE3menos) {
-				$data['diagnostico3'] = 'Desnutrición';
-				$data['color3'] = 'red';
-				$data['porcentaje3'] = '30';
-			}
-*/
 				$edad = explode(".",$TallaEdad[0]->edad);
 				$edad2 = $edad[0].':'.(int)$edad[1];
 
@@ -165,17 +82,18 @@ class Examen extends CI_Controller {
 				$tabla1 .= '<td bgcolor="#F3E2A9" align="center">'.$TallaEdad[0]->DE3.'</td></tr>';
 				$data['tabla1'] = $tabla1;
 
-				$tabla2 = '';
-				$tabla2 .= '<tr><td>'.$PesoTalla[0]->cm.'</td>';
-				$tabla2 .= '<td bgcolor="#F3E2A9" align="center">'.$PesoTalla[0]->DE3menos.'</td>';
-				$tabla2 .= '<td bgcolor="#AABDCE" align="center">'.$PesoTalla[0]->DE2menos.'</td>';
-				$tabla2 .= '<td bgcolor="#AABDCE" align="center">'.$PesoTalla[0]->DE1menos.'</td>';
-				$tabla2 .= '<td bgcolor="#AABDCE" align="center">'.$PesoTalla[0]->Mediana.'</td>';
-				$tabla2 .= '<td bgcolor="#AABDCE" align="center">'.$PesoTalla[0]->DE1.'</td>';
-				$tabla2 .= '<td bgcolor="#AABDCE" align="center">'.$PesoTalla[0]->DE2.'</td>';
-				$tabla2 .= '<td bgcolor="#F3E2A9" align="center">'.$PesoTalla[0]->DE3.'</td></tr>';
-				$data['tabla2'] = $tabla2;
-
+				if( ! empty($PesoTalla) && $peso != 0 ){
+					$tabla2 = '';
+					$tabla2 .= '<tr><td>'.$PesoTalla[0]->cm.'</td>';
+					$tabla2 .= '<td bgcolor="#F3E2A9" align="center">'.$PesoTalla[0]->DE3menos.'</td>';
+					$tabla2 .= '<td bgcolor="#AABDCE" align="center">'.$PesoTalla[0]->DE2menos.'</td>';
+					$tabla2 .= '<td bgcolor="#AABDCE" align="center">'.$PesoTalla[0]->DE1menos.'</td>';
+					$tabla2 .= '<td bgcolor="#AABDCE" align="center">'.$PesoTalla[0]->Mediana.'</td>';
+					$tabla2 .= '<td bgcolor="#AABDCE" align="center">'.$PesoTalla[0]->DE1.'</td>';
+					$tabla2 .= '<td bgcolor="#AABDCE" align="center">'.$PesoTalla[0]->DE2.'</td>';
+					$tabla2 .= '<td bgcolor="#F3E2A9" align="center">'.$PesoTalla[0]->DE3.'</td></tr>';
+					$data['tabla2'] = $tabla2;
+				}
 
 				$edad = explode(".",$PesoEdad[0]->edad);
 				$edad2 = $edad[0].':'.(int)$edad[1];
@@ -229,8 +147,13 @@ class Examen extends CI_Controller {
 	public function verDetalle($idAula, $idEvaluacion,$num)
 	{
 		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
-		$this->data['detalle'] = $this->Evaluacion->VerDetalle($idEvaluacion, 38);
-		$this->data['num'] = $num;
+
+		$evaluaciones = $this->Evaluacion->CargarEvaluaciones($idAula);
+		$pos = count($evaluaciones);
+		$penul_eval = $evaluaciones[$pos-2]->id;
+
+		$this->data['detalle'] = $this->Evaluacion->VerDetalle($idEvaluacion, $penul_eval);
+		$this->data['num'] = $num; //numero de evaluacion
 		$this->load->view('header_view', $this->header);
 		$this->load->view('examen/detalle_view',$this->data);
 		$this->load->view('footer_view', $this->footer);

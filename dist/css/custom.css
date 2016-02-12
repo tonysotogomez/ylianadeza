@@ -110,3 +110,6 @@ a.close:hover {
 	left: 5%;
   width: 90%;
 }
+.select_fila {
+  display: inline-table!important;
+}

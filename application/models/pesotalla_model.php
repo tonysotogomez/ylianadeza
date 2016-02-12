@@ -17,6 +17,8 @@ num_tabla : determina si se usa la tabla
 peso_talla_h1 , peso_talla_h2
 peso_talla_m1 , peso_talla_m2
 */
+  //talla2 esta corregida en los decimales diferentes de .0 o .5
+
   public function Cargar($data){
     $this->db->select('id, cm, DE3menos, DE2menos, DE1menos, Mediana, DE1, DE2, DE3');
     if($data['genero'] == 'h') {
@@ -25,7 +27,7 @@ peso_talla_m1 , peso_talla_m2
     else {
       $this->db->from('peso_talla_m'.$data['num_tabla']);
     }
-    $this->db->where('cm', $data['talla']);
+    $this->db->where('cm', $data['talla2']);
     $this->db->limit(1);
     $consulta = $this->db->get();
     $resultado = $consulta->result();

@@ -25,7 +25,11 @@
               <div class="box box-success">
                 <div class="box-header">
                   <h3 class="box-title">Detalle de evaluacion</h3>
-                  <button type="button" class="btn btn-default" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-download"></i> Descargar</button>
+
+                  <a href="<?php echo $url;?>excel/detalle/<?php echo $detalle[0]->idEvaluacion;?>/<?php echo $datos_aula[0]->id;?>">
+                    <button type="button" class="btn btn-default" title="Descargar Excel">
+                      <i class="fa fa-download"></i> Descargar</button>
+                  </a>
                   <a href="<?php echo $url;?>examen/evaluacion/<?php echo $datos_aula[0]->id;?>">
                     <button type="button" class="btn btn-warning pull-right">
                     <i class="fa fa-reply"></i> Regresar
@@ -33,8 +37,6 @@
                 </div><!-- /.box-header -->
 
                 <div class="box-body">
-                    <input type="hidden" value="<?php echo date("Y-m-d");?>" name="txt_fecha_eval">
-                    <input type="hidden" value="<?php echo $datos_aula[0]->id;?>" name="txt_aula" id="aula_id">
                     <table id="t_alumnos" class="table table-bordered table-striped">
                       <thead>
                         <tr>
@@ -43,9 +45,9 @@
                           <th>Nombres</th>
                           <th>Edad</th>
                           <th>Peso</th>
+                          <th>C. Peso</th>
                           <th>Talla</th>
                           <th>C. Talla</th>
-                          <th>C. Peso</th>
                           <th>Observaciones</th>
                           <th>Talla Edad</th>
                           <th>Peso Edad</th>
@@ -63,17 +65,14 @@
                           $peso_creci = comparar($datos->peso_ant,$datos->peso);
                           echo '<tr>';
                               echo '<td>'.$con;
-                              echo '<input type="hidden" class="form-control" name="txt_genero_'.$datos->idAlumno.'" value="'.$datos->genero.'">';
-                              echo '<input type="hidden" class="form-control" name="txt_detalle_'.$datos->idAlumno.'" value="'.$datos->id.'">';
-                              echo '<input type="hidden" class="form-control" name="txt_edad_'.$datos->idAlumno.'" value="'.$datos->edad.'">';
                               echo '</td>';
                               echo '<td>'.$datos->apellidos.'</td>';
                               echo '<td>'.$datos->nombres.'</td>';
                               echo '<td>'.$edad[0]->nombre.'</td>';
-                              echo '<td>'.$datos->peso.'</td>';
+                              echo '<td>'.$datos->peso.' </td>';
+                              echo '<td>'.$peso_creci.'</td>';
                               echo '<td>'.$datos->talla.'</td>';
-                              echo '<td>'.$datos->talla_ant.': '.$talla_creci.'</td>';
-                              echo '<td>'.$datos->peso_ant.': '.$peso_creci.'</td>';
+                              echo '<td>'.$talla_creci.'</td>';
                               echo '<td>'.$datos->observaciones.'</td>';
                               echo '<td>'.diagnostico($datos->diagnosticoTE).'</td>';
                               echo '<td>'.diagnostico($datos->diagnosticoPE).'</td>';
@@ -90,9 +89,9 @@
                           <th>Nombres</th>
                           <th>Edad</th>
                           <th>Peso</th>
+                          <th>C. Peso</th>
                           <th>Talla</th>
                           <th>C. Talla</th>
-                          <th>C. Peso</th>
                           <th>Observaciones</th>
                           <th>Talla Edad</th>
                           <th>Peso Edad</th>
@@ -107,5 +106,3 @@
         </section><!-- /.content -->
         </form>
       </div><!-- /.content-wrapper -->
-<div id="msj" class="msjAlert"></div>
-<?php $this->load->view('alumno/form_alumno'); ?>

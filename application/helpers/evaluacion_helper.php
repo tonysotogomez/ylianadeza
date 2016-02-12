@@ -14,17 +14,22 @@ if(!function_exists('evaluar'))
 		$data['num_tabla'] = ($data['edad'] < 2)?'1':'2';
 		//Cargo las filas correspondientes a los datos ingresados
 		$TallaEdad= $CI->TallaEdad->Cargar($data);//edad, genero, num_tabla
-		//$data['q1'] = $CI->db->last_query();
-		$PesoTalla= $CI->PesoTalla->Cargar($data);//talla, genero, num_tabla
-		//$data['q2'] = $CI->db->last_query();
 		$PesoEdad= $CI->PesoEdad->Cargar($data); //edad, genero
-		//$data['q3'] = $CI->db->last_query();
+
+		$talla_t = explode('.',$data['talla']);
+	//	if(isset($talla_t[1])){
+			if($talla_t[1] == 0 || $talla_t[1] == 1 || $talla_t[1] == 2 || $talla_t[1] == 3 || $talla_t[1] == 4) $decimal = 0;
+			else $decimal = 5;
+			$data['talla2'] = $talla_t[0].'.'.$decimal;
+		//}
+		$PesoTalla= $CI->PesoTalla->Cargar($data);//talla, genero, num_tabla
+		//$data['query'] = $data['talla2'].' query: '.$CI->db->last_query();
 
 		$talla = $data['talla'];
 		$peso = $data['peso'];
 
 
-		//FILAS CON LLAS REGLAS - OPCIONAL
+		//FILAS CON LAS REGLAS - OPCIONAL
 		$data['talla_edad'] = $TallaEdad;
 		$data['peso_talla'] = $PesoTalla;
 		$data['peso_edad'] = $PesoEdad;
@@ -123,6 +128,16 @@ if(!function_exists('evaluar'))
 		}
 	}
 
+//sin estilos para el excel
+	if(!function_exists('comparar2'))
+	{
+		function comparar2($valor_act, $valor_ant)
+		{
+			$talla_dif = ($valor_ant-$valor_act);
+			return $talla_dif;
+		}
+	}
+
 	if(!function_exists('diagnostico'))
 	{
 		function diagnostico($resultado)
@@ -153,6 +168,8 @@ if(!function_exists('evaluar'))
 			return $color;
 		}
 	}
+
+
 }
 
 
