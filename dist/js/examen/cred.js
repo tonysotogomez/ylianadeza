@@ -88,6 +88,17 @@
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(60,141,188,1)",
           data: [1.902, 2.588, 3.508, 4.527, 5.459, 6.302, 7.075,7.816,8.702,9.671,10.618,11.600,12.722,14.025]
+        },
+
+        {
+          label: "Tony",
+          fillColor: "rgba(60,141,188,0)",
+          strokeColor: "rgba(255,0,0,1)",
+          pointColor: "#3b8bba",
+          pointStrokeColor: "rgba(255,0,0,1)",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(60,141,188,0)",
+          data: [2.3, 3.1, 4.2, 5.2, 6.5, 7.5, 8.3, 9.3, 10.4, 11.7, 12.9, 14, 15.3, 17]
         }
       ]
     };
@@ -116,7 +127,7 @@
       //Number - Pixel width of point dot stroke
       pointDotStrokeWidth: 1,
       //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-      pointHitDetectionRadius: 24,
+      pointHitDetectionRadius: 20,
       //Boolean - Whether to show a stroke for datasets
       datasetStroke: true,
       //Number - Pixel width of dataset stroke

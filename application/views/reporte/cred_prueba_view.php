@@ -30,7 +30,7 @@
                 </div>
                 <div class="box-body">
                   <div class="chart">
-                    <canvas id="areaChart" style="height:600px"></canvas>
+                    <canvas id="areaChart" style="height:1000px"></canvas>
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

@@ -98,49 +98,24 @@ $meses_totales = (int)$edad_meses;
             <div class="col-md-9">
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                  <li class="active"><a href="#settings" data-toggle="tab">Examen</a></li>
+                  <li class="active"><a href="#settings" data-toggle="tab">Resultados</a></li>
                   <li><a href="#timeline" data-toggle="tab">Linea de Tiempo</a></li>
                 </ul>
                 <div class="tab-content">
 
                   <div class="active tab-pane" id="settings">
-                    <?php echo form_open('alumno/examen','class="form-horizontal'); ?>
+
                       <input type="hidden" class="form-control" name="txtid" value="<?php echo $alumno[0]->id;?>">
                       <input type="hidden" class="form-control" name="txtedad" value="<?php echo $meses_totales;?>">
                       <input type="hidden" class="form-control" name="txtsexo" value="<?php echo $alumno[0]->genero;?>">
                       <div>
                         <p>Ultimo examen: <?php echo (empty($historial))?'No se ha realizado ningun examen':$historial[0]->fecha;?></p>
                       </div>
-                      <div class="form-group">
-                        <label for="inputName" class="col-sm-2 control-label">Edad</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" name="edad" value="<?php echo $edad; ?>" disabled>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputEmail" class="col-sm-2 control-label">Peso</label>
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" name="txtpeso" placeholder="Peso" focus>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputName" class="col-sm-2 control-label">Talla</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" name="txttalla" placeholder="Talla">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputExperience" class="col-sm-2 control-label">Observacion</label>
-                        <div class="col-sm-10">
-                          <textarea class="form-control" name="txtobservacion" placeholder="Comentarios"></textarea>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                          <button type="submit" class="btn btn-primary">Guardar</button>
-                        </div>
-                      </div>
-                    <?php echo form_close(); ?>
+                      
+
+
+
+
                   </div><!-- /.tab-pane -->
 
 
