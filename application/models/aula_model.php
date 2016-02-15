@@ -33,7 +33,7 @@
     $this->db->select('id, nro, nombres, apellidos, fecha_nacimiento, genero, titular, estado');
     $this->db->from('alumno');
     $this->db->where('idAula', $idAula);
-    $this->db->where('estado', 1);
+    $this->db->where('estado != 3'); //estado 3 es eliminado
     $consulta = $this->db->get();
     $resultado = $consulta->result();
     return $resultado;

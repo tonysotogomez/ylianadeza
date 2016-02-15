@@ -1,7 +1,6 @@
 $(document).ready(function() {
   ListarAlumnos();
   $('#alumnoModal').on('shown.bs.modal', function(e){
-
     $.ajax({
         url         : url + "aula/listado_select",
         type        : 'POST',

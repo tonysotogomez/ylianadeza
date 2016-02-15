@@ -15,13 +15,13 @@ if(!function_exists('evaluar'))
 		//Cargo las filas correspondientes a los datos ingresados
 		$TallaEdad= $CI->TallaEdad->Cargar($data);//edad, genero, num_tabla
 		$PesoEdad= $CI->PesoEdad->Cargar($data); //edad, genero
-
+		$data['talla2'] = $data['talla'];
 		$talla_t = explode('.',$data['talla']);
-	//	if(isset($talla_t[1])){
+		if(isset($talla_t[1])){
 			if($talla_t[1] == 0 || $talla_t[1] == 1 || $talla_t[1] == 2 || $talla_t[1] == 3 || $talla_t[1] == 4) $decimal = 0;
 			else $decimal = 5;
 			$data['talla2'] = $talla_t[0].'.'.$decimal;
-		//}
+		}
 		$PesoTalla= $CI->PesoTalla->Cargar($data);//talla, genero, num_tabla
 		//$data['query'] = $data['talla2'].' query: '.$CI->db->last_query();
 
@@ -120,7 +120,8 @@ if(!function_exists('evaluar'))
 	{
 		function comparar($valor_act, $valor_ant)
 		{
-			$talla_dif = ($valor_ant-$valor_act);
+			$talla_dif = $valor_ant-$valor_act;
+			$talla_dif = number_format($talla_dif, 2);
 			if( $talla_dif > 0) $talla_creci = '<span class="text-green">+'.$talla_dif.'</span>';
 			elseif ($talla_dif < 0) $talla_creci = '<span class="text-red">'.$talla_dif.'</span>';
 			else $talla_creci = '<span class="text-muted">'.$talla_dif.'</span>';

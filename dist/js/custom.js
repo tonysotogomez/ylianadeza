@@ -46,7 +46,7 @@ function carcularEdad(fecha_nacimiento){
         // cogemos los valores actuales
         var fecha_hoy = new Date();
         var ahora_ano = fecha_hoy.getYear();
-        var ahora_mes = fecha_hoy.getMonth();//quite +1
+        var ahora_mes = fecha_hoy.getMonth()+1;
         var ahora_dia = fecha_hoy.getDate();
         // realizamos el calculo
         var edad = (ahora_ano + 1900) - ano;
@@ -79,5 +79,5 @@ function carcularEdad(fecha_nacimiento){
         else edadf = meses+' meses ';
         return edadf;
      //fecha = data.fecha_nacimiento;
-  } else return edadf = 0;
+  } else return edadf = 0;//retorna edas y meses
 }

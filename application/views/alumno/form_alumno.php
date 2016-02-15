@@ -38,7 +38,7 @@
                       <label>Fecha de Nacimiento:</label>
                       <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                        <input type="text" class="form-control" id="txt_fecha" name="txt_fecha" id="datemask" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask>
+                        <input type="text" class="form-control" id="txt_fecha" name="txt_fecha" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask>
                       </div><!-- /.input group -->
                     </div><!-- /.form group -->
 

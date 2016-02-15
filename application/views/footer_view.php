@@ -110,9 +110,9 @@
 		<!-- FastClick -->
     <script src="<?php echo $url;?>plugins/fastclick/fastclick.min.js"></script>
 		<!-- AdminLTE App -->
-    <script src="<?php echo $url;?>dist/js/app.min.js"></script>
+    <script src="<?php echo $url;?>dist/js/app.min.js"></script>txt_fecha
     <?php if(isset($js_home)){
-      //echo $js_home;
+      echo $js_home;
     } ?>
     <!-- InputMask -->
     <script src="<?php echo $url;?>plugins/input-mask/jquery.inputmask.js"></script>
@@ -128,6 +128,11 @@
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo $url;?>dist/js/demo.js"></script>
     <!-- page script -->
+    <script>
+      $(function () {
+        $("#txt_fecha").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
 
+      });
+    </script>
   </body>
 </html>

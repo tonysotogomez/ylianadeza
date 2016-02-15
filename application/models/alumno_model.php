@@ -26,11 +26,7 @@
 
   public function Insertar($data){
     $arr = array(
-               'idEdad' => 0,
-               'idTalla' => 0,
-               'idPeso' => 0,
                'idAula' => $data['aula'],
-               'idDiagnostico' => 0,
                'nombres' => $data['nombres'],
                'apellidos' => $data['apellidos'],
                'fecha_nacimiento' => $data['fecha'],

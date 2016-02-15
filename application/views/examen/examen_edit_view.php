@@ -62,7 +62,7 @@
                               echo '<td>'.$con;
                               echo '<input type="hidden" class="form-control" name="txt_genero_'.$datos->idAlumno.'" value="'.$datos->genero.'">';
                               echo '<input type="hidden" class="form-control" name="txt_detalle_'.$datos->idAlumno.'" value="'.$datos->id.'">';
-                              echo '<input type="hidden" class="form-control" name="txt_edad_'.$datos->idAlumno.'" value="'.$datos->edad.'">';
+                              echo '<input type="text" class="form-control" name="txt_edad_'.$datos->idAlumno.'" value="'.$datos->edad.'">';
                               echo '</td>';
                               echo '<td>'.$datos->apellidos.'</td>';
                               echo '<td>'.$datos->nombres.'</td>';

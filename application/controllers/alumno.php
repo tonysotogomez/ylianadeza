@@ -31,14 +31,15 @@ class Alumno extends CI_Controller {
 			$data['aula'] = $this->input->post('aula');
 			$data['nombres'] = $this->input->post('nombres');
 			$data['apellidos'] = $this->input->post('apellidos');
-			$data['fecha'] = date('Y-m-d', strtotime( $this->input->post('fecha')));
+			$date = str_replace('/', '-', $this->input->post('fecha'));
+			$data['fecha'] = date('Y-m-d', strtotime($date));
 			$data['genero'] = $this->input->post('radiogenero');
 			$data['titular'] = $this->input->post('titular');
 			$data['estado'] = $this->input->post('estado');
 
 			if($this->Alumno->Insertar($data)) {
 				$data['rst'] = 1;
-				$data['msj'] = 'Alumno registrado correctamente';
+				$data['msj'] = $data['fecha'].'Alumno registrado correctamente'.$date;
 			} else {
 				$data['rst'] = 0;
 				$data['msj'] = 'Ocurrio un error en el registro';
@@ -62,7 +63,8 @@ class Alumno extends CI_Controller {
 			$data['aula'] = $this->input->post('aula');
 			$data['nombres'] = $this->input->post('nombres');
 			$data['apellidos'] = $this->input->post('apellidos');
-			$data['fecha'] = date('Y-m-d', strtotime( $this->input->post('fecha')));
+			$date = str_replace('/', '-', $this->input->post('fecha'));
+			$data['fecha'] = date('Y-m-d', strtotime($date));
 			$data['genero'] = $this->input->post('radiogenero');
 			$data['titular'] = $this->input->post('titular');
 			$data['estado'] = $this->input->post('estado');
