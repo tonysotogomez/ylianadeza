@@ -45,9 +45,9 @@
                           <th>Nombres</th>
                           <th>Edad</th>
                           <th>Peso</th>
-                          <th>C. Peso</th>
+                          <th>G. Peso</th>
                           <th>Talla</th>
-                          <th>C. Talla</th>
+                          <th>G. Talla</th>
                           <th>Observaciones</th>
                           <th>Talla Edad</th>
                           <th>Peso Edad</th>
@@ -89,9 +89,9 @@
                           <th>Nombres</th>
                           <th>Edad</th>
                           <th>Peso</th>
-                          <th>C. Peso</th>
+                          <th>G. Peso</th>
                           <th>Talla</th>
-                          <th>C. Talla</th>
+                          <th>G. Talla</th>
                           <th>Observaciones</th>
                           <th>Talla Edad</th>
                           <th>Peso Edad</th>

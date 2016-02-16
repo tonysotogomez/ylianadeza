@@ -18,8 +18,9 @@ class Excel extends CI_Controller {
     public function listado($idAula) {
       //cargo los alumnos
       $this->load->model("Aula_model","Aula");
+
       $datos_aula = $this->Aula->CargarAula($idAula);
-      $alumnos_aula = $this->Aula->CargarAlumnos($idAula);
+      $alumnos_aula = $this->Aula->CargarAlumnos2($idAula); //carga solo estado 1
       // configuramos las propiedades del documento
       $this->phpexcel->getProperties()->setCreator("Yliana Deza")
                                    ->setLastModifiedBy("Yliana Deza")
@@ -32,18 +33,19 @@ class Excel extends CI_Controller {
       $observacion = ($datos_aula[0]->edades == "")?'':' - '.$datos_aula[0]->edades;
 
       $this->phpexcel->setActiveSheetIndex(0)
-                     ->setCellValue('B1', 'NÓMINA DE NIÑOS')
-                     ->setCellValue('B2', $datos_aula[0]->aula .$observacion)
-                     ->setCellValue('B3', 'AULA "'.strtoupper($datos_aula[0]->titulo).'"');
+                     ->setCellValue('C1', 'I.E.I. “DIVIDO NIÑO JESÚS')
+                     ->setCellValue('C2', 'NÓMINA DE NIÑOS')
+                     ->setCellValue('C3', strtoupper($datos_aula[0]->aula).$observacion)
+                     ->setCellValue('C4', 'AULA "'.strtoupper($datos_aula[0]->titulo).'"');
 
       $fila = 6; // a partir de que fila empezara el listado
       $f2 = $fila+1;
 
       //asigno el tamaño de las columnas
       $this->phpexcel->getActiveSheet()->getColumnDimension('A')->setWidth(3);
-      $this->phpexcel->getActiveSheet()->getColumnDimension('B')->setWidth(40);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('B')->setWidth(36);
       $this->phpexcel->getActiveSheet()->getColumnDimension('C')->setWidth(5);
-      $this->phpexcel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
       $this->phpexcel->getActiveSheet()->getColumnDimension('E')->setWidth(10);
       $this->phpexcel->getActiveSheet()->getColumnDimension('F')->setWidth(10);
 
@@ -53,31 +55,38 @@ class Excel extends CI_Controller {
                   ->setCellValue('A'.$fila, 'N°')
                   ->setCellValue('B'.$fila, 'APELLIDOS Y NOMBRES')
                   ->setCellValue('C'.$fila, 'SEXO')
-                  ->setCellValue('D'.$fila, 'EDAD')
-                  ->setCellValue('E'.$fila, 'PESO')
-                  ->setCellValue('F'.$fila, 'TALLA');
-              /*    ->setCellValue('G'.$fila, 'DIAGNOSTICO 1')
-                  ->setCellValue('H'.$fila, 'DIAGNOSTICO 2')
-                  ->setCellValue('I'.$fila, 'DIAGNOSTICO 3');*/
+                  ->setCellValue('D'.$fila, 'FECHA DE NACIMIENTO')
+                  ->setCellValue('E'.$fila, 'EDAD')
+                  ->setCellValue('F'.$fila, 'PESO')
+                  ->setCellValue('G'.$fila, 'TALLA');
 
-      $con = 0;
+      $con = 1;
 
 
       foreach ($alumnos_aula as $alumno) {
+        $date = str_replace('/', '-', $alumno->fecha_nacimiento);
+  			$nacimiento = date('d-m-Y', strtotime($date));
+
         $this->phpexcel->setActiveSheetIndex(0)
                     ->setCellValue('A'.$f2, $con)
                     ->setCellValue('B'.$f2, $alumno->apellidos .', '.$alumno->nombres)
                     ->setCellValue('C'.$f2, strtoupper($alumno->genero))
-                    ->setCellValue('D'.$f2, calcular_edad($alumno->fecha_nacimiento))
-                    ->setCellValue('E'.$f2, '')
-                    ->setCellValue('F'.$f2, '');
-            /*        ->setCellValue('G'.$f2, '')
-                    ->setCellValue('H'.$f2, '')
-                    ->setCellValue('I'.$f2, ''); */
+                    ->setCellValue('D'.$f2, $nacimiento)
+                    ->setCellValue('E'.$f2, calcular_edad($alumno->fecha_nacimiento))
+                    ->setCellValue('F'.$f2, '')
+                    ->setCellValue('G'.$f2, '');
         $con++;
         $f2++;
       }
+      //totales
+      $hombres = $this->Aula->contarAlumnos('h', $idAula);
+      $mujeres = $this->Aula->contarAlumnos('m', $idAula);
+      $totales = $this->Aula->contarAlumnos('all', $idAula);
 
+      $this->phpexcel->setActiveSheetIndex(0)
+                     ->setCellValue('D'.($f2+1), 'HOMBRES:'.$hombres[0]->num)
+                     ->setCellValue('D'.($f2+2), 'MUJERES:'.$mujeres[0]->num)
+                     ->setCellValue('D'.($f2+3), 'TOTAL:'.$totales[0]->num);
 
       //agrego estilos
       $border_style= array(
@@ -92,8 +101,8 @@ class Excel extends CI_Controller {
       );
 
       $sheet = $this->phpexcel->getActiveSheet();
-      $sheet->getStyle("A".$fila.":F".($f2-1))->applyFromArray($border_style);
-      $sheet->getStyle("A".$fila.":F".$fila)->applyFromArray($center_style)->getFont()->setBold(true);
+      $sheet->getStyle("A".$fila.":G".($f2-1))->applyFromArray($border_style);
+      $sheet->getStyle("A".$fila.":G".$fila)->applyFromArray($center_style)->getFont()->setBold(true);
       $sheet->getStyle("A".$fila.":A".($f2-1))->applyFromArray($center_style);
       $sheet->getStyle("C".$fila.":C".($f2-1))->applyFromArray($center_style);
 
@@ -118,6 +127,9 @@ class Excel extends CI_Controller {
     }
 
 
+
+
+
     public function detalle($idEvaluacion, $idAula) {
       //cargo los alumnos
       $this->load->model("Evaluacion_model","Evaluacion");
@@ -126,8 +138,15 @@ class Excel extends CI_Controller {
 
       $datos_aula = $this->Aula->CargarAula($idAula);
       $evaluaciones = $this->Evaluacion->CargarEvaluaciones($idAula);
-      $pos = count($evaluaciones);
-      $penul_eval = $evaluaciones[$pos-2]->id;
+
+      for ($i=0, $len = count($evaluaciones); $i < $len; $i++) {
+  			if ($idEvaluacion == $evaluaciones[$i]->id) {
+  				if($i == 0){ $penul_eval = $idEvaluacion; break;}
+  				$penul_eval = $evaluaciones[$i-1]->id; break;
+  			} else {
+  				$penul_eval = $idEvaluacion;
+  			}
+  		}
 
       $detalle = $this->Evaluacion->VerDetalle($idEvaluacion, $penul_eval);
 
@@ -154,35 +173,33 @@ class Excel extends CI_Controller {
 
       //asigno el tamaño de las columnas
       $this->phpexcel->getActiveSheet()->getColumnDimension('A')->setWidth(5);//nro
-      $this->phpexcel->getActiveSheet()->getColumnDimension('B')->setWidth(21);//apellidos
-      $this->phpexcel->getActiveSheet()->getColumnDimension('C')->setWidth(20);//nombres
-      $this->phpexcel->getActiveSheet()->getColumnDimension('D')->setWidth(10);//edad
-      $this->phpexcel->getActiveSheet()->getColumnDimension('E')->setWidth(5);//peso
-      $this->phpexcel->getActiveSheet()->getColumnDimension('F')->setWidth(6);
-      $this->phpexcel->getActiveSheet()->getColumnDimension('G')->setWidth(5);//talla
-      $this->phpexcel->getActiveSheet()->getColumnDimension('H')->setWidth(6);
-      $this->phpexcel->getActiveSheet()->getColumnDimension('I')->setWidth(12);//OBSERVACIONES
-      $this->phpexcel->getActiveSheet()->getColumnDimension('J')->setWidth(12);
-      $this->phpexcel->getActiveSheet()->getColumnDimension('K')->setWidth(12);
-      $this->phpexcel->getActiveSheet()->getColumnDimension('L')->setWidth(12);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('B')->setWidth(36);//apellidos y nombres
+      $this->phpexcel->getActiveSheet()->getColumnDimension('C')->setWidth(8);//EDAD
+      $this->phpexcel->getActiveSheet()->getColumnDimension('D')->setWidth(7);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('E')->setWidth(7);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('F')->setWidth(7);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('G')->setWidth(7);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('H')->setWidth(16);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('I')->setWidth(16);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('J')->setWidth(16);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('K')->setWidth(16);
 
 
       // agregamos información a las celdas
       $this->phpexcel->setActiveSheetIndex(0)
                   ->setCellValue('A'.$fila, 'Nro')
-                  ->setCellValue('B'.$fila, 'APELLIDOS')
-                  ->setCellValue('C'.$fila, 'NOMBRES')
-                  ->setCellValue('D'.$fila, 'EDAD')
-                  ->setCellValue('E'.$fila, 'PESO')
-                  ->setCellValue('F'.$fila, 'C.PESO')
-                  ->setCellValue('G'.$fila, 'TALLA')
-                  ->setCellValue('H'.$fila, 'C.TALLA')
-                  ->setCellValue('I'.$fila, 'OBSERVACIONES')
-                  ->setCellValue('J'.$fila, 'TALLA EDAD')
-                  ->setCellValue('K'.$fila, 'PESO EDAD')
-                  ->setCellValue('L'.$fila, 'PESO TALLA');
+                  ->setCellValue('B'.$fila, 'APELLIDOS Y NOMBRES')
+                  ->setCellValue('C'.$fila, 'EDAD')
+                  ->setCellValue('D'.$fila, 'PESO')
+                  ->setCellValue('E'.$fila, 'G.PESO')
+                  ->setCellValue('F'.$fila, 'TALLA')
+                  ->setCellValue('G'.$fila, 'G.TALLA')
+                  ->setCellValue('H'.$fila, 'OBSERVACIONES')
+                  ->setCellValue('I'.$fila, 'TALLA para EDAD')
+                  ->setCellValue('J'.$fila, 'PESO para EDAD')
+                  ->setCellValue('K'.$fila, 'PESO para TALLA');
 
-      $con = 0;
+      $con = 1;
 
 
       foreach ($detalle as $datos) {
@@ -192,17 +209,16 @@ class Excel extends CI_Controller {
 
         $this->phpexcel->setActiveSheetIndex(0)
                     ->setCellValue('A'.$f2, $con)
-                    ->setCellValue('B'.$f2, $datos->apellidos)
-                    ->setCellValue('C'.$f2, $datos->nombres)
-                    ->setCellValue('D'.$f2, $edad[0]->nombre)
-                    ->setCellValue('E'.$f2, $datos->peso)
-                    ->setCellValue('F'.$f2, $peso_creci)
-                    ->setCellValue('G'.$f2, $datos->talla)
-                    ->setCellValue('H'.$f2, $talla_creci)
-                    ->setCellValue('I'.$f2, $datos->observaciones)
-                    ->setCellValue('J'.$f2, $datos->diagnosticoTE)
-                    ->setCellValue('K'.$f2, $datos->diagnosticoPE)
-                    ->setCellValue('L'.$f2, $datos->diagnosticoPT);
+                    ->setCellValue('B'.$f2, $datos->apellidos.', '.$datos->nombres)
+                    ->setCellValue('C'.$f2, $edad[0]->nombre)
+                    ->setCellValue('D'.$f2, $datos->peso)
+                    ->setCellValue('E'.$f2, $peso_creci)
+                    ->setCellValue('F'.$f2, $datos->talla)
+                    ->setCellValue('G'.$f2, $talla_creci)
+                    ->setCellValue('H'.$f2, $datos->observaciones)
+                    ->setCellValue('I'.$f2, $datos->diagnosticoTE)
+                    ->setCellValue('J'.$f2, $datos->diagnosticoPE)
+                    ->setCellValue('K'.$f2, $datos->diagnosticoPT);
         $con++;
         $f2++;
       }
@@ -221,8 +237,8 @@ class Excel extends CI_Controller {
       );
 
       $sheet = $this->phpexcel->getActiveSheet();
-      $sheet->getStyle("A".$fila.":L".($f2-1))->applyFromArray($border_style);
-      $sheet->getStyle("A".$fila.":L".$fila)->applyFromArray($center_style)->getFont()->setBold(true);
+      $sheet->getStyle("A".$fila.":K".($f2-1))->applyFromArray($border_style);
+      $sheet->getStyle("A".$fila.":K".$fila)->applyFromArray($center_style)->getFont()->setBold(true);
       $sheet->getStyle("A".$fila.":A".($f2-1))->applyFromArray($center_style);
     //  $sheet->getStyle("C".$fila.":C".($f2-1))->applyFromArray($center_style);
 

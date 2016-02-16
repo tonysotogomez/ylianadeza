@@ -29,6 +29,18 @@
     return $resultado;
 	}
 
+  public function contarAlumnos($genero, $aula){
+    $this->db->select('count(genero) as num');
+    $this->db->from('alumno');
+    $this->db->where('estado != 3');
+    $this->db->where('estado != 0');
+    $this->db->where('idAula', $aula);
+    if($genero != 'all'){ $this->db->where('genero', $genero); }
+    $consulta = $this->db->get();
+    $resultado = $consulta->result();
+    return $resultado;
+  }
+
   public function CargarAlumnos($idAula){
     $this->db->select('id, nro, nombres, apellidos, fecha_nacimiento, genero, titular, estado');
     $this->db->from('alumno');
@@ -38,6 +50,19 @@
     $resultado = $consulta->result();
     return $resultado;
   }
+
+//para EVALUACIONES
+  public function CargarAlumnos2($idAula){
+    $this->db->select('id, nro, nombres, apellidos, fecha_nacimiento, genero, titular, estado');
+    $this->db->from('alumno');
+    $this->db->where('idAula', $idAula);
+    $this->db->where('estado != 3'); //estado 3 es eliminado
+    $this->db->where('estado != 0'); //estado 0 es desactivado
+    $consulta = $this->db->get();
+    $resultado = $consulta->result();
+    return $resultado;
+  }
+
 
   public function CargarAula($idAula){
     $this->db->select('aula.id, aula.nombre as titulo, tipo.nombre as aula, aula.observacion as edades');

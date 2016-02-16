@@ -35,6 +35,15 @@ class Aula extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	/*Lista todos los alumnos para las evaluaciones */
+	public function listar2()
+	{
+		$id = $this->input->post('id');
+		$data['listado'] = $this->Aula->CargarAlumnos2($id);
+		$data['rst'] = 1;
+		echo json_encode($data);
+	}
+
  /*Pobla el combobox de aulas*/
 	public function listado_select()
 	{

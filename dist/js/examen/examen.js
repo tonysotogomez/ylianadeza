@@ -85,7 +85,7 @@ $(document).ready(function() {
     function ListarAlumnos(){
       var id = $('#aula_id').val();
       $.ajax({
-            url         : url + 'aula/listar',
+            url         : url + 'aula/listar2',
             type        : 'POST',
             cache       : false,
             dataType    : 'json',
