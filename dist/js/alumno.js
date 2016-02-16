@@ -32,6 +32,8 @@ function Nuevo(){
   $("#slct_estado").val('1');
   $('#alumnoModal').find('.modal-title').text('Nuevo Alumno');
   $('#alumnoModal').modal('show');
+  $("#submit").val('0');
+  $('#submit').text('Guardar');
 }
 
 
