@@ -148,16 +148,17 @@ class Examen extends CI_Controller {
 	{
 		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
 		$evaluaciones = $this->Evaluacion->CargarEvaluaciones($idAula);
-		$pos = count($evaluaciones);
-		$penul_eval = $evaluaciones[$pos-2]->id;
 
 		for ($i=0, $len = count($evaluaciones); $i < $len; $i++) {
-			echo $idEvaluacion.'='.$evaluaciones[$i]->id;
-			if($idEvaluacion == $evaluaciones[$i]->id) {$penul_eval = $evaluaciones[$i-1]->id; break;}
-			else $penul_eval = 0;
+			if ($idEvaluacion == $evaluaciones[$i]->id) {
+				if($i == 0){ $penul_eval = $idEvaluacion; break;}
+				$penul_eval = $evaluaciones[$i-1]->id; break;
+			} else {
+				$penul_eval = $idEvaluacion;
+			}
 		}
-		//echo $penul_eval;
 		$this->data['detalle'] = $this->Evaluacion->VerDetalle($idEvaluacion, $penul_eval);
+		//echo $this->db->last_query();
 		$this->data['num'] = $num; //numero de evaluacion
 		$this->load->view('header_view', $this->header);
 		$this->load->view('examen/detalle_view',$this->data);

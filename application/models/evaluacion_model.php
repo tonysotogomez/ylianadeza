@@ -83,7 +83,7 @@
 
     public function EditarDetalle($data){
       $arr = array(
-                // 'edad' => $data['edad'], edad no se debe actualizar
+                 'edad' => $data['edad'],// edad no se debe actualizar, SOLO PARA PRUEBAS
                  'peso' => $data['peso'],
                  'talla' => $data['talla'],
                  'diagnosticoTE' => $data['talla_edad'],
