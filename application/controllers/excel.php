@@ -33,10 +33,10 @@ class Excel extends CI_Controller {
       $observacion = ($datos_aula[0]->edades == "")?'':' - '.$datos_aula[0]->edades;
 
       $this->phpexcel->setActiveSheetIndex(0)
-                     ->setCellValue('C1', 'I.E.I. “DIVIDO NIÑO JESÚS')
+                     ->setCellValue('C1', 'I.E.I. “DIVIDO NIÑO JESÚS”')
                      ->setCellValue('C2', 'NÓMINA DE NIÑOS')
                      ->setCellValue('C3', strtoupper($datos_aula[0]->aula).$observacion)
-                     ->setCellValue('C4', 'AULA "'.strtoupper($datos_aula[0]->titulo).'"');
+                     ->setCellValue('C4', 'AULA “'.strtoupper($datos_aula[0]->titulo).'”');
 
       $fila = 6; // a partir de que fila empezara el listado
       $f2 = $fila+1;
@@ -46,7 +46,7 @@ class Excel extends CI_Controller {
       $this->phpexcel->getActiveSheet()->getColumnDimension('B')->setWidth(36);
       $this->phpexcel->getActiveSheet()->getColumnDimension('C')->setWidth(5);
       $this->phpexcel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
-      $this->phpexcel->getActiveSheet()->getColumnDimension('E')->setWidth(10);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('E')->setWidth(14);
       $this->phpexcel->getActiveSheet()->getColumnDimension('F')->setWidth(10);
 
 

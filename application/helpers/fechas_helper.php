@@ -66,17 +66,26 @@ if(!function_exists('calcular_edad'))
 			$meses_totales = (int)$edad_meses;
 			$edad = $edad_a.'.'.$edad_m;
 
-			if($edad_a < 1){
-				$edad = $edad_m.' meses';
-			} else {
-				if($edad_m == 0) $edad = $edad_a.'año(s)';
-				else $edad = $edad_a.'año(s) ' . $edad_m .'meses';
+			$anios = '';
+			$meses = '';
+
+			if($edad_m <= 12){
+				if($edad_m == 1) $meses = $edad_m.'mes';
+				else $meses = $edad_m.'meses';
 			}
-			if($edad_a > 5) $edad = 'Fuera de rango';
+
+			if($edad_a >= 1){
+				if($edad_a == 1) $anios = $edad_a.'año ';
+				else $anios = $edad_a.'años ';
+			}
+
+			$edadf = $anios . $meses;
+			if($edad_a > 5) $edadf = 'Fuera de rango';
+			if($fecha_nac == '1970-01-01' OR $fecha_nac == '01-01-1970') $edadf = ' ';
 		} else {
-			$edad = "-";
+			$edadf = "-";
 		}
-		return $edad; //me retorna la edad
+		return $edadf; //me retorna la edad
 	}
 }
 

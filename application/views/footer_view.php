@@ -110,7 +110,7 @@
 		<!-- FastClick -->
     <script src="<?php echo $url;?>plugins/fastclick/fastclick.min.js"></script>
 		<!-- AdminLTE App -->
-    <script src="<?php echo $url;?>dist/js/app.min.js"></script>txt_fecha
+    <script src="<?php echo $url;?>dist/js/app.min.js"></script>
     <?php if(isset($js_home)){
       echo $js_home;
     } ?>

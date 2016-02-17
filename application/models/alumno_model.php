@@ -33,7 +33,7 @@
                'genero' => $data['genero'],
                'titular' => $data['titular'],
                'estado' => $data['estado'],
-               'register_at' => date("Y-m-d")
+               'register_at' => date("Y-m-d H:i:s")
             );
    if ($this->db->insert('alumno', $arr)) return true;
    else return false;
@@ -68,7 +68,7 @@
                'genero' => $data['genero'],
                'titular' => $data['titular'],
                'estado' => $data['estado'],
-               'update_at' => date("Y-m-d")
+               'update_at' => date("Y-m-d H:i:s")
             );
     $this->db->where('id', $data['id']);
     if ($this->db->update('alumno', $arr)) return true;
