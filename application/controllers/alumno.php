@@ -39,7 +39,7 @@ class Alumno extends CI_Controller {
 
 			if($this->Alumno->Insertar($data)) {
 				$data['rst'] = 1;
-				$data['msj'] = $data['fecha'].'Alumno registrado correctamente'.$date;
+				$data['msj'] = 'Alumno registrado correctamente';
 			} else {
 				$data['rst'] = 0;
 				$data['msj'] = 'Ocurrio un error en el registro';

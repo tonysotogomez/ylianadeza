@@ -10,16 +10,20 @@
             </div>
             <div class="modal-body">
                 <form id="form_alumno" name="form_alumno" action="" method="post">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Apellidos:</label>
-                      <input type="text" class="form-control" name="txt_apellidos" id="txt_apellidos" placeholder="Ingresa sus apellidos">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Apellidos:</label>
+                        <input type="text" class="form-control" name="txt_apellidos" id="txt_apellidos" placeholder="Ingresa sus apellidos">
+                      </div>
                     </div>
-
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Nombres:</label>
-                      <input type="text" class="form-control" name="txt_nombres" id="txt_nombres" placeholder="Ingresa sus nombres">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Nombres:</label>
+                        <input type="text" class="form-control" name="txt_nombres" id="txt_nombres" placeholder="Ingresa sus nombres">
+                      </div>
                     </div>
-
+                  </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Titular:</label>
                       <input type="text" class="form-control" name="txt_titular" id="txt_titular" placeholder="Ingresa el titular">
@@ -41,19 +45,24 @@
                         <input type="text" class="form-control" id="txt_fecha" name="txt_fecha" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask>
                       </div><!-- /.input group -->
                     </div><!-- /.form group -->
-
-                  <div class="form-group">
-                    <label>Aula: </label>
-                    <select class="form-control" name="slct_aula" id="slct_aula">
-                    </select>
-                  </div>
-                    <div class="form-group">
-                        <label class="control-label">Estado:
-                        </label>
-                        <select class="form-control" name="slct_estado" id="slct_estado">
-                            <option value='0'>Inactivo</option>
-                            <option value='1' selected>Activo</option>
-                        </select>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Aula: </label>
+                          <select class="form-control" name="slct_aula" id="slct_aula">
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Estado:
+                            </label>
+                            <select class="form-control" name="slct_estado" id="slct_estado">
+                                <option value='0'>Inactivo</option>
+                                <option value='1' selected>Activo</option>
+                            </select>
+                        </div>
+                      </div>
                     </div>
                     <input type="hidden" name="txt_id" id="txt_id">
                 </form>

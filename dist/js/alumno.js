@@ -73,6 +73,7 @@ function Nuevo(){
           var nac = (data.fecha_nacimiento).split("-");
           fecha = nac[2]+"-"+nac[1]+"-"+nac[0];
         } else fecha = "No registrado";
+        if(nac[0] == 1970) fecha = " ";
 
         if(data.genero != null) genero = data.genero.toUpperCase();
         else genero = "No registrado";

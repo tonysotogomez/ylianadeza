@@ -32,6 +32,7 @@
                'fecha_nacimiento' => $data['fecha'],
                'genero' => $data['genero'],
                'titular' => $data['titular'],
+               'estado' => $data['estado'],
                'register_at' => date("Y-m-d")
             );
    if ($this->db->insert('alumno', $arr)) return true;
@@ -66,6 +67,7 @@
                'fecha_nacimiento' => $data['fecha'],
                'genero' => $data['genero'],
                'titular' => $data['titular'],
+               'estado' => $data['estado'],
                'update_at' => date("Y-m-d")
             );
     $this->db->where('id', $data['id']);
