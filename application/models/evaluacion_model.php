@@ -152,7 +152,8 @@
                                   and d2.estado = 1) ant ON ant.evalu = d.idAlumno
                               WHERE
                                 idEvaluacion = '.$idEvaluacion.'
-                              AND d.estado = 1');
+                              AND d.estado = 1
+                            ORDER BY a.apellidos asc');
       $resultado = $query->result();
       return $resultado;
     }

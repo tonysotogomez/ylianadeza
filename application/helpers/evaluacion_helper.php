@@ -42,7 +42,7 @@ if(!function_exists('evaluar'))
 		//TALLA PARA LA EDAD
 		if(! empty($TallaEdad) && $talla != 0) {
 				if($talla > $TallaEdad[0]->DE3) {
-				$data['diagnostico'] = 'Alto +';
+				$data['diagnostico'] = 'Alto';//Alto +
 				$data['color'] = 'yellow';
 				$data['porcentaje'] = '90';
 			} elseif($talla > $TallaEdad[0]->DE2 && $talla <= $TallaEdad[0]->DE3) {
@@ -66,7 +66,7 @@ if(!function_exists('evaluar'))
 		//PESO PARA LA EDAD
 		if( ! empty($PesoEdad) && $peso != 0) {
 			if($peso > $PesoEdad[0]->DE3) {
-				$data['diagnostico3'] = 'Sobrepeso +';
+				$data['diagnostico3'] = 'Sobrepeso';//Sobrepeso +
 				$data['color3'] = 'yellow';
 				$data['porcentaje3'] = '90';
 			} elseif($peso > $PesoEdad[0]->DE2 && $peso <= $PesoEdad[0]->DE3) {
@@ -78,7 +78,7 @@ if(!function_exists('evaluar'))
 				$data['color3'] = 'light-blue';
 				$data['porcentaje3'] = '50';
 			}elseif($peso < $PesoEdad[0]->DE3menos) {
-				$data['diagnostico3'] = 'Desnutrición +';
+				$data['diagnostico3'] = 'Desnutrición';//Desnutrición +
 				$data['color3'] = 'red';
 				$data['porcentaje3'] = '10';
 			} elseif($peso < $PesoEdad[0]->DE2menos && $peso >= $PesoEdad[0]->DE3menos) {

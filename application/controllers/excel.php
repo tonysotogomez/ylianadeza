@@ -254,7 +254,7 @@ class Excel extends CI_Controller {
 
       //redireccionamos la salida al navegador del cliente (Excel2007)
       header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      header('Content-Disposition: attachment;filename="Evaluacion_'.$evaluaciones[0]->fecha.'.xlsx"');
+      header('Content-Disposition: attachment;filename="Evaluacion_'.$datos_aula[0]->titulo.'.xlsx"');
       header('Cache-Control: max-age=0');
 
       $objWriter = PHPExcel_IOFactory::createWriter($this->phpexcel, 'Excel2007');
