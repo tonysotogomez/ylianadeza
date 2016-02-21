@@ -6,13 +6,13 @@
           <h1>Evaluación N°<?php echo $num; ?>:
             <?php echo $detalle[0]->evaluacion;?>
               <input type="hidden" name="txt_idEval" value="<?php echo $detalle[0]->idEvaluacion;?>">
-            <small>Fecha Evaluación <?php echo  $detalle[0]->fecha; ?></small>
+            <small>Fecha Evaluación <?php echo  date('d-m-Y h:m:s', strtotime($detalle[0]->fecha)); ?></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?php echo $url;?>"><i class="fa fa-dashboard"></i> Inicio</a></li>
             <li><a href="#">Aula</a></li>
             <li><?php echo $datos_aula[0]->titulo;?></li>
-            <li>Evaluacion</li>
+            <li>Evaluación</li>
             <li class="active">Ver</li>
           </ol>
         </section>
@@ -24,7 +24,7 @@
 
               <div class="box box-success">
                 <div class="box-header">
-                  <h3 class="box-title">Detalle de evaluacion</h3>
+                  <h3 class="box-title">Detalle de evaluación</h3>
 
                   <a href="<?php echo $url;?>excel/detalle/<?php echo $detalle[0]->idEvaluacion;?>/<?php echo $datos_aula[0]->id;?>">
                     <button type="button" class="btn btn-default" title="Descargar Excel">
@@ -41,8 +41,7 @@
                       <thead>
                         <tr>
                           <th>Nro</th>
-                          <th>Apellidos</th>
-                          <th>Nombres</th>
+                          <th>Apellidos y Nombres</th>
                           <th>Edad</th>
                           <th>Peso</th>
                           <th>G. Peso</th>
@@ -52,6 +51,7 @@
                           <th>Talla Edad</th>
                           <th>Peso Edad</th>
                           <th>Peso Talla</th>
+                          <th>Diagnóstico Nutricional</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -66,8 +66,7 @@
                           echo '<tr>';
                               echo '<td>'.$con;
                               echo '</td>';
-                              echo '<td>'.$datos->apellidos.'</td>';
-                              echo '<td>'.$datos->nombres.'</td>';
+                              echo '<td>'.$datos->apellidos.', '.$datos->nombres.'</td>';
                               echo '<td>'.$edad[0]->nombre.'</td>';
                               echo '<td>'.$datos->peso.' </td>';
                               echo '<td>'.$peso_creci.'</td>';
@@ -77,27 +76,12 @@
                               echo '<td>'.diagnostico($datos->diagnosticoTE).'</td>';
                               echo '<td>'.diagnostico($datos->diagnosticoPE).'</td>';
                               echo '<td>'.diagnostico($datos->diagnosticoPT).'</td>';
+                              echo '<td>'.$datos->diagnosticoF.'</td>';
                           echo '</tr>';
                           $con++;
                         }
                         ?>
                       </tbody>
-                      <tfoot>
-                        <tr>
-                          <th>Nro</th>
-                          <th>Apellidos</th>
-                          <th>Nombres</th>
-                          <th>Edad</th>
-                          <th>Peso</th>
-                          <th>G. Peso</th>
-                          <th>Talla</th>
-                          <th>G. Talla</th>
-                          <th>Observaciones</th>
-                          <th>Talla Edad</th>
-                          <th>Peso Edad</th>
-                          <th>Peso Talla</th>
-                        </tr>
-                      </tfoot>
                     </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

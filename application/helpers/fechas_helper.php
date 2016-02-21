@@ -33,6 +33,9 @@ if(!function_exists('convertir_fecha'))
 		} else {
 			$edad_decimales = 0;
 		}
+		if($fecha_nac == '1970-01-01' || $fecha_nac == '01-01-1970') {
+			$edad_decimales = null;
+		}
 		return $edad_decimales; //me retorna en decimales para la logica
 	}
 }
@@ -80,10 +83,15 @@ if(!function_exists('calcular_edad'))
 			}
 
 			$edadf = $anios . $meses;
-			if($edad_a > 5) $edadf = 'Fuera de rango';
-			if($fecha_nac == '1970-01-01' OR $fecha_nac == '01-01-1970') $edadf = ' ';
+
+			if($edad_a > 5) { $edadf = 'Fuera de rango';}
+
+
 		} else {
 			$edadf = "-";
+		}
+		if($fecha_nac == '1970-01-01' || $fecha_nac == '01-01-1970') {
+			$edadf = ' ';
 		}
 		return $edadf; //me retorna la edad
 	}

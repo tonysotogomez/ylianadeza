@@ -75,8 +75,28 @@ function carcularEdad(fecha_nacimiento){
             ultimoDiaMes=new Date(ahora_ano, ahora_mes, 0);
             dias=ultimoDiaMes.getDate()-(dia-ahora_dia);
         }
+  /*
         if (edad > 0) edadf = edad+'años ' + meses+' meses';
         else edadf = meses+' meses ';
+*/
+
+        var anios = '';
+        var meses_1 = '';
+        if(meses <= 12){
+          if(meses == 1) meses_1 = meses+'mes';
+          else meses_1 = meses+'meses';
+        }
+        if(edad >= 1){
+          if(edad == 1) anios = eda+'año ';
+          else anios = edad+'años ';
+        }
+        edadf = anios + meses_1;
+
+//si esta sin formato, es decir: 1970-01-01
+        if(fecha_nacimiento == '1970-01-01' || fecha_nacimiento == '01-01-1970') {
+          edadf = ' ';
+        }
+
         return edadf;
      //fecha = data.fecha_nacimiento;
   } else return edadf = 0;//retorna edas y meses

@@ -58,7 +58,7 @@
     $this->db->from('alumno');
     $this->db->where('idAula', $idAula);
     $this->db->where('estado != 3'); //estado 3 es eliminado
-    $this->db->where('estado != 0'); //estado 0 es desactivado
+    //$this->db->where('estado != 0'); //estado 0 es desactivado
     $this->db->order_by('apellidos', 'asc');
     $consulta = $this->db->get();
     $resultado = $consulta->result();

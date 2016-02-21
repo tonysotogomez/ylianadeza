@@ -59,7 +59,7 @@
                           echo '<tr>';
                           echo '<td>'.$con.'</td>';
                           echo '<td>'.$eval->nombre.'</td>';
-                          echo '<td>'.date('d-m-Y', strtotime($eval->fecha)).'</td>';
+                          echo '<td>'.date('d-m-Y h:m:s', strtotime($eval->fecha)).'</td>';
                           //echo '<td>'.$eval->observacion.'</td>';
                           echo '<td>';
                           echo ' <a href="'.$url.'examen/cargarDetalle/'.$datos_aula[0]->id.'/'.$eval->id.'/'.$con.'"><button type="button" title="Editar" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar</button></a>';

@@ -38,30 +38,18 @@
                     <table id="t_alumnos" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Nro</th>
-                          <th>Apellidos</th>
+                          <th style="width: 10px!important;">Nro</th>
+                          <th style="width: 190px!important;">Apellidos</th>
                           <th>Nombres</th>
-                          <th>Edad</th>
+                          <th style="width: 80px!important;">Nacimiento</th>
+                          <th style="width: 40px!important;">Edad</th>
                           <th>Peso</th>
                           <th>Talla</th>
                           <th>Obervaciones</th>
-                          <th>Cumple</th>
                         </tr>
                       </thead>
                       <tbody id="tb_alumnos">
                       </tbody>
-                      <tfoot>
-                        <tr>
-                          <th>Nro</th>
-                          <th>Apellidos</th>
-                          <th>Nombres</th>
-                          <th>Edad</th>
-                          <th>Peso</th>
-                          <th>Talla</th>
-                          <th>Obervaciones</th>
-                          <th>Cumple</th>
-                        </tr>
-                      </tfoot>
                     </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

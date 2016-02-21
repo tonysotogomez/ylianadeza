@@ -7,7 +7,7 @@
             <input type="text" name="txt_titulo"
               placeholder="Nombre de Evaluacion" value="<?php echo $detalle[0]->evaluacion;?>">
               <input type="hidden" name="txt_idEval" value="<?php echo $detalle[0]->idEvaluacion;?>">
-            <small>Fecha Evaluación <?php echo  $detalle[0]->fecha; ?></small>
+            <small>Fecha Evaluación <?php echo  date('d-m-Y h:m:s', strtotime($detalle[0]->fecha)); ?></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?php echo $url;?>"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -39,9 +39,8 @@
                     <table id="t_alumnos" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Nro</th>
-                          <th>Apellidos</th>
-                          <th>Nombres</th>
+                          <th style="width: 10px;">Nro</th>
+                          <th style="width: 130px;">Apellidos y Nombres</th>
                           <th>Edad</th>
                           <th>Peso</th>
                           <th>Talla</th>
@@ -49,6 +48,7 @@
                           <th>Talla Edad</th>
                           <th>Peso Edad</th>
                           <th>Peso Talla</th>
+                          <th>Diagnóstico Nutricional</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -57,41 +57,29 @@
                         $CI =& get_instance();
                         $CI->load->model("Edad_model","Edad");
                         foreach ($detalle as $datos) {
-                          $edad = $CI->Edad->CargarEdad((float)$datos->edad);
+                          if( $datos->edad == 46.01) $edad = ' ';
+                          else $edad = $CI->Edad->CargarEdad((float)$datos->edad);
                           echo '<tr>';
                               echo '<td>'.$con;
                               echo '<input type="hidden" class="form-control" name="txt_genero_'.$datos->idAlumno.'" value="'.$datos->genero.'">';
                               echo '<input type="hidden" class="form-control" name="txt_detalle_'.$datos->idAlumno.'" value="'.$datos->id.'">';
-                              echo '<input type="text" class="form-control" name="txt_edad_'.$datos->idAlumno.'" value="'.$datos->edad.'">';
                               echo '</td>';
-                              echo '<td>'.$datos->apellidos.'</td>';
-                              echo '<td>'.$datos->nombres.'</td>';
-                              echo '<td>'.$edad[0]->nombre.'</td>';
-                              echo '<td><input type="text" class="form-control" name="txt_peso_'.$datos->idAlumno.'" value="'.$datos->peso.'" style="width: 75px!important;"></td>';
-                              echo '<td><input type="text" class="form-control" name="txt_talla_'.$datos->idAlumno.'" value="'.$datos->talla.'" style="width: 75px!important;"></td>';
+                              echo '<td>'.$datos->apellidos.',<br>'.$datos->nombres.'</td>';
+                              echo '<td>';
+                              echo '<input type="text" class="form-control" name="txt_edad_'.$datos->idAlumno.'" value="'.$datos->edad.'" style="width: 55px!important;">';
+                              echo '<br>'.$edad[0]->nombre.'</td>';
+                              echo '<td><input type="text" class="form-control" name="txt_peso_'.$datos->idAlumno.'" value="'.$datos->peso.'" style="width: 60px!important;"></td>';
+                              echo '<td><input type="text" class="form-control" name="txt_talla_'.$datos->idAlumno.'" value="'.$datos->talla.'" style="width: 60px!important;"></td>';
                               echo '<td><input type="text" class="form-control" name="txt_observaciones_'.$datos->idAlumno.'" value="'.$datos->observaciones.'"></td>';
-                              echo '<td>'.$datos->diagnosticoTE.'</td>';
-                              echo '<td>'.$datos->diagnosticoPE.'</td>';
-                              echo '<td>'.$datos->diagnosticoPT.'</td>';
+                              echo '<td>'.diagnostico($datos->diagnosticoTE).'</td>';
+                              echo '<td>'.diagnostico($datos->diagnosticoPE).'</td>';
+                              echo '<td>'.diagnostico($datos->diagnosticoPT).'</td>';
+                              echo '<td><input type="text" class="form-control" name="txt_final_'.$datos->idAlumno.'" value="'.$datos->diagnosticoF.'" style="width: 150px!important;"></td>';
                           echo '</tr>';
                           $con++;
                         }
                         ?>
                       </tbody>
-                      <tfoot>
-                        <tr>
-                          <th>Nro</th>
-                          <th>Apellidos</th>
-                          <th>Nombres</th>
-                          <th>Edad</th>
-                          <th>Peso</th>
-                          <th>Talla</th>
-                          <th>Observaciones</th>
-                          <th>Talla Edad</th>
-                          <th>Peso Edad</th>
-                          <th>Peso Talla</th>
-                        </tr>
-                      </tfoot>
                     </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

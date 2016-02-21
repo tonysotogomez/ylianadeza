@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Lima');
 /**
 * EVALUACION
 *
@@ -83,14 +84,14 @@
 
     public function EditarDetalle($data){
       $arr = array(
-                 'edad' => $data['edad'],// edad no se debe actualizar, SOLO PARA PRUEBAS
+                 'edad' => $data['edad'],// se edita fecha manualmente, casos especiales
                  'peso' => $data['peso'],
                  'talla' => $data['talla'],
                  'diagnosticoTE' => $data['talla_edad'],
                  'diagnosticoPE' => $data['peso_edad'],
                  'diagnosticoPT' => $data['peso_talla'],
+                 'diagnosticoF' => $data['final'],
                  'updated_at' => date("Y-m-d H:i:s"),
-                 //'fecha' => $data['fecha'],
                  'observaciones' => $data['observaciones']
               );
       $this->db->where('id', $data['idDetalle']);
@@ -108,7 +109,7 @@
     }
 
     public function CargarDetalle($idEvaluacion){
-      $this->db->select('d.id, e.fecha, e.nombre as evaluacion, d.idEvaluacion, d.idAlumno, a.nombres, a.apellidos, d.edad, a.genero, d.peso, d.talla, d.fecha, d.observaciones, d.estado, d.diagnosticoTE, d.diagnosticoPE, d.diagnosticoPT');
+      $this->db->select('d.id, e.fecha, e.nombre as evaluacion, d.idEvaluacion, d.idAlumno, a.nombres, a.apellidos, d.edad, a.genero, d.peso, d.talla, d.fecha, d.observaciones, d.estado, d.diagnosticoTE, d.diagnosticoPE, d.diagnosticoPT, d.diagnosticoF');
       $this->db->from('detalle_evaluacion d');
       $this->db->join('alumno a', 'a.id = d.idAlumno');
       $this->db->join('evaluacion e', 'e.id = d.idEvaluacion');
@@ -140,7 +141,8 @@
                                 d.estado,
                                 d.diagnosticoTE,
                                 d.diagnosticoPE,
-                                d.diagnosticoPT
+                                d.diagnosticoPT,
+                                d.diagnosticoF
                               FROM
                                 (detalle_evaluacion d)
                               JOIN alumno a ON a.id = d.idAlumno
@@ -149,10 +151,10 @@
                                   SELECT d2.idAlumno as evalu, d2.talla, d2.peso
                                   FROM detalle_evaluacion d2
                                   where d2.idEvaluacion = '.$idEvalAnt.'
-                                  and d2.estado = 1) ant ON ant.evalu = d.idAlumno
+                                  and d2.estado != 2) ant ON ant.evalu = d.idAlumno
                               WHERE
                                 idEvaluacion = '.$idEvaluacion.'
-                              AND d.estado = 1
+                              AND d.estado != 2
                             ORDER BY a.apellidos asc');
       $resultado = $query->result();
       return $resultado;

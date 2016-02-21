@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Lima');
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Examen extends CI_Controller {
@@ -242,7 +243,7 @@ class Examen extends CI_Controller {
 				$data['peso'] = (float)$this->input->post('peso_'.$alumnos[$i]->id);
 				$data['talla'] = (float)$this->input->post('talla_'.$alumnos[$i]->id);
 				$data['observaciones'] = $this->input->post('observaciones_'.$alumnos[$i]->id);
-
+				$data['final'] = $this->input->post('final_'.$alumnos[$i]->id);
 
 				/* Evaluacion Nutricional */
 				$resultado = evaluar($data);//edad, peso, talla y genero (h o m)

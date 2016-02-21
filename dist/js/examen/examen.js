@@ -85,7 +85,7 @@ $(document).ready(function() {
     function ListarAlumnos(){
       var id = $('#aula_id').val();
       $.ajax({
-            url         : url + 'aula/listar2',
+            url         : url + 'aula/listar',
             type        : 'POST',
             cache       : false,
             dataType    : 'json',
@@ -122,17 +122,22 @@ $(document).ready(function() {
           if(data.apellidos != null) apellidos = data.apellidos;
           else apellidos = "No registrado";
 
+          //if(data.fecha_nacimiento == '1970-01-01' || data.fecha_nacimiento == '01-01-1970') edadf = ' ';
+          var nac = data.fecha_nacimiento.split("-");
+          var fecha_nac = nac[2]+"-"+nac[1]+"-"+nac[0];
+          if (data.fecha_nacimiento == '1970-01-01') { fecha_nac = ' '; }
           html+="<tr>"+
               "<td>"+con+"</td>"+
               "<td>"+apellidos+"</td>"+
               "<td>"+nombres+"</td>"+
+              '<td>'+fecha_nac+'</td>'+
               "<td>"+edadf+"</td>"+
-              '<td><input type="text" class="form-control" name="txt_peso_'+data.id+'" placeholder="Ingrese el peso"></td>'+
-              '<td><input type="text" class="form-control" name="txt_talla_'+data.id+'" placeholder="Ingrese el talla"></td>'+
+              '<td><input type="text" class="form-control" name="txt_peso_'+data.id+'" placeholder="Ingrese el peso" style="width: 130px!important;"></td>'+
+              '<td><input type="text" class="form-control" name="txt_talla_'+data.id+'" placeholder="Ingrese el talla" style="width: 130px!important;"></td>'+
               '<td><input type="text" class="form-control" name="txt_observaciones_'+data.id+'" placeholder="Observaciones">'+
               '<input type="hidden" value="'+data.fecha_nacimiento+'" name="txt_fecha_'+data.id+'">'+
-              '<input type="hidden" value="'+data.genero+'" name="txt_genero_'+data.id+'"></td>'+
-              '<td>'+data.fecha_nacimiento+'</td>';
+              '<input type="hidden" value="'+data.genero+'" name="txt_genero_'+data.id+'"></td>';
+
           html+="</tr>";
       });
       $("#tb_alumnos").html(html);

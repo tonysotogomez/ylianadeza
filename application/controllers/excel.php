@@ -157,9 +157,9 @@ class Excel extends CI_Controller {
                                    ->setLastModifiedBy("Yliana Deza")
                                    ->setTitle("Office 2007 XLSX Test Document")
                                    ->setSubject("Office 2007 XLSX Test Document")
-                                   ->setDescription("Listado de Alumnos")
+                                   ->setDescription("Evaluacion")
                                    ->setKeywords("office 2007 openxml php")
-                                   ->setCategory("Alumnos");
+                                   ->setCategory("Evaluacion");
 
       $observacion = ($datos_aula[0]->edades == "")?'':' - '.$datos_aula[0]->edades;
 
@@ -183,7 +183,9 @@ class Excel extends CI_Controller {
       $this->phpexcel->getActiveSheet()->getColumnDimension('I')->setWidth(16);
       $this->phpexcel->getActiveSheet()->getColumnDimension('J')->setWidth(16);
       $this->phpexcel->getActiveSheet()->getColumnDimension('K')->setWidth(16);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('L')->setWidth(26);
 
+      //$this->phpexcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(34);
 
       // agregamos información a las celdas
       $this->phpexcel->setActiveSheetIndex(0)
@@ -197,7 +199,8 @@ class Excel extends CI_Controller {
                   ->setCellValue('H'.$fila, 'OBSERVACIONES')
                   ->setCellValue('I'.$fila, 'TALLA para EDAD')
                   ->setCellValue('J'.$fila, 'PESO para EDAD')
-                  ->setCellValue('K'.$fila, 'PESO para TALLA');
+                  ->setCellValue('K'.$fila, 'PESO para TALLA')
+                  ->setCellValue('L'.$fila, 'DIAGNOSTICO NUTRICIONAL');
 
       $con = 1;
 
@@ -218,7 +221,8 @@ class Excel extends CI_Controller {
                     ->setCellValue('H'.$f2, $datos->observaciones)
                     ->setCellValue('I'.$f2, $datos->diagnosticoTE)
                     ->setCellValue('J'.$f2, $datos->diagnosticoPE)
-                    ->setCellValue('K'.$f2, $datos->diagnosticoPT);
+                    ->setCellValue('K'.$f2, $datos->diagnosticoPT)
+                    ->setCellValue('L'.$f2, $datos->diagnosticoF);
         $con++;
         $f2++;
       }
@@ -237,8 +241,8 @@ class Excel extends CI_Controller {
       );
 
       $sheet = $this->phpexcel->getActiveSheet();
-      $sheet->getStyle("A".$fila.":K".($f2-1))->applyFromArray($border_style);
-      $sheet->getStyle("A".$fila.":K".$fila)->applyFromArray($center_style)->getFont()->setBold(true);
+      $sheet->getStyle("A".$fila.":L".($f2-1))->applyFromArray($border_style);
+      $sheet->getStyle("A".$fila.":L".$fila)->applyFromArray($center_style)->getFont()->setBold(true);
       $sheet->getStyle("A".$fila.":A".($f2-1))->applyFromArray($center_style);
     //  $sheet->getStyle("C".$fila.":C".($f2-1))->applyFromArray($center_style);
 
