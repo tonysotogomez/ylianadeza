@@ -27,7 +27,7 @@
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <link rel="stylesheet" href="<?php echo $url;?>dist/css/skins/skin-green-light.min.css">
+    <link rel="stylesheet" href="<?php echo $url;?>dist/css/skins/_all-skins.min.css">
     <!-- Morris chart -->
     <link rel="stylesheet" href="<?php echo $url;?>plugins/morris/morris.css">
     <!-- jvectormap -->
@@ -67,7 +67,7 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-  <body class="hold-transition skin-green fixed">
+  <body class="hold-transition skin-green-light fixed">
     <div class="wrapper">
 
       <!-- Main Header -->
@@ -162,11 +162,10 @@
 
             <li><a href="<?php echo $url;?>examen"><i class="fa fa-heartbeat"></i> <span>Evaluación</span></a></li>
 
-            <li class="header">MANTENIMIENTO</li>
+      <!--      <li class="header">MANTENIMIENTO</li>
             <li><a href="<?php echo $url;?>reporte/cred"><i class="fa fa-home"></i> <span>CRED</span></a></li>
-      <!--      <li><a href="<?php echo $url;?>alumno/nuevo"><i class="fa fa-user-plus"></i> <span>Nuevo Alumno</span></a></li> -->
             <li><a href="<?php echo $url;?>diagnostico"><i class="fa fa-home"></i> <span>Aula</span></a></li>
-
+          -->
             <li class="header">AULAS</li>
 
             <li class="treeview active">
