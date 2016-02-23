@@ -7,7 +7,7 @@
           <b>Version</b> 1.0
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="http://softgroup-peru.com/">SoftGroup Perú</a>.</strong> Todos los derechos reservados.
+        <strong>Copyright &copy; 2016 <a target="_blank" href="http://softgroup-peru.com/">SoftGroup Perú</a>.</strong> Todos los derechos reservados.
       </footer>
 
       <!-- Control Sidebar

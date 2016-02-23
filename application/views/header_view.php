@@ -158,7 +158,7 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-            <li class="header">Examen</li>
+            <li class="header">EXAMEN</li>
 
             <li><a href="<?php echo $url;?>examen"><i class="fa fa-heartbeat"></i> <span>Evaluación</span></a></li>
 
@@ -167,39 +167,43 @@
             <li><a href="<?php echo $url;?>diagnostico"><i class="fa fa-home"></i> <span>Aula</span></a></li>
           -->
             <li class="header">AULAS</li>
-
-            <li class="treeview active">
+            <?php $uri = $this->uri->segment(3);?>
+            <li class="treeview <?php echo ($uri==1 or $uri==2)?'active':'';?>">
               <a href="#"><i class="fa fa-group"></i> <span>Lactantes</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($lactantes as $fila) {
-                  echo '<li><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
+                  $active = ($this->uri->segment(3) == $fila->id)?'active':'';
+                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
 
-            <li class="treeview">
+            <li class="treeview <?php echo ($uri==3 or $uri==4 or $uri==5 or $uri==6)?'active':'';?>">
               <a href="#"><i class="fa fa-group"></i> <span>Andantes</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($andantes as $fila) {
-                  echo '<li><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
+                  $active = ($this->uri->segment(3) == $fila->id)?'active':'';
+                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
 
-            <li class="treeview">
+            <li class="treeview <?php echo ($uri==7 or $uri==8 or $uri==9 or $uri==10 or $uri==11)?'active':'';?>">
               <a href="#"><i class="fa fa-group"></i> <span>Infantes</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($infantes as $fila) {
-                  echo '<li><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
+                  $active = ($this->uri->segment(3) == $fila->id)?'active':'';
+                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
 
-            <li class="treeview">
+            <li class="treeview <?php echo ($uri==12 or $uri==14 or $uri==15 or $uri==33)?'active':'';?>">
               <a href="#"><i class="fa fa-group"></i> <span>Jardín</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($jardin as $fila) {
-                  echo '<li><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
+                  $active = ($this->uri->segment(3) == $fila->id)?'active':'';
+                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
