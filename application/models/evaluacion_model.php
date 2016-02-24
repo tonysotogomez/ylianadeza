@@ -147,11 +147,44 @@ date_default_timezone_set('America/Lima');
                                 (detalle_evaluacion d)
                               JOIN alumno a ON a.id = d.idAlumno
                               JOIN evaluacion e ON e.id = d.idEvaluacion
-                              INNER JOIN (
+                              LEFT JOIN (
                                   SELECT d2.idAlumno as evalu, d2.talla, d2.peso
                                   FROM detalle_evaluacion d2
                                   where d2.idEvaluacion = '.$idEvalAnt.'
                                   and d2.estado != 2) ant ON ant.evalu = d.idAlumno
+                              WHERE
+                                idEvaluacion = '.$idEvaluacion.'
+                              AND d.estado != 2
+                            ORDER BY a.apellidos asc');
+      $resultado = $query->result();
+      return $resultado;
+    }
+
+
+    public function VerDetalle2($idEvaluacion){
+      $query = $this->db->query('SELECT
+                                d.id,
+                                e.fecha,
+                                e.nombre AS evaluacion,
+                                d.idEvaluacion,
+                                d.idAlumno,
+                                a.nombres,
+                                a.apellidos,
+                                d.edad,
+                                a.genero,
+                                d.peso,
+                                d.talla,
+                                d.fecha,
+                                d.observaciones,
+                                d.estado,
+                                d.diagnosticoTE,
+                                d.diagnosticoPE,
+                                d.diagnosticoPT,
+                                d.diagnosticoF
+                              FROM
+                                (detalle_evaluacion d)
+                              JOIN alumno a ON a.id = d.idAlumno
+                              JOIN evaluacion e ON e.id = d.idEvaluacion
                               WHERE
                                 idEvaluacion = '.$idEvaluacion.'
                               AND d.estado != 2

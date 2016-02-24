@@ -26,6 +26,10 @@
                     <button type="button" class="btn btn-primary">
                     <i class="fa fa-plus-circle"></i> Nueva Evaluación
                   </button></a>
+                  <a href="<?php echo $url;?>excel/evaluaciones/<?php echo $datos_aula[0]->id;?>">
+                    <button type="button" class="btn btn-default" title="Descargar Excel">
+                      <i class="fa fa-download"></i> Descargar</button>
+                  </a>
               <!--    <a href="<?php echo $url;?>reporte/<?php echo $datos_aula[0]->id;?>">
                     <button type="button" class="btn btn-info">
                     <i class="fa fa-line-chart"></i> Reporte

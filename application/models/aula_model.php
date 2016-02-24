@@ -52,13 +52,13 @@
     return $resultado;
   }
 
-//para EVALUACIONES
+//para listado excel
   public function CargarAlumnos2($idAula){
     $this->db->select('id, nombres, apellidos, fecha_nacimiento, genero, titular, estado');
     $this->db->from('alumno');
     $this->db->where('idAula', $idAula);
     $this->db->where('estado != 3'); //estado 3 es eliminado
-    //$this->db->where('estado != 0'); //estado 0 es desactivado
+    $this->db->where('estado != 0'); //estado 0 es desactivado
     $this->db->order_by('apellidos', 'asc');
     $consulta = $this->db->get();
     $resultado = $consulta->result();

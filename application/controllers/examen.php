@@ -139,6 +139,7 @@ class Examen extends CI_Controller {
 	{
 		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
 		$this->data['detalle'] = $this->Evaluacion->CargarDetalle($idEvaluacion);
+
 		$this->data['num'] = $num;
 		$this->load->view('header_view', $this->header);
 		$this->load->view('examen/examen_edit_view',$this->data);
@@ -149,7 +150,6 @@ class Examen extends CI_Controller {
 	{
 		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
 		$evaluaciones = $this->Evaluacion->CargarEvaluaciones($idAula);
-
 		for ($i=0, $len = count($evaluaciones); $i < $len; $i++) {
 			if ($idEvaluacion == $evaluaciones[$i]->id) {
 				if($i == 0){ $penul_eval = $idEvaluacion; break;}
