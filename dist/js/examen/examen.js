@@ -32,19 +32,7 @@ $(document).ready(function() {
                 $("#talla_edad_reglas").html(data.tabla1);
                 $("#peso_talla_reglas").html(data.tabla2);
                 $("#talla_peso_reglas").html(data.tabla3);
-                /*
-                if(data.rst==1){
-                      $('#t_usuarios').dataTable().fnDestroy();
-                      ListarUsuarios();
-                      $('#usuarioModal .modal-footer [data-dismiss="modal"]').click();
-                      mensaje('success', data.msj, 5000);
-                  }
-                  else{
-                      $.each(obj.msj,function(index,datos){
-                          mensaje('error', data.msj, 5000);
-                      });
-                  }
-                  */
+                // /console.log(data.query);
             },
             error : function(){
               $(".overlay,.loading-img").remove();

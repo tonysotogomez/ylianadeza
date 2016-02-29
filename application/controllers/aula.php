@@ -21,12 +21,17 @@ class Aula extends CI_Controller {
 		$this->data['datos_aula'] = $this->Aula->CargarAula($id);
 		$this->data['active'] = '';
 		$this->data['id'] = $id;
+		//totales
+		$this->data['hombres'] = $this->Aula->contarAlumnos('h', $id);
+		$this->data['mujeres'] = $this->Aula->contarAlumnos('m', $id);
+		$this->data['totales'] = $this->Aula->contarAlumnos('all', $id);
+
 		$this->load->view('header_view', $this->header);
 		$this->load->view('alumno/alumno_view',$this->data);
 		$this->load->view('footer_view', $this->footer);
 	}
 
-	/*Lista todos los alumnos del aula id*/
+	/*Lista todos los alumnos del aula id con estado 1*/
 	public function listar()
 	{
 		$id = $this->input->post('id');
@@ -35,7 +40,17 @@ class Aula extends CI_Controller {
 		echo json_encode($data);
 	}
 
-	/*Lista todos los alumnos para las evaluaciones */
+	public function listar_todos()
+	{
+		$id = $this->input->post('id');
+		$todos = $this->input->post('todos');
+		$data['listado'] = $this->Aula->CargarAlumnos_all($id);
+		$data['rst'] = 1;
+		$data['all'] = ($todos == 0)?1:0;
+		echo json_encode($data);
+	}
+
+	/*no deberia utilizarse */
 	public function listar2()
 	{
 		$id = $this->input->post('id');

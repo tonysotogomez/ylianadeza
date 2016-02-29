@@ -87,7 +87,7 @@ function carcularEdad(fecha_nacimiento){
           else meses_1 = meses+'meses';
         }
         if(edad >= 1){
-          if(edad == 1) anios = eda+'año ';
+          if(edad == 1) anios = edad+'año ';
           else anios = edad+'años ';
         }
         edadf = anios + meses_1;

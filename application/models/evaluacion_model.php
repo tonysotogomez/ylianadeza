@@ -115,6 +115,7 @@ date_default_timezone_set('America/Lima');
       $this->db->join('evaluacion e', 'e.id = d.idEvaluacion');
       $this->db->where('idEvaluacion', $idEvaluacion);
       $this->db->where('d.estado', 1);
+      $this->db->order_by('a.apellidos', 'asc');
     //  $this->db->order_by('fecha', 'desc');
       $consulta = $this->db->get();
       $resultado = $consulta->result();

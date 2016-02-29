@@ -12,7 +12,6 @@
             <li class="active"><?php echo $datos_aula[0]->titulo;?></li>
           </ol>
         </section>
-
         <!-- Main content -->
         <section class="content">
           <div class="row">
@@ -30,8 +29,10 @@
                     <button type="button" class="btn btn-default" title="Descargar Excel">
                       <i class="fa fa-download"></i> Descargar</button>
                   </a>
+                  <input class="flat-red" type="checkbox" name="txt_todos" id="txt_todos" onclick="listar_todos();"> Listar todos
                 </div><!-- /.box-header -->
                 <input type="hidden" value="<?php echo $datos_aula[0]->id;?>" id="aula_id">
+                <input type="hidden" value="0>" id="todos">
                 <div class="box-body">
                   <table id="t_alumnos" class="table table-bordered table-striped">
                     <thead>
@@ -43,7 +44,7 @@
                         <th style="width: 100px;">F.Nacimiento</th>
                         <th style="width: 250px;">Titular</th>
                         <th style="width: 10px;">Estado</th>
-                        <th style="width: 25px;">Opciones</th>
+                        <th style="width: 25px;">Editar</th>
                       </tr>
                     </thead>
                     <tbody id="tb_alumnos">
@@ -57,10 +58,15 @@
                         <th style="width: 10px;">F.Nacimiento</th>
                         <th style="width: 250px;">Titular</th>
                         <th style="width: 10px;">Estado</th>
-                        <th style="width: 25px;">Opciones</th>
+                        <th style="width: 25px;">Editar</th>
                       </tr>
                     </tfoot>
                   </table>
+                  <span class="text-muted well well-sm no-shadow">
+                    <i class="fa fa-male"></i> <i class="fa fa-arrow-right"> </i><?php echo $hombres[0]->num;?>,
+                    <i class="fa fa-female"></i> <i class="fa fa-arrow-right"> </i><?php echo $mujeres[0]->num;?>,
+                    <i class="fa fa-users"></i> <i class="fa fa-arrow-right"> </i><?php echo $totales[0]->num;?>
+                  </span>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->

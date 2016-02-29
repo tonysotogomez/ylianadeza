@@ -61,13 +61,14 @@
                         $CI->load->model("Edad_model","Edad");
                         foreach ($detalle as $datos) {
                           $edad = $CI->Edad->CargarEdad((float)$datos->edad);
+                          $edad_texto = (empty($edad))?' ':$edad[0]->nombre;
                           $talla_creci = comparar($datos->talla_ant,$datos->talla);
                           $peso_creci = comparar($datos->peso_ant,$datos->peso);
                           echo '<tr>';
                               echo '<td>'.$con;
                               echo '</td>';
                               echo '<td>'.$datos->apellidos.', '.$datos->nombres.'</td>';
-                              echo '<td>'.$edad[0]->nombre.'</td>';
+                              echo '<td>'.$edad_texto.'</td>';
                               echo '<td>'.$datos->peso.' </td>';
                               echo '<td>'.$peso_creci.'</td>';
                               echo '<td>'.$datos->talla.'</td>';

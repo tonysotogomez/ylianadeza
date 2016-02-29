@@ -33,7 +33,7 @@ class Excel extends CI_Controller {
       $observacion = ($datos_aula[0]->edades == "")?'':' - '.$datos_aula[0]->edades;
 
       $this->phpexcel->setActiveSheetIndex(0)
-                     ->setCellValue('C1', 'I.E.I. “DIVIDO NIÑO JESÚS”')
+                     ->setCellValue('C1', 'I.E.I. “DIVINO NIÑO JESÚS”')
                      ->setCellValue('C2', 'NÓMINA DE NIÑOS')
                      ->setCellValue('C3', strtoupper($datos_aula[0]->aula).$observacion)
                      ->setCellValue('C4', 'AULA “'.strtoupper($datos_aula[0]->titulo).'”');
@@ -204,13 +204,14 @@ class Excel extends CI_Controller {
 
       foreach ($detalle as $datos) {
         $edad = $this->Edad->CargarEdad((float)$datos->edad);
+        $edad = (empty($edad))?' ':$edad[0]->nombre;
         $talla_creci = comparar2($datos->talla_ant,$datos->talla);
         $peso_creci = comparar2($datos->peso_ant,$datos->peso);
 
         $this->phpexcel->setActiveSheetIndex(0)
                     ->setCellValue('A'.$f2, $con)
                     ->setCellValue('B'.$f2, $datos->apellidos.', '.$datos->nombres)
-                    ->setCellValue('C'.$f2, $edad[0]->nombre)
+                    ->setCellValue('C'.$f2, $edad)
                     ->setCellValue('D'.$f2, $datos->peso)
                     ->setCellValue('E'.$f2, $peso_creci)
                     ->setCellValue('F'.$f2, $datos->talla)
@@ -360,12 +361,12 @@ echo '</table>';*/
         $temp[$j] = $this->Evaluacion->VerDetalle2($evaluaciones[$j]->id);
         foreach ($temp[$j] as $datos) {
           $edad = $this->Edad->CargarEdad((float)$datos->edad);
-
+          $edad = (empty($edad))?' ':$edad[0]->nombre;
           $this->phpexcel->setActiveSheetIndex(0)
                       ->setCellValue($Z[$j].$f2, $con)
-                      ->setCellValue($Z[$j].$f2, $edad[0]->nombre)
+                      ->setCellValue($Z[$j].$f2, $edad)
                       ->setCellValue($Z[$j].$f2, $datos->apellidos.', '.$datos->nombres)
-                      ->setCellValue($Z[$j].$f2, $edad[0]->nombre)
+                      ->setCellValue($Z[$j].$f2, $edad)
                       ->setCellValue($Z[$j].$f2, $datos->peso)
                       ->setCellValue($Z[$j].$f2, $datos->talla)
                       ->setCellValue($Z[$j].$f2, $datos->diagnosticoF);

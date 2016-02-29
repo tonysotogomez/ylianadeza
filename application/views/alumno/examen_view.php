@@ -45,7 +45,7 @@
                           <th style="width: 40px!important;">Edad</th>
                           <th>Peso</th>
                           <th>Talla</th>
-                          <th>Obervaciones</th>
+                          <th>Observaciones</th>
                         </tr>
                       </thead>
                       <tbody id="tb_alumnos">

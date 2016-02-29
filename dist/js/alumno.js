@@ -22,7 +22,6 @@ $(document).ready(function() {
 
 });
 
-
 function Nuevo(){
   $("#txt_apellidos").val('');
   $("#txt_nombres").val('');
@@ -36,6 +35,35 @@ function Nuevo(){
   $('#submit').text('Guardar');
 }
 
+function listar_todos(){
+  var id = $('#aula_id').val();
+  var todos = $('#todos').val();
+  var accion = 'aula/listar_todos';
+  if(todos==1){
+      accion = 'aula/listar';
+  }
+  $.ajax({
+        url         : url + accion,
+        type        : 'POST',
+        cache       : false,
+        dataType    : 'json',
+        data        : {id: id, todos: todos},
+        beforeSend : function() {
+            $("body").append('<div class="overlay"></div><div class="loading-img"></div>');
+        },
+        success : function(obj) {
+            if(obj.rst==1){
+                HTMLCargarAlumno(obj.listado);
+            }
+            $('#todos').val(obj.all);
+            $(".overlay,.loading-img").remove();
+        },
+        error: function(){
+            $(".overlay,.loading-img").remove();
+            mensaje('danger', 'Ocurrio una interrupción en el proceso,Favor de intentar nuevamente.', 6000);
+        }
+    });
+}
 
   function ListarAlumnos(){
     var id = $('#aula_id').val();

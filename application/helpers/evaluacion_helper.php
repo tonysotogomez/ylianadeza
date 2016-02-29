@@ -15,15 +15,20 @@ if(!function_exists('evaluar'))
 		//Cargo las filas correspondientes a los datos ingresados
 		$TallaEdad= $CI->TallaEdad->Cargar($data);//edad, genero, num_tabla
 		$PesoEdad= $CI->PesoEdad->Cargar($data); //edad, genero
+
+		//UPDATE correcion de insertar valores diferentes de .0 y .5
 		$data['talla2'] = $data['talla'];
 		$talla_t = explode('.',$data['talla']);
+
 		if(isset($talla_t[1])){
 			if($talla_t[1] == 0 || $talla_t[1] == 1 || $talla_t[1] == 2 || $talla_t[1] == 3 || $talla_t[1] == 4) $decimal = 0;
 			else $decimal = 5;
 			$data['talla2'] = $talla_t[0].'.'.$decimal;
 		}
+		if($data['talla'] == '45.1' or $data['talla'] == '45.2' or $data['talla'] == '45.3' or $data['talla'] == '45.4') $data['talla2'] = 45.1;
+
 		$PesoTalla= $CI->PesoTalla->Cargar($data);//talla, genero, num_tabla
-		//$data['query'] = $data['talla2'].' query: '.$CI->db->last_query();
+		// /$data['query'] = $data['talla2'].' query: '.$CI->db->last_query();
 
 		$talla = $data['talla'];
 		$peso = $data['peso'];
