@@ -77,6 +77,7 @@
                               echo '<td>'.diagnostico($datos->diagnosticoPT).'</td>';
                               echo '<td>';
                               echo '<select class="form-control" name="txt_final_'.$datos->idAlumno.'" style="width: 175px!important;">
+                                <option value="-">Seleccione</option>
                                 <option value="Normal">Normal</option>
                                 <option value="Sobrepeso">Sobrepeso</option>
                                 <option value="Obesidad">Obesidad</option>
