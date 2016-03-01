@@ -162,34 +162,32 @@ date_default_timezone_set('America/Lima');
     }
 
 
-    public function VerDetalle2($idEvaluacion){
-      $query = $this->db->query('SELECT
-                                d.id,
-                                e.fecha,
-                                e.nombre AS evaluacion,
-                                d.idEvaluacion,
-                                d.idAlumno,
-                                a.nombres,
-                                a.apellidos,
-                                d.edad,
-                                a.genero,
-                                d.peso,
-                                d.talla,
-                                d.fecha,
-                                d.observaciones,
-                                d.estado,
-                                d.diagnosticoTE,
-                                d.diagnosticoPE,
-                                d.diagnosticoPT,
-                                d.diagnosticoF
-                              FROM
-                                (detalle_evaluacion d)
-                              JOIN alumno a ON a.id = d.idAlumno
-                              JOIN evaluacion e ON e.id = d.idEvaluacion
-                              WHERE
-                                idEvaluacion = '.$idEvaluacion.'
-                              AND d.estado != 2
-                            ORDER BY a.apellidos asc');
+    public function VerDetalle2($idAlumno = null){
+      $and = ($idAlumno)?'AND a.id='.$idAlumno:'';
+      $query = $this->db->query("SELECT
+                                	d.id as idDetalle,
+                                	date(e.fecha) as fecha,
+                                	e.nombre AS evaluacion,
+                                	d.idEvaluacion,
+                                	d.idAlumno,
+                                	CONCAT(a.apellidos,', ',a.nombres) as alumno,
+                                	d.edad,
+                                	a.genero,
+                                	d.peso,
+                                	d.talla,
+                                	d.observaciones,
+                                	d.diagnosticoTE,
+                                	d.diagnosticoPE,
+                                	d.diagnosticoPT,
+                                	d.diagnosticoF
+                                FROM
+                                	(detalle_evaluacion d)
+                                JOIN alumno a ON a.id = d.idAlumno
+                                JOIN evaluacion e ON e.id = d.idEvaluacion
+                                $and
+                                AND d.estado = 1
+                                ORDER BY
+                                	a.apellidos ASC");
       $resultado = $query->result();
       return $resultado;
     }

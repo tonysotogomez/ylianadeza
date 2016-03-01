@@ -60,6 +60,14 @@
                           //if( $datos->edad > 6) $edad = ' ';
                           $edad = $CI->Edad->CargarEdad((float)$datos->edad);
                           $edad_texto = (empty($edad))?' ':$edad[0]->nombre;
+                          
+                          $s1 = ($datos->diagnosticoF == 'Normal')?'selected':'';
+                          $s2 = ($datos->diagnosticoF == 'Sobrepeso')?'selected':'';
+                          $s3 = ($datos->diagnosticoF == 'Obesidad')?'selected':'';
+                          $s4 = ($datos->diagnosticoF == 'Desnutrición Aguda')?'selected':'';
+                          $s5 = ($datos->diagnosticoF == 'Desnutrición Severa')?'selected':'';
+                          $s6 = ($datos->diagnosticoF == 'Desnutrición Cronica')?'selected':'';
+
                           echo '<tr>';
                               echo '<td>'.$con;
                               echo '<input type="hidden" class="form-control" name="txt_genero_'.$datos->idAlumno.'" value="'.$datos->genero.'">';
@@ -78,12 +86,12 @@
                               echo '<td>';
                               echo '<select class="form-control" name="txt_final_'.$datos->idAlumno.'" style="width: 175px!important;">
                                 <option value="-">Seleccione</option>
-                                <option value="Normal">Normal</option>
-                                <option value="Sobrepeso">Sobrepeso</option>
-                                <option value="Obesidad">Obesidad</option>
-                                <option value="Desnutrición Aguda">Desnutrición Aguda</option>
-                                <option value="Desnutrición Severa">Desnutrición Severa</option>
-                                <option value="Desnutrición Cronica">Desnutrición Cronica</option>
+                                <option value="Normal" '.$s1.'>Normal</option>
+                                <option value="Sobrepeso" '.$s2.'>Sobrepeso</option>
+                                <option value="Obesidad" '.$s3.'>Obesidad</option>
+                                <option value="Desnutrición Aguda" '.$s4.'>Desnutrición Aguda</option>
+                                <option value="Desnutrición Severa" '.$s5.'>Desnutrición Severa</option>
+                                <option value="Desnutrición Cronica" '.$s6.'>Desnutrición Cronica</option>
                               </select>';
                               echo '<input type="hidden" class="form-control" name="hidden_final_'.$datos->idAlumno.'" value="'.$datos->diagnosticoF.'" style="width: 150px!important;"></td>';
                           echo '</tr>';
