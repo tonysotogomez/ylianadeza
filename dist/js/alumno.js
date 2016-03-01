@@ -67,8 +67,13 @@ function listar_todos(){
 
   function ListarAlumnos(){
     var id = $('#aula_id').val();
+    var todos = $('#todos').val();
+    var accion = 'aula/listar';
+    if(todos==1){
+        accion = 'aula/listar_todos';
+    }
     $.ajax({
-          url         : url + 'aula/listar',
+          url         : url + accion,
           type        : 'POST',
           cache       : false,
           dataType    : 'json',
