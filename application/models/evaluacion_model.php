@@ -46,6 +46,17 @@ date_default_timezone_set('America/Lima');
       $this->db->insert('evaluacion', $arr);
     }
 
+    public function CargarID($id){
+      $this->db->select('id, idAula, nombre, fecha, observacion, estado');
+      $this->db->from('evaluacion');
+      $this->db->where('id', $id);
+      $this->db->where('estado', 1);
+      $this->db->limit(1);
+      $consulta = $this->db->get();
+      $resultado = $consulta->result();
+      return $resultado;
+    }
+
     public function Editar($data){
       $arr = array(
                  'nombre' => $data['nombre']

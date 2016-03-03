@@ -27,7 +27,7 @@
                   </a>
                   <a href="<?php echo $url;?>excel/listado/<?php echo $datos_aula[0]->id;?>">
                     <button type="button" class="btn btn-default" title="Descargar Excel">
-                      <i class="fa fa-download"></i> Descargar</button>
+                      <i class="fa fa-download"></i> Listado Alumnos</button>
                   </a>
                   <input class="flat-red" type="checkbox" name="txt_todos" id="txt_todos" onclick="listar_todos();"> Listar todos
                 </div><!-- /.box-header -->

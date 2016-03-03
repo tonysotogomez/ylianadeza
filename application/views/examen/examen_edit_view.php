@@ -25,8 +25,8 @@
 
               <div class="box box-success">
                 <div class="box-header">
-                  <h3 class="box-title">La evaluación se actualizará cuando de clic en el botón Guardar</h3>
-                  <button type="button" class="btn btn-primary" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-save"></i> Editar</button>
+                  <h3 class="box-title">La evaluación se actualizará cuando de clic en el botón Editar</h3>
+                  <button type="button" class="btn btn-primary" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-edit"></i> Editar</button>
                   <a href="<?php echo $url;?>examen/evaluacion/<?php echo $datos_aula[0]->id;?>">
                     <button type="button" class="btn btn-danger pull-right">
                     <i class="fa fa-remove"></i> Cancelar
@@ -60,7 +60,7 @@
                           //if( $datos->edad > 6) $edad = ' ';
                           $edad = $CI->Edad->CargarEdad((float)$datos->edad);
                           $edad_texto = (empty($edad))?' ':$edad[0]->nombre;
-                          
+
                           $s1 = ($datos->diagnosticoF == 'Normal')?'selected':'';
                           $s2 = ($datos->diagnosticoF == 'Sobrepeso')?'selected':'';
                           $s3 = ($datos->diagnosticoF == 'Obesidad')?'selected':'';
@@ -100,6 +100,9 @@
                         ?>
                       </tbody>
                     </table>
+                    <div class="col-md-12 text-center">
+                      <button type="button" class="btn btn-primary" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-edit"></i> Editar</button>
+                    </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->

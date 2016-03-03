@@ -28,7 +28,7 @@
 
                   <a href="<?php echo $url;?>excel/detalle/<?php echo $detalle[0]->idEvaluacion;?>/<?php echo $datos_aula[0]->id;?>">
                     <button type="button" class="btn btn-default" title="Descargar Excel">
-                      <i class="fa fa-download"></i> Descargar</button>
+                      <i class="fa fa-download"></i> Evaluacion N°<?php echo $num; ?></button>
                   </a>
                   <a href="<?php echo $url;?>examen/evaluacion/<?php echo $datos_aula[0]->id;?>">
                     <button type="button" class="btn btn-warning pull-right">

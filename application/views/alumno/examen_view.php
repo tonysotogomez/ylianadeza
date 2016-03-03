@@ -51,6 +51,9 @@
                       <tbody id="tb_alumnos">
                       </tbody>
                     </table>
+                    <div class="col-md-12 text-center">
+                      <button type="button" class="btn btn-primary" value="0" onclick="GuardarEvaluacion(0);"><i class="fa fa-save"></i> Guardar</button>
+                    </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
