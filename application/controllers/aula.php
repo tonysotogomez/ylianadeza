@@ -66,6 +66,22 @@ class Aula extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function mantenimiento()
+	{
+		$this->footer2['js_custom'] = '<script src="'.base_url().'dist/js/mantenimiento/aula.js"></script>';
+		$this->load->view('header_view', $this->header);
+		$this->load->view('aula/aula_view');
+		$this->load->view('footer_view', $this->footer2);
+	}
+
+	/*Lista todos las aulas con estado 1 y 0*/
+	public function listado()
+	{
+		$data['listado'] = $this->Aula->CargarAula();
+		$data['rst'] = 1;
+		echo json_encode($data);
+	}
+
 }
 
 

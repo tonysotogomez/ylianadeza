@@ -29,24 +29,25 @@
     return $resultado;
 	}
 
-  public function contarAlumnos($genero, $aula){
+  public function contarAlumnos($genero, $aula = null){
     $this->db->select('count(genero) as num');
     $this->db->from('alumno');
     $this->db->where('estado != 3');
     $this->db->where('estado != 0');
-    $this->db->where('idAula', $aula);
+    if($aula) { $this->db->where('idAula', $aula); }
     if($genero != 'all'){ $this->db->where('genero', $genero); }
     $consulta = $this->db->get();
     $resultado = $consulta->result();
     return $resultado;
   }
 
-  public function CargarAlumnos($idAula){
-    $this->db->select('id, nombres, apellidos, fecha_nacimiento, genero, titular, estado');
-    $this->db->from('alumno');
-    $this->db->where('idAula', $idAula);
+  public function CargarAlumnos($idAula = null){
+    $this->db->select('a.id, nombres, apellidos, fecha_nacimiento, genero, titular, a.estado, aula.nombre as aula');
+    $this->db->from('alumno a');
+    $this->db->join('aula', 'a.idAula = aula.id');
+    if($idAula) { $this->db->where('idAula', $idAula); }
     //$this->db->where('estado != 3'); //estado 3 es eliminado
-      $this->db->where('estado != 0');
+      $this->db->where('a.estado != 0');
     $this->db->order_by('apellidos', 'asc');
     $consulta = $this->db->get();
     $resultado = $consulta->result();
@@ -54,9 +55,10 @@
   }
 
   public function CargarAlumnos_all($idAula){
-    $this->db->select('id, nombres, apellidos, fecha_nacimiento, genero, titular, estado');
-    $this->db->from('alumno');
-    $this->db->where('idAula', $idAula);
+    $this->db->select('a.id, nombres, apellidos, fecha_nacimiento, genero, titular, a.estado, aula.nombre as aula');
+    $this->db->from('alumno a');
+    $this->db->join('aula', 'a.idAula = aula.id');
+    if($idAula) { $this->db->where('idAula', $idAula = null); }
     $this->db->order_by('apellidos', 'asc');
     $consulta = $this->db->get();
     $resultado = $consulta->result();
@@ -77,11 +79,11 @@
   }
 
 
-  public function CargarAula($idAula){
-    $this->db->select('aula.id, aula.nombre as titulo, tipo.nombre as aula, aula.observacion as edades');
+  public function CargarAula($idAula = null){
+    $this->db->select('aula.id, aula.nombre as titulo, tipo.nombre as aula, aula.observacion as edades, aula.estado');
     $this->db->from('aula');
     $this->db->join('tipo', 'aula.idTipo = tipo.id');
-    $this->db->where('aula.id', $idAula);
+    if($idAula) { $this->db->where('aula.id', $idAula); }
     $consulta = $this->db->get();
     $resultado = $consulta->result();
     return $resultado;

@@ -1,25 +1,5 @@
 $(document).ready(function() {
-  ListarAlumnos();
-  $('#alumnoModal').on('shown.bs.modal', function(e){
-    $.ajax({
-        url         : url + "aula/listado_select",
-        type        : 'POST',
-        cache       : false,
-        dataType    : 'json',
-        success : function(data) {
-            var i, len, selected = '', opciones = '';
-            var aulas = data['aulas'];
-            var id = $('#aula_id').val();
-            for (i = 0, len = data['aulas'].length; i < len; i++) {
-              if (id == aulas[i]['id']) { selected = 'selected'; }
-              else { selected = ''; }
-              opciones += '<option value="'+aulas[i]['id']+'" '+selected+'>'+aulas[i]['nombre']+'</option>';
-            }
-            $('#slct_aula').append(opciones);
-        }
-    });
-  });
-
+  ListarAulas();
 });
 
 function Nuevo(){
@@ -65,25 +45,18 @@ function listar_todos(){
     });
 }
 
-  function ListarAlumnos(){
-    var id = $('#aula_id').val();
-    var todos = $('#todos').val();
-    var accion = 'aula/listar';
-    if(todos==1){
-        accion = 'aula/listar_todos';
-    }
+  function ListarAulas(){
     $.ajax({
-          url         : url + accion,
+          url         : url + 'aula/listado',
           type        : 'POST',
           cache       : false,
           dataType    : 'json',
-          data        : {id: id},
           beforeSend : function() {
               $("body").append('<div class="overlay"></div><div class="loading-img"></div>');
           },
           success : function(obj) {
               if(obj.rst==1){
-                  HTMLCargarAlumno(obj.listado);
+                  HTMLCargarAula(obj.listado);
               }
               $(".overlay,.loading-img").remove();
           },
@@ -94,25 +67,14 @@ function listar_todos(){
       });
   }
 
-  function HTMLCargarAlumno(datos){
+  function HTMLCargarAula(datos){
     var html="";
     var con = 0;
-    var fecha, genero, nombres, estadohtml;
-    $('#t_alumnos').dataTable().fnDestroy();
+    var estadohtml;
+    $('#t_aulas').dataTable().fnDestroy();
 
     $.each(datos,function(index,data){
         con++;
-        if(data.fecha_nacimiento != null){
-          var nac = (data.fecha_nacimiento).split("-");
-          fecha = nac[2]+"-"+nac[1]+"-"+nac[0];
-        } else fecha = "No registrado";
-        if(nac[0] == 1970) fecha = " ";
-
-        if(data.genero != null) genero = data.genero.toUpperCase();
-        else genero = "No registrado";
-
-        if(data.nombres != null) nombres = data.nombres;
-        else nombres = "No registrado";
 
         estadohtml='<span id="'+data.id+'" onClick="CambiarEstado('+data.id+','+data.estado+')" class="btn btn-danger btn-xs">Inactivo</span>';
         if(data.estado==1){
@@ -120,18 +82,16 @@ function listar_todos(){
         }
         html+="<tr>"+
             "<td>"+con+"</td>"+
-            "<td>"+data.apellidos+"</td>"+
-            "<td>"+nombres+"</td>"+
-            "<td>"+genero+"</td>"+
-            "<td>"+fecha+"</td>"+
-            "<td>"+data.titular+"</td>"+
+            "<td>"+data.titulo+"</td>"+
+            "<td>"+data.edades+"</td>"+
+            "<td>"+data.aula+"</td>"+
             "<td>"+estadohtml+"</td>"+
             '<td><button type="button" title="Editar" onclick="Cargar('+data.id+')" class="btn btn-sm btn-primary btn-xs"><i class="fa fa-edit"></i></button>';
           //  ' <a href="'+url+'alumno/perfil/'+data.id+'"><button title="Historial" type="button" class="btn btn-sm btn-info"><i class="fa fa-area-chart"></i></button></a></td>';
         html+="</tr>";
     });
-    $("#tb_alumnos").html(html);
-    $("#t_alumnos").dataTable({
+    $("#tb_aulas").html(html);
+    $("#t_aulas").dataTable({
        "bStateSave": true,
         "responsive": true,
         "paging": true,

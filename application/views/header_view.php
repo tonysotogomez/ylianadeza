@@ -16,9 +16,11 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="<?php echo $url;?>bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
+    <link rel="stylesheet" href="<?php echo $url;?>dist/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!--<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">-->
+    <link rel="stylesheet" href="<?php echo $url;?>dist/css/ionicons.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="<?php echo $url;?>plugins/datatables/dataTables.bootstrap.css">
     <!-- Theme style -->
@@ -158,9 +160,12 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-            <li class="header">EXAMEN</li>
+            <li class="header">MANTENIMIENTO</li>
+            <li><a href="<?php echo $url;?>aula/mantenimiento"><i class="fa fa-folder"></i> <span>Aula</span></a></li>
+            <li><a href="<?php echo $url;?>alumno"><i class="fa fa-male"></i> <span>Alumnos</span></a></li>
 
-            <li><a href="<?php echo $url;?>examen"><i class="fa fa-heartbeat"></i> <span>Evaluación</span></a></li>
+            <li class="header">EXAMEN</li>
+            <li><a href="<?php echo $url;?>examen"><i class="fa fa-heartbeat"></i> <span>Evaluación Nutricional</span></a></li>
 
       <!--      <li class="header">MANTENIMIENTO</li>
             <li><a href="<?php echo $url;?>reporte/cred"><i class="fa fa-home"></i> <span>CRED</span></a></li>

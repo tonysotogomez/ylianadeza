@@ -69,7 +69,7 @@
                           echo ' <a href="'.$url.'examen/cargarDetalle/'.$datos_aula[0]->id.'/'.$eval->id.'/'.$con.'"><button type="button" title="Editar" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar</button></a>';
                           echo ' <button type="button" title="Eliminar" class="btn btn-sm btn-danger pull-right" onClick="EliminarEvaluacion('.$eval->id.')"><i class="fa fa-trash"></i> Eliminar</button>';
                           echo ' <a href="'.$url.'examen/verDetalle/'.$datos_aula[0]->id.'/'.$eval->id.'/'.$con.'"><button type="button" title="Ver" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Ver</button></a>';
-                          echo ' <a href="'.$url.'excel/detalle/'.$eval->id.'/'.$datos_aula[0]->id.'"><button type="button" title="Excel" class="btn btn-default"><i class="fa fa-file-excel-o"></i> Excel</button></a>';
+                          echo ' <a href="'.$url.'excel/detalle/'.$eval->id.'/'.$datos_aula[0]->id.'"><button type="button" title="Excel" class="btn btn-default"><i class="fa fa-download"></i> Excel</button></a>';
                           echo '</td>';
                           echo '</tr>';
                           $con++;

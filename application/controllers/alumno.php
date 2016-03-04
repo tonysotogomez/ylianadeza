@@ -14,8 +14,21 @@ class Alumno extends CI_Controller {
 				 $this->header['andantes'] = $this->Aula->CargarMenu(2);
 				 $this->header['infantes'] = $this->Aula->CargarMenu(3);
 				 $this->header['jardin'] = $this->Aula->CargarMenu(4);
+				 $this->footer['js_custom'] = '<script src="'.base_url().'dist/js/mantenimiento/alumno.js"></script>';
 				 $this->load->helper(array('form'));
     }
+
+	public function index()
+	{
+		//totales
+		$this->data['hombres'] = $this->Aula->contarAlumnos('h');
+		$this->data['mujeres'] = $this->Aula->contarAlumnos('m');
+		$this->data['totales'] = $this->Aula->contarAlumnos('all');
+
+		$this->load->view('header_view', $this->header);
+		$this->load->view('alumno/mantenimiento_alumno_view',$this->data);
+		$this->load->view('footer_view', $this->footer);
+	}
 
 	public function nuevo()
 	{

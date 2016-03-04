@@ -78,7 +78,8 @@
     <!-- jQuery 2.1.4 -->
     <script src="<?php echo $url;?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
 		<!-- jQuery UI 1.11.4 -->
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <!--<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>-->
+    <script src="<?php echo $url;?>dist/js/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
       $.widget.bridge('uibutton', $.ui.button);
@@ -99,7 +100,8 @@
     <!-- jQuery Knob Chart -->
     <script src="<?php echo $url;?>plugins/knob/jquery.knob.js"></script>
 		<!-- daterangepicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>-->
+    <script src="<?php echo $url;?>dist/js/moment.min.js"></script>
     <script src="<?php echo $url;?>plugins/daterangepicker/daterangepicker.js"></script>
 		<!-- Bootstrap WYSIHTML5 -->
     <script src="<?php echo $url;?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
