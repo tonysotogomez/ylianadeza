@@ -58,7 +58,7 @@
     $this->db->select('a.id, nombres, apellidos, fecha_nacimiento, genero, titular, a.estado, aula.nombre as aula');
     $this->db->from('alumno a');
     $this->db->join('aula', 'a.idAula = aula.id');
-    if($idAula) { $this->db->where('idAula', $idAula = null); }
+    if($idAula) { $this->db->where('idAula', $idAula); }
     $this->db->order_by('apellidos', 'asc');
     $consulta = $this->db->get();
     $resultado = $consulta->result();
@@ -83,7 +83,7 @@
     $this->db->select('aula.id, aula.nombre as titulo, tipo.nombre as aula, aula.observacion as edades, aula.estado');
     $this->db->from('aula');
     $this->db->join('tipo', 'aula.idTipo = tipo.id');
-    if($idAula) { $this->db->where('aula.id', $idAula); }
+    $this->db->where('aula.id', $idAula); 
     $consulta = $this->db->get();
     $resultado = $consulta->result();
     return $resultado;

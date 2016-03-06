@@ -161,13 +161,10 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
             <li class="header">MANTENIMIENTO</li>
-            <li><a href="<?php echo $url;?>aula/mantenimiento"><i class="fa fa-folder"></i> <span>Aula</span></a></li>
+      <!--  <li><a href="<?php echo $url;?>aula/mantenimiento"><i class="fa fa-folder"></i> <span>Aula</span></a></li> -->
             <li><a href="<?php echo $url;?>alumno"><i class="fa fa-male"></i> <span>Alumnos</span></a></li>
 
-            <li class="header">EXAMEN</li>
-            <li><a href="<?php echo $url;?>examen"><i class="fa fa-heartbeat"></i> <span>Evaluación Nutricional</span></a></li>
-
-      <!--      <li class="header">MANTENIMIENTO</li>
+        <!--      <li class="header">MANTENIMIENTO</li>
             <li><a href="<?php echo $url;?>reporte/cred"><i class="fa fa-home"></i> <span>CRED</span></a></li>
             <li><a href="<?php echo $url;?>diagnostico"><i class="fa fa-home"></i> <span>Aula</span></a></li>
           -->
@@ -213,6 +210,8 @@
               </ul>
             </li>
 
+            <li class="header">EXAMEN</li>
+            <li><a href="<?php echo $url;?>examen"><i class="fa fa-heartbeat"></i> <span>Evaluación Nutricional</span></a></li>
 
 
           </ul><!-- /.sidebar-menu -->
