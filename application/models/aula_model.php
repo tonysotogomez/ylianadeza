@@ -83,10 +83,11 @@
     $this->db->select('aula.id, aula.nombre as titulo, tipo.nombre as aula, aula.observacion as edades, aula.estado');
     $this->db->from('aula');
     $this->db->join('tipo', 'aula.idTipo = tipo.id');
-    $this->db->where('aula.id', $idAula); 
+    $this->db->where('aula.id', $idAula);
     $consulta = $this->db->get();
     $resultado = $consulta->result();
     return $resultado;
   }
+
 
  }

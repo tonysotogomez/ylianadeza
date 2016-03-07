@@ -78,6 +78,7 @@ date_default_timezone_set('America/Lima');
       $arr = array(
                  'idEvaluacion' => $data['idEvaluacion'],
                  'idAlumno' => $data['idAlumno'],
+                 'idAula' => $data['idAula'],
                  'edad' => $data['edad'],
                  'peso' => $data['peso'],
                  'talla' => $data['talla'],
@@ -95,13 +96,14 @@ date_default_timezone_set('America/Lima');
 
     public function EditarDetalle($data){
       $arr = array(
+        'idAula' => $data['idAula'],//NO ES NECESARIO PERO POR MIENTRAS HASTA FORMATEAR LA DATA
                  'edad' => $data['edad'],// se edita fecha manualmente, casos especiales
                  'peso' => $data['peso'],
                  'talla' => $data['talla'],
                  'diagnosticoTE' => $data['talla_edad'],
                  'diagnosticoPE' => $data['peso_edad'],
                  'diagnosticoPT' => $data['peso_talla'],
-                 'diagnosticoF' => $data['final'],
+                 'idDiagnostico' => $data['final'],
                  'updated_at' => date("Y-m-d H:i:s"),
                  'observaciones' => $data['observaciones']
               );
@@ -120,7 +122,7 @@ date_default_timezone_set('America/Lima');
     }
 
     public function CargarDetalle($idEvaluacion){
-      $this->db->select('d.id, e.fecha, e.nombre as evaluacion, d.idEvaluacion, d.idAlumno, a.nombres, a.apellidos, d.edad, a.genero, d.peso, d.talla, d.fecha, d.observaciones, d.estado, d.diagnosticoTE, d.diagnosticoPE, d.diagnosticoPT, d.diagnosticoF');
+      $this->db->select('d.id, e.fecha, e.nombre as evaluacion, d.idEvaluacion, d.idAlumno, a.nombres, a.apellidos, d.edad, a.genero, d.peso, d.talla, d.fecha, d.observaciones, d.estado, d.diagnosticoTE, d.diagnosticoPE, d.diagnosticoPT, d.idDiagnostico');
       $this->db->from('detalle_evaluacion d');
       $this->db->join('alumno a', 'a.id = d.idAlumno');
       $this->db->join('evaluacion e', 'e.id = d.idEvaluacion');
@@ -154,11 +156,12 @@ date_default_timezone_set('America/Lima');
                                 d.diagnosticoTE,
                                 d.diagnosticoPE,
                                 d.diagnosticoPT,
-                                d.diagnosticoF
+                                di.nombre as idDiagnostico
                               FROM
                                 (detalle_evaluacion d)
                               JOIN alumno a ON a.id = d.idAlumno
                               JOIN evaluacion e ON e.id = d.idEvaluacion
+                              LEFT JOIN diagnostico di ON di.id = d.idDiagnostico
                               LEFT JOIN (
                                   SELECT d2.idAlumno as evalu, d2.talla, d2.peso
                                   FROM detalle_evaluacion d2
@@ -190,11 +193,12 @@ date_default_timezone_set('America/Lima');
                                 	d.diagnosticoTE,
                                 	d.diagnosticoPE,
                                 	d.diagnosticoPT,
-                                	d.diagnosticoF
+                                	di.nombre as idDiagnostico
                                 FROM
                                 	(detalle_evaluacion d)
                                 JOIN alumno a ON a.id = d.idAlumno
                                 JOIN evaluacion e ON e.id = d.idEvaluacion
+                                LEFT JOIN diagnostico di ON di.id = d.idDiagnostico
                                 $and
                                 AND d.estado = 1
                                 ORDER BY
@@ -202,5 +206,48 @@ date_default_timezone_set('America/Lima');
       $resultado = $query->result();
       return $resultado;
     }
+
+    public function count_diagnostico($idAula, $idEvaluacion){
+      $query = $this->db->query('SELECT e.nombre as evaluacion, a.nombre as aula,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 1 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as normales,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 2 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as obesos,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 3 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as sobrepesos,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 4 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as agudas,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 5 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as severos,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 6 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as cronicos
+      FROM detalle_evaluacion d
+      JOIN evaluacion e ON e.id = d.idEvaluacion
+      JOIN alumno al ON al.id = d.idAlumno
+      JOIN aula a ON a.id = al.idAula
+      WHERE a.id = '.$idAula.'
+      AND e.id = '.$idEvaluacion.'
+      GROUP BY e.id');
+      $resultado = $query->result();
+      return $resultado;
+    }
+
+    public function count_totales($idAula, $idEvaluacion){
+      $query = $this->db->query('  SELECT e.nombre as evaluacion, a.nombre as aula,
+          (SELECT count(*) FROM detalle_evaluacion d
+    			JOIN alumno al ON al.id = d.idAlumno
+    			where idEvaluacion = '.$idEvaluacion.' and al.genero = "m") as mujeres,
+    			(SELECT count(*) FROM detalle_evaluacion d
+          JOIN alumno al ON al.id = d.idAlumno
+          where idEvaluacion = '.$idEvaluacion.' and al.genero = "h") as hombres,
+          (SELECT count(*) FROM detalle_evaluacion d
+          JOIN alumno al ON al.id = d.idAlumno
+          where idEvaluacion = '.$idEvaluacion.') as totales
+          FROM detalle_evaluacion d
+          JOIN evaluacion e ON e.id = d.idEvaluacion
+          JOIN alumno al ON al.id = d.idAlumno
+          JOIN aula a ON a.id = al.idAula
+          WHERE a.id = '.$idAula.'
+          AND e.id = '.$idEvaluacion.'
+          GROUP BY e.id');
+      $resultado = $query->result();
+      return $resultado;
+    }
+
+
 
  }

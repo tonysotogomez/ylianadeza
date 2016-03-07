@@ -137,8 +137,10 @@ class Examen extends CI_Controller {
 
 	public function cargarDetalle($idAula, $idEvaluacion,$num)
 	{
+		$this->load->model("Diagnostico_model","Diagnostico");
 		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
 		$this->data['detalle'] = $this->Evaluacion->CargarDetalle($idEvaluacion);
+		$this->data['diagnostico'] = $this->Diagnostico->Listar();
 
 		$this->data['num'] = $num;
 		$this->load->view('header_view', $this->header);
@@ -159,6 +161,9 @@ class Examen extends CI_Controller {
 			}
 		}
 		$this->data['detalle'] = $this->Evaluacion->VerDetalle($idEvaluacion, $penul_eval);
+
+		//datos estadisticos
+		$this->data['datos_num'] = $this->Evaluacion->count_diagnostico($idAula, $idEvaluacion);
 		//echo $this->db->last_query();
 		$this->data['num'] = $num; //numero de evaluacion
 		$this->load->view('header_view', $this->header);
@@ -181,6 +186,9 @@ class Examen extends CI_Controller {
 			//Obtengo el id de la evaluacion
 			$data['idEvaluacion'] = $this->db->insert_id();
 			$data['fecha'] = $this->input->post('fecha_eval');
+
+			//idAula, nuevo campo para reportes
+			$data['idAula'] =  $this->input->post('aula');
 
 			//Ingreso los datos en el detallleEvaluacion
 			for ($i=0, $len = count($alumnos); $i < $len; $i++) {
@@ -230,6 +238,9 @@ class Examen extends CI_Controller {
 			$this->Evaluacion->Editar($data);
 			$data['idEvaluacion'] = $this->input->post('txt_idEval');
 			//$data['fecha'] = $this->input->post('fecha_eval');
+
+			//NO ES NECESARIO, HASTA FORMATREAR LA DATA
+			$data['idAula'] =  $this->input->post('aula');
 
 			for ($i=0, $len = count($alumnos); $i < $len; $i++) {
 			//	$fecha_nac = $this->input->post('fecha_'.$alumnos[$i]->id);

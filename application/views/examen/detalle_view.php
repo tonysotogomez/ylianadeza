@@ -30,6 +30,23 @@
                     <button type="button" class="btn btn-default" title="Descargar Excel">
                       <i class="fa fa-download"></i> Evaluacion N°<?php echo $num; ?></button>
                   </a>
+                  <div class="col-md-12 text-center">
+                  <?php
+                  foreach ($datos_num as $v) {
+                    echo '<span class="text-muted well well-sm no-shadow" style="color:#001F3F;">
+                      Normal <i class="fa fa-arrow-right"></i>'.$v->normales.'</span>';
+                    echo '<span class="text-muted well well-sm no-shadow" style="color:#001F3F;">
+                      Obeso <i class="fa fa-arrow-right"></i>'.$v->obesos.'</span>';
+                    echo '<span class="text-muted well well-sm no-shadow" style="color:#001F3F;">
+                      Sobrepeso <i class="fa fa-arrow-right"></i>'.$v->sobrepesos.'</span>';
+                    echo '<span class="text-muted well well-sm no-shadow" style="color:#001F3F;">
+                      Desnutrición Aguda <i class="fa fa-arrow-right"></i>'.$v->agudas.'</span>';
+                    echo '<span class="text-muted well well-sm no-shadow" style="color:#001F3F;">
+                      Desnutrición Severa <i class="fa fa-arrow-right"></i>'.$v->severos.'</span>';
+                    echo '<span class="text-muted well well-sm no-shadow" style="color:#001F3F;">
+                      Desnutrición Crónica <i class="fa fa-arrow-right"></i>'.$v->cronicos.'</span>';
+                  }
+                  ?></div>
                   <a href="<?php echo $url;?>examen/evaluacion/<?php echo $datos_aula[0]->id;?>">
                     <button type="button" class="btn btn-warning pull-right">
                     <i class="fa fa-reply"></i> Regresar
@@ -77,7 +94,7 @@
                               echo '<td>'.diagnostico($datos->diagnosticoTE).'</td>';
                               echo '<td>'.diagnostico($datos->diagnosticoPE).'</td>';
                               echo '<td>'.diagnostico($datos->diagnosticoPT).'</td>';
-                              echo '<td>'.$datos->diagnosticoF.'</td>';
+                              echo '<td>'.$datos->idDiagnostico.'</td>';
                           echo '</tr>';
                           $con++;
                         }
