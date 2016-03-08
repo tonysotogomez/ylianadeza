@@ -18,7 +18,7 @@ class Examen extends CI_Controller {
 
 				 $this->footer['js_custom'] = '<script src="'.base_url().'dist/js/examen/examen.js"></script>';
 
-				 $this->load->helper(array('fechas_helper', 'evaluacion_helper', 'form'));
+				 $this->load->helper(array('fechas_helper', 'evaluacion_helper', 'chart_helper','form'));
 				 //$this->output->enable_profiler(TRUE);
     }
 
@@ -165,6 +165,12 @@ class Examen extends CI_Controller {
 		//datos estadisticos
 		$this->data['datos_num'] = $this->Evaluacion->count_diagnostico($idAula, $idEvaluacion);
 		//echo $this->db->last_query();
+
+		$valores = $this->data['datos_num'];//obtengo aula y lasa cantidades de estados
+		//cargo script highcharts
+ 		$this->footer['js_custom'] = script_pie($num, $valores);
+
+
 		$this->data['num'] = $num; //numero de evaluacion
 		$this->load->view('header_view', $this->header);
 		$this->load->view('examen/detalle_view',$this->data);

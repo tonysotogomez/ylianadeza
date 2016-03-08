@@ -15,6 +15,9 @@ class Reporte extends CI_Controller {
 				 $this->load->helper(array('form'));
 
 				 $this->footer['js_custom'] = '<script src="'.base_url().'dist/js/examen/cred.js"></script>';
+
+				 $data['home'] = strtolower(__CLASS__).'/';
+ 			 	 $this->load->vars($data);
     }
 
 
@@ -25,8 +28,42 @@ class Reporte extends CI_Controller {
 		$this->load->view('reporte/cred_prueba_view');
 		$this->load->view('footer_view',$this->footer);
 	}
+	function index()
+	{
+		// simple highcharts example
+		$this->load->library('highcharts');
 
+		// some data series
+		$serie['data'] = array(20, 45, 60, 22, 6, 36);
 
+		$data['charts'] = $this->highcharts->set_serie($serie)->render();
+
+		$this->load->view('reporte/prueba_view', $data);
+
+	}
+
+	function pie()
+		{
+			$this->load->library('highcharts');
+			$serie['data']	= array(
+				array('value one', 20),
+				array('value two', 45),
+				array('other value', 60)
+			);
+			$callback = "function() { return '<b>'+ this.point.name +'</b>: '+ this.y +' %'}";
+
+			@$tool->formatter = $callback;
+			@$plot->pie->dataLabels->formatter = $callback;
+
+			$this->highcharts
+				->set_type('pie')
+				->set_serie($serie)
+				->set_tooltip($tool)
+				->set_plotOptions($plot);
+
+			$data['charts'] = $this->highcharts->render();
+			$this->load->view('reporte/prueba_view', $data);
+		}
 
 }
 

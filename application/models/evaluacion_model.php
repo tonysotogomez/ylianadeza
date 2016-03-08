@@ -199,6 +199,7 @@ date_default_timezone_set('America/Lima');
                                 JOIN alumno a ON a.id = d.idAlumno
                                 JOIN evaluacion e ON e.id = d.idEvaluacion
                                 LEFT JOIN diagnostico di ON di.id = d.idDiagnostico
+                                WHERE 1 = 1
                                 $and
                                 AND d.estado = 1
                                 ORDER BY
@@ -214,7 +215,8 @@ date_default_timezone_set('America/Lima');
       (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 3 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as sobrepesos,
       (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 4 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as agudas,
       (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 5 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as severos,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 6 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as cronicos
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 6 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as cronicos,
+      (SELECT count(*) FROM detalle_evaluacion where idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as totales
       FROM detalle_evaluacion d
       JOIN evaluacion e ON e.id = d.idEvaluacion
       JOIN alumno al ON al.id = d.idAlumno

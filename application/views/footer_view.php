@@ -120,11 +120,16 @@
     <script src="<?php echo $url;?>plugins/input-mask/jquery.inputmask.js"></script>
     <script src="<?php echo $url;?>plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
     <script src="<?php echo $url;?>plugins/input-mask/jquery.inputmask.extensions.js"></script>
+    <!-- Highcharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <!-- Custom -->
     <script src="<?php echo $url;?>dist/js/custom.js"></script>
+
     <?php if(isset($js_custom)){
       echo $js_custom;
     } ?>
+    
     <!--<script src="<?php echo $url;?>dist/js/examen/examen.js"></script>
     <script src="<?php echo $url;?>dist/js/alumno.js"></script>-->
     <!-- AdminLTE for demo purposes -->

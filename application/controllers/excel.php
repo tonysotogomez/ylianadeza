@@ -255,15 +255,21 @@ class Excel extends CI_Controller {
       $datos_num = $this->Evaluacion->count_diagnostico($idAula, $idEvaluacion);//normales, obesos, sobrepesos, etc
 
       $this->phpexcel->setActiveSheetIndex(0)
-                     ->setCellValue('B'.($f2+4), 'HOMBRES:'.$totales_num[0]->hombres)
-                     ->setCellValue('B'.($f2+5), 'MUJERES:'.$totales_num[0]->mujeres)
-                     ->setCellValue('B'.($f2+6), 'TOTAL:'.$totales_num[0]->totales)
-                     ->setCellValue('H'.($f2+2), 'NORMAL:'.$datos_num[0]->normales)
-                     ->setCellValue('H'.($f2+3), 'OBESO:'.$datos_num[0]->obesos)
-                     ->setCellValue('H'.($f2+4), 'SOBREPESO:'.$datos_num[0]->sobrepesos)
-                     ->setCellValue('H'.($f2+5), 'DESNUTRICIÓN AGUDA:'.$datos_num[0]->agudas)
-                     ->setCellValue('H'.($f2+6), 'DESNUTRICIÓN SEVERA:'.$datos_num[0]->severos)
-                     ->setCellValue('H'.($f2+7), 'DESNUTRICIÓN CRÓNICA:'.$datos_num[0]->cronicos);
+                     ->setCellValue('B'.($f2+4), 'Hombres:'.$totales_num[0]->hombres)
+                     ->setCellValue('B'.($f2+5), 'Mujeres:'.$totales_num[0]->mujeres)
+                     ->setCellValue('B'.($f2+6), 'Total:'.$totales_num[0]->totales)
+                     ->setCellValue('E'.($f2+2), 'Normal:')
+                     ->setCellValue('E'.($f2+3), 'Obeso:')
+                     ->setCellValue('E'.($f2+4), 'Sobrepeso:')
+                     ->setCellValue('E'.($f2+5), 'Desnutrición Aguda:')
+                     ->setCellValue('E'.($f2+6), 'Desnutrición Severa:')
+                     ->setCellValue('E'.($f2+7), 'Desnutrición Crónica:')
+                     ->setCellValue('H'.($f2+2), $datos_num[0]->normales)
+                     ->setCellValue('H'.($f2+3), $datos_num[0]->obesos)
+                     ->setCellValue('H'.($f2+4), $datos_num[0]->sobrepesos)
+                     ->setCellValue('H'.($f2+5), $datos_num[0]->agudas)
+                     ->setCellValue('H'.($f2+6), $datos_num[0]->severos)
+                     ->setCellValue('H'.($f2+7), $datos_num[0]->cronicos);
 
 
 
@@ -297,10 +303,27 @@ class Excel extends CI_Controller {
 
       $datos_aula = $this->Aula->CargarAula($idAula);
       $evaluaciones = $this->Evaluacion->CargarEvaluaciones($idAula);
+
     //  $temp = array();
       //$temp = $this->Evaluacion->VerDetalle2();
       $temp = $evaluaciones;
-      $Z = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AW','AX','AY','AZ'];
+      $Z = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+      'AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AW','AX','AY','AZ',
+      'BA','BB','BC','BD','BE','BF','BG','BH','BI','BJ','BK','BL','BM','BN','BO','BP','BQ','BR','BS','BT','BU','BW','BX','BY','BZ',
+      'CA','CB','CC','CD','CE','CF','CG','CH','CI','CJ','CK','CL','CM','CN','CO','CP','CQ','CR','CS','CT','CU','CW','CX','CY','CZ',
+      'DA','DB','DC','DD','DE','DF','DG','DH','DI','DJ','DK','DL','DM','DN','DO','DP','DQ','DR','DS','DT','DU','DW','DX','DY','DZ',
+      'EA','EB','EC','ED','EE','EF','EG','EH','EI','EJ','EK','EL','EM','EN','EO','EP','EQ','ER','ES','ET','EU','EW','EX','EY','EZ',
+      'FA','FB','FC','FD','FE','FF','FG','FH','FI','FJ','FK','FL','FM','FN','FO','FP','FQ','FR','FS','FT','FU','FW','FX','FY','FZ',
+      'GA','GB','GC','GD','GE','GF','GG','GH','GI','GJ','GK','GL','GM','GN','GO','GP','GQ','GR','GS','GT','GU','GW','GX','GY','GZ',
+      'HA','HB','HC','HD','HE','HF','HG','HH','HI','HJ','HK','HL','HM','HN','HO','HP','HQ','HR','HS','HT','HU','HW','HX','HY','HZ',
+      'IA','IB','IC','ID','IE','IF','IG','IH','II','IJ','IK','IL','IM','IN','IO','IP','IQ','IR','IS','IT','IU','IW','IX','IY','IZ',
+      'JA','JB','JC','JD','JE','JF','JG','JH','JI','JJ','JK','JL','JM','JN','JO','JP','JQ','JR','JS','JT','JU','JW','JX','JY','JZ',
+      'KA','KB','KC','KD','KE','KF','KG','KH','KI','KJ','KK','KL','KM','KN','KO','KP','KQ','KR','KS','KT','KU','KW','KX','KY','KZ',
+      'LA','LB','LC','LD','LE','LF','LG','LH','LI','LJ','LK','LL','LM','LN','LO','LP','LQ','LR','LS','LT','LU','LW','LX','LY','LZ',
+      'MA','MB','MC','MD','ME','MF','MG','MH','MI','MJ','MK','ML','MM','MN','MO','MP','MQ','MR','MS','MT','MU','MW','MX','MY','MZ',
+      'NA','NB','NC','ND','NE','NF','NG','NH','NI','NJ','NK','NL','NM','NN','NO','NP','NQ','NR','NS','NT','NU','NW','NX','NY','NZ',
+      'OA','OB','OC','OD','OE','OF','OG','OH','OI','OJ','OK','OL','OM','ON','OO','OP','OQ','OR','OS','OT','OU','OW','OX','OY','OZ',
+      'PA','PB','PC','PD','PE','PF','PG','PH','PI','PJ','PK','PL','PM','PN','PO','PP','PQ','PR','PS','PT','PU','PW','PX','PY','PZ'];
 
       // configuramos las propiedades del documento
       $this->phpexcel->getProperties()->setCreator("Yliana Deza")
@@ -373,20 +396,20 @@ class Excel extends CI_Controller {
       for ($i=0, $len = count($alumnos); $i < $len; $i++) {
         $c = 2;
         $con = 1;
-        $z = false;
+        $y = false;
         $temp = $this->Evaluacion->VerDetalle2($alumnos[$i]->id);
         //si alumno no tiene ninguna evaluacion
         if(empty($temp)){
           $alumno = $this->Alumno->CargarAlumno($alumnos[$i]->id);
           $this->phpexcel->setActiveSheetIndex(0)
-                    ->setCellValue($Z[0].$f1, $num)
-                    ->setCellValue($Z[1].$f1, $alumno[0]->apellidos.', '.$alumno[0]->nombres);
+                    ->setCellValue('A'.$f1, $num)
+                    ->setCellValue('B'.$f1, $alumno[0]->apellidos.', '.$alumno[0]->nombres);
         } else {
           foreach ($temp as $datos) {
             //$f1 = fila 8
             $edad = $this->Edad->CargarEdad((float)$datos->edad);
             $edad = (empty($edad))?' ':$edad[0]->nombre;
-            if($z){
+            if($y){
               $p = 1;
               $q = 1;
             } else {

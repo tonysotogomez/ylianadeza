@@ -54,7 +54,7 @@
                 </div><!-- /.box-header -->
 
                 <div class="box-body">
-                    <table id="t_alumnos" class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped">
                       <thead>
                         <tr>
                           <th>Nro</th>
@@ -103,6 +103,10 @@
                     </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
+
+            <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+
             </div><!-- /.col -->
           </div><!-- /.row -->
         </section><!-- /.content -->
