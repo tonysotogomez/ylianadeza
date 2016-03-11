@@ -1,5 +1,6 @@
 $(document).ready(function() {
   ListarAlumnos();
+  calcularTotales()
   $('#alumnoModal').on('shown.bs.modal', function(e){
     $.ajax({
         url         : url + "aula/listado_select",
@@ -33,6 +34,27 @@ function Nuevo(){
   $('#alumnoModal').modal('show');
   $("#submit").val('0');
   $('#submit').text('Guardar');
+}
+
+function calcularTotales(){
+  var id = $('#aula_id').val();
+  $.ajax({
+        url         : url + 'aula/calcularTotales',
+        type        : 'POST',
+        cache       : false,
+        dataType    : 'json',
+        data        : {idAula: id},
+        success : function(obj) {
+            html = '';
+            if(obj.rst==1){
+              html+='<span class="text-muted well well-sm no-shadow" style="color:#001F3F;"><i class="fa fa-male"></i> <i class="fa fa-arrow-right"></i>'+obj.hombres+'</span>';
+              html+='<span class="text-muted well well-sm no-shadow" style="color:#D81B60;"><i class="fa fa-female"></i> <i class="fa fa-arrow-right"></i>'+obj.mujeres+'</span>';
+              html+='<span class="text-muted well well-sm no-shadow" style="color:#111111;"><i class="fa fa-users"></i> <i class="fa fa-arrow-right"></i>'+obj.totales+'</span>';
+              $('#contenedor_totales').html(html);
+
+            }
+        }
+    });
 }
 
 function listar_todos(){
@@ -188,6 +210,7 @@ function listar_todos(){
                 if(data.rst==1){
                       $('#t_alumnos').dataTable().fnDestroy();
                       ListarAlumnos();
+                      calcularTotales();
                       $('#alumnoModal .modal-footer [data-dismiss="modal"]').click();
                       mensaje('success', data.msj, 5000);
                   }
@@ -243,6 +266,7 @@ function listar_todos(){
                 if(obj.rst==1){
                     $('#t_alumnos').dataTable().fnDestroy();
                     ListarAlumnos();
+                    calcularTotales();
                 }
                 else{
                     $.each(obj.msj,function(index,datos){

@@ -47,6 +47,7 @@
                         <th>Nro</th>
                         <th>Nombre</th>
                         <th>Fecha</th>
+                        <th>Estado</th>
                         <!--<th>Observaciones</th> -->
                         <th>Opciones</th>
                       </tr>
@@ -57,13 +58,17 @@
                         foreach ($evaluaciones as $eval) {
                           $estadohtml='<span id="'.$eval->id.'" onClick="CambiarEstadoEval('.$eval->id.','.$eval->estado.')" class="btn btn-danger btn-sm">Inactivo</span>';
                           if($eval->estado==1){
-                              $estadohtml='<span id="'.$eval->id.'" onClick="CambiarEstadoEval('.$eval->id.','.$eval->estado.')" class="btn btn-success btn-sm">Activo</span>';
+                            $estadohtml='<span id="'.$eval->id.'" onClick="CambiarEstadoEval('.$eval->id.','.$eval->estado.')" class="btn btn-success btn-sm">Activo</span>';
                           }
-
+                          $completa = '<span class="label label-warning">Incompleta</span>';
+                          if($eval->completado==1){
+                            $completa='<span class="label label-success">Completa</span>';
+                          }
                           echo '<tr>';
                           echo '<td>'.$con.'</td>';
                           echo '<td>'.$eval->nombre.'</td>';
                           echo '<td>'.date('d-m-Y h:m:s', strtotime($eval->fecha)).'</td>';
+                          echo '<td>'.$completa.'</td>';
                           //echo '<td>'.$eval->observacion.'</td>';
                           echo '<td>';
                           echo ' <a href="'.$url.'examen/cargarDetalle/'.$datos_aula[0]->id.'/'.$eval->id.'/'.$con.'"><button type="button" title="Editar" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar</button></a>';

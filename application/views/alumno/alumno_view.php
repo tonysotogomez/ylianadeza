@@ -62,15 +62,8 @@
                       </tr>
                     </tfoot>
                   </table>
-                  <span class="text-muted well well-sm no-shadow" style="color:#001F3F;">
-                    <i class="fa fa-male"></i> <i class="fa fa-arrow-right"> </i><?php echo $hombres[0]->num;?>
-                  </span>
-                  <span class="text-muted well well-sm no-shadow" style="color:#D81B60;">
-                    <i class="fa fa-female"></i> <i class="fa fa-arrow-right"> </i><?php echo $mujeres[0]->num;?>
-                  </span>
-                  <span class="text-muted well well-sm no-shadow" style="color:#111111;">
-                    <i class="fa fa-users"></i> <i class="fa fa-arrow-right"> </i><?php echo $totales[0]->num;?>
-                  </span>
+                  <!-- cantidad de alumnos -->
+                  <div id="contenedor_totales"></div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->

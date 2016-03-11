@@ -3,7 +3,9 @@
         <form id="form_datos" name="form_datos" action="" method="post">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>Evaluación N°<?php echo $count_eval+1; ?>:
+          <h1>Evaluación N°
+            <input type="text" name="txt_numero" id="numero"
+              placeholder="<?php echo $count_eval+1; ?>" style="width:40px;">:
             <input type="text" name="txt_titulo"
               placeholder="Nombre de Evaluacion" value="<?php echo date("F");?>">
             <small>Última evaluación <?php echo  $ult_eval; ?></small>

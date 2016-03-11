@@ -56,4 +56,4 @@
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 <div id="msj" class="msjAlert"></div>
-<?php //$this->load->view('aula/form_aula'); ?>
+<?php $this->load->view('aula/form_aula'); ?>

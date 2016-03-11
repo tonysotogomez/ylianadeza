@@ -25,10 +25,23 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		$this->footer['js_home'] = '<script src="'.base_url().'dist/js/pages/dashboard.js"></script>';
+		// /$this->footer['js_home'] = '<script src="'.base_url().'dist/js/pages/dashboard.js"></script>';
+		$this->load->model("Evaluacion_model","Evaluacion");
+		$data['cantidad'] = $this->Evaluacion->totales();//hombres, mujeres, totales
+
+		$aulas = $this->Aula->CargarAula();
+
+		for ($i=0, $len = count($aulas); $i < $len; $i++) {
+			$cant_eval = $this->Evaluacion->countEvaluacion($aulas[$i]->id);
+			$array[$i]['id'] = $aulas[$i]->id;
+			$array[$i]['nombre'] = $aulas[$i]->titulo;
+			$array[$i]['descripcion'] = $aulas[$i]->edades;
+			$array[$i]['evaluaciones'] = $cant_eval;
+		}
+		$data['aulas'] = $array;
 		$this->load->view('header_view', $this->data);
-		$this->load->view('home_view');
-		$this->load->view('footer_view',$this->footer);
+		$this->load->view('home_view',$data);
+		$this->load->view('footer_view');
 	}
 
 	function logout()

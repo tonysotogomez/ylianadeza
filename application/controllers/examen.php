@@ -151,6 +151,7 @@ class Examen extends CI_Controller {
 	public function verDetalle($idAula, $idEvaluacion,$num)
 	{
 		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
+
 		$evaluaciones = $this->Evaluacion->CargarEvaluaciones($idAula);
 		for ($i=0, $len = count($evaluaciones); $i < $len; $i++) {
 			if ($idEvaluacion == $evaluaciones[$i]->id) {
@@ -161,14 +162,14 @@ class Examen extends CI_Controller {
 			}
 		}
 		$this->data['detalle'] = $this->Evaluacion->VerDetalle($idEvaluacion, $penul_eval);
-
+		$this->data['evaluacion'] = $this->Evaluacion->CargarEvaluacion($idEvaluacion);
 		//datos estadisticos
 		$this->data['datos_num'] = $this->Evaluacion->count_diagnostico($idAula, $idEvaluacion);
 		//echo $this->db->last_query();
 
-		$valores = $this->data['datos_num'];//obtengo aula y lasa cantidades de estados
+		$valores = $this->data['datos_num'];//obtengo aula y las cantidades de estados
 		//cargo script highcharts
- 		$this->footer['js_custom'] = script_pie($num, $valores);
+ 		$this->footer['js_custom'] = script_pie($num, $valores).' '.script_barras($num, $valores);
 
 
 		$this->data['num'] = $num; //numero de evaluacion
@@ -236,31 +237,48 @@ class Examen extends CI_Controller {
 	{
 		if($this->input->is_ajax_request()){
 			$result = false;
+			$con = 0; //contado para completar la evaluacion
 			$alumnos = $this->Alumno->CargarAlumnoID($this->input->post('aula'));
 
-			//actualizo el titulo d ela evaluacion
-			$data['nombre'] = $this->input->post('titulo');
-			$data['id'] = $this->input->post('idEval');
-			$this->Evaluacion->Editar($data);
-			$data['idEvaluacion'] = $this->input->post('txt_idEval');
-			//$data['fecha'] = $this->input->post('fecha_eval');
+
+			/* CALCULO DE LA EVALUACION ANTERIOR */
+			$idEvaluacion = $this->input->post('idEval');
+			$evaluaciones = $this->Evaluacion->CargarEvaluaciones($this->input->post('aula')); //cargas las evaluaciones de la mas antigua a la actual
+			for ($i=0, $len = count($evaluaciones); $i < $len; $i++) {
+				if ($idEvaluacion == $evaluaciones[$i]->id) { //si el id es igual al actual
+					if($i == 0){ $ant_eval = false; break;}//pero es el primero, entonces no hay evaluacion anterior
+					$ant_eval = $evaluaciones[$i-1]->id; break;//pero si no, entonces restamos 1 para encontrar la evaluacion anterior
+				}
+			}
 
 			//NO ES NECESARIO, HASTA FORMATREAR LA DATA
 			$data['idAula'] =  $this->input->post('aula');
 
 			for ($i=0, $len = count($alumnos); $i < $len; $i++) {
-			//	$fecha_nac = $this->input->post('fecha_'.$alumnos[$i]->id);
+				//si la evaluacion anterior no existe
+				if($ant_eval == false){
+					$data['gpeso'] = 0;
+					$data['gtalla'] = 0;
+				} else {
+					//cargo de la evaluacion anterior el detalle del alumno
+					$detalle_ant = $this->Evaluacion->CargarDetalleID($ant_eval, $alumnos[$i]->id);
+					if(! empty($detalle_ant)){
+						$data['gpeso'] = (float)$this->input->post('peso_'.$alumnos[$i]->id) - (float)$detalle_ant[0]->peso;
+						$data['gtalla'] = (float)$this->input->post('talla_'.$alumnos[$i]->id) - (float)$detalle_ant[0]->talla;
+					}
+				}
 
-			//	$edad_decimales = convertir_fecha($fecha_nac);
+
 				$data['idDetalle'] = $this->input->post('detalle_'.$alumnos[$i]->id);
-			//	$data['idAlumno'] = $alumnos[$i]->id;
-			//	$data['edad'] = $edad_decimales;
 			  $data['genero'] = $this->input->post('genero_'.$alumnos[$i]->id);
 			  $data['edad'] = (float)$this->input->post('edad_'.$alumnos[$i]->id);
 				$data['peso'] = (float)$this->input->post('peso_'.$alumnos[$i]->id);
 				$data['talla'] = (float)$this->input->post('talla_'.$alumnos[$i]->id);
 				$data['observaciones'] = $this->input->post('observaciones_'.$alumnos[$i]->id);
 				$data['final'] = $this->input->post('final_'.$alumnos[$i]->id);
+
+				//cuento los diagnosticos finales ingresados
+				if($data['final'] != '-') $con++;
 
 				/* Evaluacion Nutricional */
 				$resultado = evaluar($data);//edad, peso, talla y genero (h o m)
@@ -270,6 +288,15 @@ class Examen extends CI_Controller {
 
 				$result = $this->Evaluacion->EditarDetalle($data);
 			}
+			//verifico si todos los diag.finales estan completos
+			$completado = ($len == $con)?1:0;
+
+			/* DATOS DE LA EVALUACION*/
+			$data['nombre'] = $this->input->post('titulo');
+			$data['id'] = $this->input->post('idEval');
+			$data['numero'] = $this->input->post('numero');
+			$data['completado'] = $completado;
+			$this->Evaluacion->Editar($data);
 
 			if($result) {
 				$data['rst'] = 1;

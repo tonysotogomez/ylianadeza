@@ -26,7 +26,7 @@ date_default_timezone_set('America/Lima');
 
   //de la mas antigua a la mas actual
     public function CargarEvaluaciones($idAula){
-      $this->db->select('id, idAula, nombre, fecha, observacion, estado');
+      $this->db->select('id, idAula, nombre, fecha, observacion, completado, estado');
       $this->db->from('evaluacion');
       $this->db->where('idAula', $idAula);
       $this->db->where('estado', 1);
@@ -35,6 +35,19 @@ date_default_timezone_set('America/Lima');
       $resultado = $consulta->result();
       return $resultado;
     }
+
+    //carga la evaluacion por id
+    public function CargarEvaluacion($idEvaluacion){
+      $query = $this->db->query('SELECT e.nombre, e.numero, e.fecha, a.nombre as aula, count(d.id) as alumnos, e.completado
+                                FROM detalle_evaluacion d
+                                JOIN evaluacion e ON e.id = d.idEvaluacion
+                                JOIN aula a ON a.id = e.idAula
+                                WHERE e.id= '.$idEvaluacion.'
+                                AND e.estado = 1');
+      $resultado = $query->result();
+      return $resultado;
+    }
+
 
 
     public function Crear($data){
@@ -59,7 +72,9 @@ date_default_timezone_set('America/Lima');
 
     public function Editar($data){
       $arr = array(
-                 'nombre' => $data['nombre']
+                 'nombre' => $data['nombre'],
+                 'numero' => $data['numero'],
+                 'completado' => $data['completado']
               );
       $this->db->where('id', $data['id']);
       $this->db->update('evaluacion', $arr);
@@ -100,6 +115,8 @@ date_default_timezone_set('America/Lima');
                  'edad' => $data['edad'],// se edita fecha manualmente, casos especiales
                  'peso' => $data['peso'],
                  'talla' => $data['talla'],
+                 'gpeso' => $data['gpeso'],
+                 'gtalla' => $data['gtalla'],
                  'diagnosticoTE' => $data['talla_edad'],
                  'diagnosticoPE' => $data['peso_edad'],
                  'diagnosticoPT' => $data['peso_talla'],
@@ -122,7 +139,7 @@ date_default_timezone_set('America/Lima');
     }
 
     public function CargarDetalle($idEvaluacion){
-      $this->db->select('d.id, e.fecha, e.nombre as evaluacion, d.idEvaluacion, d.idAlumno, a.nombres, a.apellidos, d.edad, a.genero, d.peso, d.talla, d.fecha, d.observaciones, d.estado, d.diagnosticoTE, d.diagnosticoPE, d.diagnosticoPT, d.idDiagnostico');
+      $this->db->select('d.id, e.fecha, e.nombre as evaluacion, e.numero, d.idEvaluacion, d.idAlumno, a.nombres, a.apellidos, d.edad, a.genero, d.peso, d.talla, d.fecha, d.observaciones, d.estado, d.diagnosticoTE, d.diagnosticoPE, d.diagnosticoPT, d.idDiagnostico');
       $this->db->from('detalle_evaluacion d');
       $this->db->join('alumno a', 'a.id = d.idAlumno');
       $this->db->join('evaluacion e', 'e.id = d.idEvaluacion');
@@ -138,7 +155,7 @@ date_default_timezone_set('America/Lima');
     public function VerDetalle($idEvaluacion, $idEvalAnt){
       $query = $this->db->query('SELECT
                                 d.id,
-                                e.fecha,
+                                e.fecha as fecha_e,
                                 e.nombre AS evaluacion,
                                 d.idEvaluacion,
                                 d.idAlumno,
@@ -175,7 +192,6 @@ date_default_timezone_set('America/Lima');
       return $resultado;
     }
 
-
     public function VerDetalle2($idAlumno = null){
       $and = ($idAlumno)?'AND a.id='.$idAlumno:'';
       $query = $this->db->query("SELECT
@@ -188,7 +204,9 @@ date_default_timezone_set('America/Lima');
                                 	d.edad,
                                 	a.genero,
                                 	d.peso,
+                                  d.gpeso,
                                 	d.talla,
+                                  d.gtalla,
                                 	d.observaciones,
                                 	d.diagnosticoTE,
                                 	d.diagnosticoPE,
@@ -227,7 +245,7 @@ date_default_timezone_set('America/Lima');
       $resultado = $query->result();
       return $resultado;
     }
-
+    //cantidad de alumnos por evaluacion y aula
     public function count_totales($idAula, $idEvaluacion){
       $query = $this->db->query('  SELECT e.nombre as evaluacion, a.nombre as aula,
           (SELECT count(*) FROM detalle_evaluacion d
@@ -250,6 +268,36 @@ date_default_timezone_set('America/Lima');
       return $resultado;
     }
 
+    public function totales(){
+      $query = $this->db->query("SELECT (SELECT count(id) from alumno where estado = 1 and genero='h') as hombres,
+          (SELECT count(id) from alumno where estado = 1 and genero='m') as mujeres,
+          count(id)  as totales
+          FROM alumno
+          where estado = 1");
+      $resultado = $query->result();
+      return $resultado;
+    }
 
+    public function countEvaluacion($idAula){
+      $this->db->from('evaluacion')->where('idAula', $idAula);
+      return $this->db->count_all_results();
+    }
+
+
+    //carga el detalle de evaluacion de un alumno
+    public function CargarDetalleID($idEvaluacion, $idAlumno){
+      $this->db->select('d.id, e.fecha, e.nombre as evaluacion, e.numero, d.idEvaluacion, d.idAlumno, a.nombres, a.apellidos, d.edad, a.genero, d.peso, d.talla, d.fecha, d.observaciones, d.estado, d.diagnosticoTE, d.diagnosticoPE, d.diagnosticoPT, d.idDiagnostico');
+      $this->db->from('detalle_evaluacion d');
+      $this->db->join('alumno a', 'a.id = d.idAlumno');
+      $this->db->join('evaluacion e', 'e.id = d.idEvaluacion');
+      $this->db->where('d.idEvaluacion', $idEvaluacion);
+      $this->db->where('d.idAlumno', $idAlumno);
+      $this->db->where('d.estado', 1);
+      $this->db->order_by('a.apellidos', 'asc');
+    //  $this->db->order_by('fecha', 'desc');
+      $consulta = $this->db->get();
+      $resultado = $consulta->result();
+      return $resultado;
+    }
 
  }

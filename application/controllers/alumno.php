@@ -20,13 +20,8 @@ class Alumno extends CI_Controller {
 
 	public function index()
 	{
-		//totales
-		$this->data['hombres'] = $this->Aula->contarAlumnos('h');
-		$this->data['mujeres'] = $this->Aula->contarAlumnos('m');
-		$this->data['totales'] = $this->Aula->contarAlumnos('all');
-
 		$this->load->view('header_view', $this->header);
-		$this->load->view('alumno/mantenimiento_alumno_view',$this->data);
+		$this->load->view('alumno/mantenimiento_alumno_view');
 		$this->load->view('footer_view', $this->footer);
 	}
 

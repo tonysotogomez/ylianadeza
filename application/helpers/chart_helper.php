@@ -4,7 +4,7 @@ function script_pie($num, $datos)
 {
   $script = "<script>
   $(function () {
-    $('#container').highcharts({
+    $('#pie_container').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -71,7 +71,7 @@ function script_barras($num, $datos)
   $script = "<script>
   $(function () {
     // Create the chart
-    $('#container').highcharts({
+    $('#bar_container').highcharts({
         chart: {
             type: 'column'
         },

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="<?php echo $url;?>dist/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <!--<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">-->
-    <link rel="stylesheet" href="<?php echo $url;?>dist/css/ionicons.min.css">
+    <link rel="stylesheet" href="<?php echo $url;?>dist/ionicons/css/ionicons.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="<?php echo $url;?>plugins/datatables/dataTables.bootstrap.css">
     <!-- Theme style -->
@@ -160,14 +160,9 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-            <li class="header">MANTENIMIENTO</li>
-      <!--  <li><a href="<?php echo $url;?>aula/mantenimiento"><i class="fa fa-folder"></i> <span>Aula</span></a></li> -->
-            <li><a href="<?php echo $url;?>alumno"><i class="fa fa-male"></i> <span>Alumnos</span></a></li>
+            <li class="header">EXAMEN</li>
+            <li><a href="<?php echo $url;?>examen"><i class="fa fa-user-md"></i> <span>Evaluación Nutricional</span></a></li>
 
-        <!--      <li class="header">MANTENIMIENTO</li>
-            <li><a href="<?php echo $url;?>reporte/cred"><i class="fa fa-home"></i> <span>CRED</span></a></li>
-            <li><a href="<?php echo $url;?>diagnostico"><i class="fa fa-home"></i> <span>Aula</span></a></li>
-          -->
             <li class="header">AULAS</li>
             <?php $uri = $this->uri->segment(3);?>
             <li class="treeview <?php echo ($uri==1 or $uri==2)?'active':'';?>">
@@ -175,7 +170,7 @@
               <ul class="treeview-menu">
                 <?php foreach($lactantes as $fila) {
                   $active = ($this->uri->segment(3) == $fila->id)?'active':'';
-                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
+                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'"><i class="fa fa-caret-right"></i>'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
@@ -185,7 +180,7 @@
               <ul class="treeview-menu">
                 <?php foreach($andantes as $fila) {
                   $active = ($this->uri->segment(3) == $fila->id)?'active':'';
-                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
+                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'"><i class="fa fa-caret-right"></i>'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
@@ -195,7 +190,7 @@
               <ul class="treeview-menu">
                 <?php foreach($infantes as $fila) {
                   $active = ($this->uri->segment(3) == $fila->id)?'active':'';
-                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
+                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'"><i class="fa fa-caret-right"></i>'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
@@ -205,14 +200,14 @@
               <ul class="treeview-menu">
                 <?php foreach($jardin as $fila) {
                   $active = ($this->uri->segment(3) == $fila->id)?'active':'';
-                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'">'.$fila->nombre.'</a></li>';
+                  echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'"><i class="fa fa-caret-right"></i>'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
 
-            <li class="header">EXAMEN</li>
-            <li><a href="<?php echo $url;?>examen"><i class="fa fa-heartbeat"></i> <span>Evaluación Nutricional</span></a></li>
-
+            <li class="header">MANTENIMIENTO</li>
+              <li><a href="<?php echo $url;?>aula/mantenimiento"><i class="fa fa-folder"></i> <span>Aula</span></a></li>
+            <li><a href="<?php echo $url;?>alumno"><i class="fa fa-male"></i> <span>Alumnos</span></a></li>
 
           </ul><!-- /.sidebar-menu -->
         </section>

@@ -3,14 +3,12 @@ $(document).ready(function() {
 });
 
 function Nuevo(){
-  $("#txt_apellidos").val('');
-  $("#txt_nombres").val('');
-  $("#txt_titular").val('');
-  $('input[name="radiogenero"][value="h"]').prop('checked', true);
-  $("#txt_fecha").val('');
+  $("#txt_nombre").val('');
+  $("#txt_descripcion").val('');
+  $("#slct_tipo").val('0');
   $("#slct_estado").val('1');
-  $('#alumnoModal').find('.modal-title').text('Nuevo Alumno');
-  $('#alumnoModal').modal('show');
+  $('#aulaModal').find('.modal-title').text('Nueva Aula');
+  $('#aulaModal').modal('show');
   $("#submit").val('0');
   $('#submit').text('Guardar');
 }
@@ -129,10 +127,10 @@ function listar_todos(){
 
 
   function AgregarEditar(AE){
-        var datos=$("#form_alumno").serialize().split("txt_").join("").split("slct_").join("");
-        var accion="alumno/crear";
+        var datos=$("#form_aula").serialize().split("txt_").join("").split("slct_").join("");
+        var accion="aula/crear";
         if(AE==1){
-            accion="alumno/editar";
+            accion="aula/editar";
         }
         $.ajax({
             url         : url + accion,
@@ -146,9 +144,9 @@ function listar_todos(){
             success : function(data) {
                 $(".overlay,.loading-img").remove();
                 if(data.rst==1){
-                      $('#t_alumnos').dataTable().fnDestroy();
-                      ListarAlumnos();
-                      $('#alumnoModal .modal-footer [data-dismiss="modal"]').click();
+                      $('#t_aulas').dataTable().fnDestroy();
+                      ListarAulas();
+                      $('#aulaModal .modal-footer [data-dismiss="modal"]').click();
                       mensaje('success', data.msj, 5000);
                   }
                   else{
@@ -161,26 +159,22 @@ function listar_todos(){
   }
 
   function Cargar(id){
-    $('#alumnoModal').modal('show');
-    $('#alumnoModal').find('.modal-title').text('Editar Alumno');
+    $('#aulaModal').modal('show');
+    $('#aulaModal').find('.modal-title').text('Editar Aula');
     $('#submit').text('Editar');
-    var idAula = $('#aula_id').val();
         $.ajax({
-            url         : url + "alumno/cargar",
+            url         : url + "aula/cargar",
             type        : 'POST',
             cache       : false,
             dataType    : 'json',
-            data        : {id: id, idAula: idAula},
+            data        : {id: id},
             success : function(data) {
-                var alumno = data['alumno'][0];
-                var nac = alumno['fecha'].split("-");
-                $("#txt_id").val(alumno['id']);
-                $("#txt_apellidos").val(alumno['apellidos']);
-                $("#txt_nombres").val(alumno['nombres']);
-                $("#txt_titular").val(alumno['titular']);
-                $('input[name="radiogenero"][value="' + alumno['genero'] + '"]').prop('checked', true);
-                $("#txt_fecha").val(nac[2]+"-"+nac[1]+"-"+nac[0]);
-                $("#slct_estado").val(alumno['estado']);
+                var aula = data['aula'][0];
+                $("#txt_id").val(aula['id']);
+                $("#txt_nombre").val(aula['titulo']);
+                $("#txt_descripcion").val(aula['edades']);
+                $("#slct_tipo").val(aula['idTipo']);
+                $("#slct_estado").val(aula['estado']);
                 $("#submit").val('1');
 
             }
@@ -188,9 +182,9 @@ function listar_todos(){
   }
 
   function CambiarEstado(id,estado){
-        var datos=$("#form_alumno").serialize().split("txt_").join("").split("slct_").join("");
+        var datos=$("#form_aula").serialize().split("txt_").join("").split("slct_").join("");
         $.ajax({
-            url         : url + 'alumno/cambiarestado',
+            url         : url + 'aula/cambiarestado',
             type        : 'POST',
             cache       : false,
             dataType    : 'json',
@@ -201,8 +195,8 @@ function listar_todos(){
             success : function(obj) {
                 $(".overlay,.loading-img").remove();
                 if(obj.rst==1){
-                    $('#t_alumnos').dataTable().fnDestroy();
-                    ListarAlumnos();
+                    $('#t_aula').dataTable().fnDestroy();
+                    ListarAulas();
                 }
                 else{
                     $.each(obj.msj,function(index,datos){

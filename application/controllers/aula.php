@@ -21,14 +21,22 @@ class Aula extends CI_Controller {
 		$this->data['datos_aula'] = $this->Aula->CargarAula($id);
 		$this->data['active'] = '';
 		$this->data['id'] = $id;
-		//totales
-		$this->data['hombres'] = $this->Aula->contarAlumnos('h', $id);
-		$this->data['mujeres'] = $this->Aula->contarAlumnos('m', $id);
-		$this->data['totales'] = $this->Aula->contarAlumnos('all', $id);
-
 		$this->load->view('header_view', $this->header);
 		$this->load->view('alumno/alumno_view',$this->data);
 		$this->load->view('footer_view', $this->footer);
+	}
+
+	public function calcularTotales()
+	{
+		$idAula = $this->input->post('idAula');
+		if(empty($idAula)) $cantidad = $this->Aula->contarallAlumnos();
+		else $cantidad = $this->Aula->contarAlumnos($idAula);
+
+		$data['hombres'] = $cantidad[0]->hombres;
+		$data['mujeres'] = $cantidad[0]->mujeres;
+		$data['totales'] = $cantidad[0]->totales;
+		$data['rst'] = 1;
+		echo json_encode($data);
 	}
 
 	/*Lista todos los alumnos del aula id con estado 1*/
@@ -80,6 +88,71 @@ class Aula extends CI_Controller {
 		$data['listado'] = $this->Aula->CargarAula();
 		$data['rst'] = 1;
 		echo json_encode($data);
+	}
+
+	//MANTENIMIENTO
+
+	public function crear()
+	{
+		if($this->input->is_ajax_request()){
+			$data['nombre'] = $this->input->post('nombre');
+			$data['descripcion'] = $this->input->post('descripcion');
+			$data['tipo'] = $this->input->post('tipo');
+			$data['estado'] = $this->input->post('estado');
+
+			if($this->Aula->Insertar($data)) {
+				$data['rst'] = 1;
+				$data['msj'] = 'Aula registrada correctamente';
+			} else {
+				$data['rst'] = 0;
+				$data['msj'] = 'Ocurrio un error en el registro';
+			}
+			echo json_encode($data);
+		}
+		else echo 'Funcion ajax';
+	}
+
+	public function editar()
+	{
+		if($this->input->is_ajax_request()){
+			$data['id'] = $this->input->post('id');
+			$data['nombre'] = $this->input->post('nombre');
+			$data['descripcion'] = $this->input->post('descripcion');
+			$data['tipo'] = $this->input->post('tipo');
+			$data['estado'] = $this->input->post('estado');
+			if($this->Aula->Editar($data)) {
+				$data['rst'] = 1;
+				$data['msj'] = 'Aula actualizada correctamente';
+			} else {
+				$data['rst'] = 0;
+				$data['msj'] = 'Ocurrio un error en la actualización';
+			}
+			echo json_encode($data);
+		}
+	}
+
+	public function cambiarestado()
+	{
+		$estado = $this->input->post('estado');
+
+		$data['estado'] = ($estado == 1)?'0':'1';
+		$data['id'] = $this->input->post('id');
+
+		if($this->Aula->activardesactivar($data)) {
+			$data['rst'] = 1;
+			$data['msj'] = 'Aula actualizada correctamente';
+		} else {
+			$data['rst'] = 0;
+			$data['msj'] = 'Ocurrio un error en la actualización';
+		}
+		echo json_encode($data);
+	}
+
+	public function cargar()
+	{
+		$id = $this->input->post('id');
+		$data['aula'] = $this->Aula->CargarAula($id);
+		echo json_encode ($data) ;
 	}
 
 }

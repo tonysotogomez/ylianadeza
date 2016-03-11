@@ -192,6 +192,14 @@ $(document).ready(function() {
 
 
     function GuardarEvaluacion(AE){
+          var numero = $('#numero').val();
+
+          if(numero.length < 1){
+            $('#numero').css( "border-color", "#dd4b39" );
+            $('#numero').focus();
+            mensaje('error', 'Completa la casilla con el número de evaluación',4000);
+            return;
+          }
           var datos=$("#form_datos").serialize().split("txt_").join("");
 
           var accion="examen/insertarDetalle";
@@ -212,9 +220,8 @@ $(document).ready(function() {
                   if(data.rst==1){
                       $('#t_alumnos').dataTable().fnDestroy();
                       ListarAlumnos();
+                      mensaje('success', data.msj, 5000)
                       window.location.replace(url + "examen/evaluacion/"+data.aula);
-                      //mensaje('success', data.msj, 5000)
-
                     }
                   else{
                       mensaje('error', data.msj, 5000);
