@@ -25,6 +25,7 @@
     $this->db->select('id, nombre');
     $this->db->from('aula');
     if($idTipo != 0) { $this->db->where('idTipo', $idTipo); }
+    $this->db->where('estado', 1);
     $consulta = $this->db->get();
     $resultado = $consulta->result();
     return $resultado;

@@ -127,6 +127,14 @@ function listar_todos(){
 
 
   function AgregarEditar(AE){
+        var tipo = $('#slct_tipo').val();
+        var nombre = $('#txt_nombre').val();
+        if(tipo == 0) {
+          alert('Selecciona un tipo de aula'); return;
+        }
+        if(nombre.trim() == ''){
+          alert('Ingresa un nombre de aula'); return;
+        }
         var datos=$("#form_aula").serialize().split("txt_").join("").split("slct_").join("");
         var accion="aula/crear";
         if(AE==1){

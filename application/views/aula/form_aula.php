@@ -30,7 +30,7 @@
                         <label for="exampleInputEmail1">Tipo:</label>
                         <select class="form-control" name="slct_tipo" id="slct_tipo">
                             <option value='0'>Seleccione</option>
-                            <option value='1' selected>Andantes</option>
+                            <option value='1' selected>Lactantes</option>
                             <option value='2' selected>Andantes</option>
                             <option value='3' selected>Infantes</option>
                             <option value='4' selected>Jardín</option>
