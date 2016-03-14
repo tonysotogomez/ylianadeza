@@ -69,7 +69,7 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-  <body class="hold-transition skin-green-light fixed">
+  <body class="hold-transition skin-green-light fixed hold-transition lockscreen lock">
     <div class="wrapper">
 
       <!-- Main Header -->
@@ -113,7 +113,7 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Bloquear</a>
+                      <a href="#" class="btn btn-default btn-flat" onclick="lock()">Bloquear</a>
                     </div>
                     <div class="pull-right">
                       <a href="<?php echo $url;?>home/logout" class="btn btn-default btn-flat">Cerrar Sesión</a>

@@ -21,6 +21,23 @@ function mensaje(tipo, texto, tiempo){
     $("#msj").fadeOut(tiempo);
 }
 
+function lock(){
+    $('body').css('overflow', 'hidden');
+    $("body").append('<div class="overlay lockscreen lock" id="block"></div>');
+    $('#block').load(url+'dist/lockscreen.html');
+}
+
+function unlock(){
+  var pass = $('#pass_lock').val();
+  if($.trim(pass) != 'yliana'){
+    alert('Contraseña Incorrecta'); die();
+  } else {
+    $('body').css('overflow', 'scroll');
+    $(".overlay,.lockscreen,.lock").remove();
+    $('#block').remove();
+  }
+}
+
 function totalAlumnos(){
   $.ajax({
         url         : url + 'alumno/total',

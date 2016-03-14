@@ -238,6 +238,9 @@ $(document).ready(function() {
               cache       : false,
               dataType    : 'json',
               data        : {id: id},
+              beforeSend : function() {
+                  $("body").append('<div class="overlay"></div><div class="loading-img"></div>');
+              },
               success : function(data) {
                 if(data.rst==1){
                     location.reload();

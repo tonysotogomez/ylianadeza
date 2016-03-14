@@ -83,7 +83,8 @@
                             <th>N°</th>
                             <th>Nombre</th>
                             <th>Descripcion</th>
-                            <th>Evaluaciones</th>
+                            <th>Evaluaciones<br>Completas</th>
+                            <th>Evaluaciones<br>Incompletas</th>
                           </tr>
                           </thead>
                           <tbody>
@@ -95,6 +96,7 @@
                               echo '<td>'.$a['nombre'].'</td>';
                               echo '<td>'.$a['descripcion'].'</td>';
                               echo '<td>'.$a['evaluaciones'].'</td>';
+                              echo '<td>'.$a['incompletas'].'</td>';
                               echo '</tr>';
                               $con++;
                             }
@@ -104,7 +106,7 @@
                       </div>
                       <!-- /.table-responsive -->
                     </div>
-                    <!-- /.box-body 
+                    <!-- /.box-body
                     <div class="box-footer clearfix">
                       <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
                       <a href="javascript::;" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>

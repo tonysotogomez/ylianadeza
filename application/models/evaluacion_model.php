@@ -278,8 +278,8 @@ date_default_timezone_set('America/Lima');
       return $resultado;
     }
 
-    public function countEvaluacion($idAula){
-      $this->db->from('evaluacion')->where('idAula', $idAula)->where('estado', 1);
+    public function countEvaluacion($idAula, $completado){
+      $this->db->from('evaluacion')->where('idAula', $idAula)->where('estado', 1)->where('completado', $completado);
       return $this->db->count_all_results();
     }
 

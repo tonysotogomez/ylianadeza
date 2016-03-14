@@ -32,11 +32,13 @@ class Home extends CI_Controller {
 		$aulas = $this->Aula->CargarAula();
 
 		for ($i=0, $len = count($aulas); $i < $len; $i++) {
-			$cant_eval = $this->Evaluacion->countEvaluacion($aulas[$i]->id);
+			$cant_eval = $this->Evaluacion->countEvaluacion($aulas[$i]->id,1);
+			$cant_eval2 = $this->Evaluacion->countEvaluacion($aulas[$i]->id,0);
 			$array[$i]['id'] = $aulas[$i]->id;
 			$array[$i]['nombre'] = $aulas[$i]->titulo;
 			$array[$i]['descripcion'] = $aulas[$i]->edades;
 			$array[$i]['evaluaciones'] = $cant_eval;
+			$array[$i]['incompletas'] = $cant_eval2;
 		}
 		$data['aulas'] = $array;
 		$this->load->view('header_view', $this->data);
