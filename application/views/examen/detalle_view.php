@@ -83,7 +83,7 @@
                                   echo '<td>'.diagnostico($datos->diagnosticoTE).'</td>';
                                   echo '<td>'.diagnostico($datos->diagnosticoPE).'</td>';
                                   echo '<td>'.diagnostico($datos->diagnosticoPT).'</td>';
-                                  echo '<td>'.$datos->idDiagnostico.'</td>';
+                                  echo '<td align="center"><b>'.diagnostico($datos->idDiagnostico).'</b></td>';
                               echo '</tr>';
                               $con++;
                             }
@@ -113,7 +113,7 @@
                         <div class="col-xs-12 col-sm-6">
                           <dl class="dl-horizontal">
                             <dt>Nombre de Aula</dt>
-                            <dd>Caracolitos</dd>
+                            <dd><?php echo $evaluacion[0]->aula;?></dd>
                             <dt>N° de Evaluación</dt>
                             <dd><?php echo $evaluacion[0]->numero;?></dd>
                             <dt>Nombre de Evaluación</dt>

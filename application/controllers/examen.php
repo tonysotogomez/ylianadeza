@@ -254,6 +254,7 @@ class Examen extends CI_Controller {
 			//NO ES NECESARIO, HASTA FORMATREAR LA DATA
 			$data['idAula'] =  $this->input->post('aula');
 
+			//guardo la ganancia de peso y talla
 			for ($i=0, $len = count($alumnos); $i < $len; $i++) {
 				//si la evaluacion anterior no existe
 				if($ant_eval == false){
@@ -265,6 +266,10 @@ class Examen extends CI_Controller {
 					if(! empty($detalle_ant)){
 						$data['gpeso'] = (float)$this->input->post('peso_'.$alumnos[$i]->id) - (float)$detalle_ant[0]->peso;
 						$data['gtalla'] = (float)$this->input->post('talla_'.$alumnos[$i]->id) - (float)$detalle_ant[0]->talla;
+						if($detalle_ant[0]->peso == 0 OR $detalle_ant[0]->talla){
+							$data['gpeso'] = 0;
+							$data['gtalla'] = 0;
+						}
 					}
 				}
 

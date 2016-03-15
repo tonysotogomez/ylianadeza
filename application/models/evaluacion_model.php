@@ -26,7 +26,7 @@ date_default_timezone_set('America/Lima');
 
   //de la mas antigua a la mas actual
     public function CargarEvaluaciones($idAula){
-      $this->db->select('id, idAula, nombre, fecha, observacion, completado, estado');
+      $this->db->select('id, idAula, nombre, numero, fecha, observacion, completado, estado');
       $this->db->from('evaluacion');
       $this->db->where('idAula', $idAula);
       $this->db->where('estado', 1);

@@ -69,7 +69,7 @@
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
-  <body class="hold-transition skin-green-light fixed hold-transition lockscreen lock">
+  <body class="hold-transition skin-green-light fixed">
     <div class="wrapper">
 
       <!-- Main Header -->

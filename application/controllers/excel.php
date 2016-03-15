@@ -306,7 +306,7 @@ class Excel extends CI_Controller {
 
     //  $temp = array();
       //$temp = $this->Evaluacion->VerDetalle2();
-      $temp = $evaluaciones;
+      //$temp = $evaluaciones;
       $Z = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
       'AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AW','AX','AY','AZ',
       'BA','BB','BC','BD','BE','BF','BG','BH','BI','BJ','BK','BL','BM','BN','BO','BP','BQ','BR','BS','BT','BU','BW','BX','BY','BZ',
@@ -375,21 +375,21 @@ class Excel extends CI_Controller {
                   ->setCellValue('B'.$fila, 'APELLIDOS Y NOMBRES');
 
       for ($i=0, $leng = count($evaluaciones); $i < $leng; $i++) {
+        $this->phpexcel->setActiveSheetIndex(0)->mergeCells($Z[$b].$filas.':'.$Z[$b+8].$filas);
+      //$this->phpexcel->setActiveSheetIndex(0)->mergeCells('C'.$filas.':K'.$filas);
 
-      $this->phpexcel->setActiveSheetIndex(0)->mergeCells($Z[$b].$filas.':'.$Z[$b+6].$filas);
-      $this->phpexcel->setActiveSheetIndex(0)->setCellValue($Z[$b].$filas, 'EVALUACION N°'.($i+1));
-      $this->phpexcel->setActiveSheetIndex(0)
-              ->setCellValue($Z[$b].$fila, 'EDAD')
-              ->setCellValue($Z[$b+1].$fila, 'PESO')
-              ->setCellValue($Z[$b+2].$fila, 'G.PESO')
-              ->setCellValue($Z[$b+3].$fila, 'TALLA')
-              ->setCellValue($Z[$b+4].$fila, 'G.TALLA')
-              ->setCellValue($Z[$b+5].$fila, 'T/E')
-              ->setCellValue($Z[$b+6].$fila, 'P/E')
-              ->setCellValue($Z[$b+7].$fila, 'P/T')
-              ->setCellValue($Z[$b+8].$fila, 'D. NUTRICIONAL');
-      $b = $b+9;
-
+        $this->phpexcel->setActiveSheetIndex(0)->setCellValue($Z[$b].$filas, 'EVALUACION N°'.$evaluaciones[$i]->numero.' ('.date("d-m-Y",strtotime($evaluaciones[$i]->fecha)).')');
+        $this->phpexcel->setActiveSheetIndex(0)
+                ->setCellValue($Z[$b].$fila, 'EDAD')
+                ->setCellValue($Z[$b+1].$fila, 'PESO')
+                ->setCellValue($Z[$b+2].$fila, 'G.PESO')
+                ->setCellValue($Z[$b+3].$fila, 'TALLA')
+                ->setCellValue($Z[$b+4].$fila, 'G.TALLA')
+                ->setCellValue($Z[$b+5].$fila, 'T/E')
+                ->setCellValue($Z[$b+6].$fila, 'P/E')
+                ->setCellValue($Z[$b+7].$fila, 'P/T')
+                ->setCellValue($Z[$b+8].$fila, 'D. NUTRICIONAL');
+        $b = $b+9;
         $con2++;
       }
     //FIN CABECERAS
@@ -398,7 +398,7 @@ class Excel extends CI_Controller {
       $alumnos = $this->Aula->CargarAlumnos($idAula);
       $num = 1;
       for ($i=0, $len = count($alumnos); $i < $len; $i++) {
-        $c = 2;
+        $c = 2;//a partir de la columna 2 :: (A,B)
         $con = 1;
         $y = false;
         $temp = $this->Evaluacion->VerDetalle2($alumnos[$i]->id);
@@ -408,6 +408,7 @@ class Excel extends CI_Controller {
           $this->phpexcel->setActiveSheetIndex(0)
                     ->setCellValue('A'.$f1, $num)
                     ->setCellValue('B'.$f1, $alumno[0]->apellidos.', '.$alumno[0]->nombres);
+          $c+=9;
         } else {
           foreach ($temp as $datos) {
             //$f1 = fila 8
@@ -425,8 +426,8 @@ class Excel extends CI_Controller {
                       ->setCellValue($Z[0].$f1, $num)
                       ->setCellValue($Z[1].$f1, $datos->alumno);
 
-
-            if(($p - $q) == 0){
+            //total evaluaciones del aula - total evaluaciones de 1 alumno
+            if(($p - $q) == 0){//si es 0 entonces no tiene falta de evaluacion
               $this->phpexcel->setActiveSheetIndex(0)
                       ->setCellValue($Z[$c].$f1, $edad)
                       ->setCellValue($Z[$c+1].$f1, $datos->peso)
@@ -437,7 +438,6 @@ class Excel extends CI_Controller {
                       ->setCellValue($Z[$c+6].$f1, $datos->diagnosticoPE)
                       ->setCellValue($Z[$c+7].$f1, $datos->diagnosticoPT)
                       ->setCellValue($Z[$c+8].$f1, $datos->idDiagnostico);
-              $c = $c+9;
             } else {
               $c = $c + (9*($p - $q)); //validacion para alumnos que no estuvieron en evaluaciones pasadas
               $this->phpexcel->setActiveSheetIndex(0)
@@ -450,9 +450,9 @@ class Excel extends CI_Controller {
                       ->setCellValue($Z[$c+6].$f1, $datos->diagnosticoPE)
                       ->setCellValue($Z[$c+7].$f1, $datos->diagnosticoPT)
                       ->setCellValue($Z[$c+8].$f1, $datos->idDiagnostico);
-              $z = true;
-              $c = $c+9;
+              $y = true;
             }
+            $c+=9;
             $con++;
           }//end foreach
         } //end if alumno no tiene ninguna evaluacion pero esta activo
@@ -460,7 +460,6 @@ class Excel extends CI_Controller {
         $num++;
       }
     //FIN CONTENIDO
-               
 
       //agrego estilos
       $border_style= array(
@@ -475,11 +474,11 @@ class Excel extends CI_Controller {
       );
 
       $sheet = $this->phpexcel->getActiveSheet();
-      $sheet->getStyle("A".$filas.":".$Z[($c-1)].($f1-1))->applyFromArray($border_style);
+      $sheet->getStyle('C'.$filas.':K'.$filas)->applyFromArray($center_style);
       $sheet->getStyle("A".$filas.":".$Z[($c-1)].$fila)->applyFromArray($center_style)->getFont()->setBold(true);
       $sheet->getStyle("A".$fila.":A".($f1-1))->applyFromArray($center_style);
-    //  $sheet->getStyle("C".$fila.":C".($f2-1))->applyFromArray($center_style);
 
+      $sheet->getStyle("A".$filas.":".$Z[($c-1)].($f1-1))->applyFromArray($border_style);
       // renombro la hoja de trabajo con el nombre del aula
       $this->phpexcel->getActiveSheet()->setTitle($datos_aula[0]->titulo);
 
@@ -492,7 +491,7 @@ class Excel extends CI_Controller {
 
       //redireccionamos la salida al navegador del cliente (Excel2007)
       header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      header('Content-Disposition: attachment;filename="Evaluaciones - '.$datos_aula[0]->titulo.'_.xlsx"');
+      header('Content-Disposition: attachment;filename="Evaluaciones - '.$datos_aula[0]->titulo.'.xlsx"');
       header('Cache-Control: max-age=0');
 
       $objWriter = PHPExcel_IOFactory::createWriter($this->phpexcel, 'Excel2007');

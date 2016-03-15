@@ -169,6 +169,8 @@ if(!function_exists('evaluar'))
 					break;
 				case 'Desnutrición Aguda': $color = '<span class="text-red">'.$resultado.'</span>';
 					break;
+				case 'Desnutrición Crónica': $color = '<span class="text-red">'.$resultado.'</span>';
+					break;
 				case 'Desnutrición': $color = '<span class="text-red">'.$resultado.'</span>';
 					break;
 				case 'Normal': $color = '<span class="text-light-blue">'.$resultado.'</span>';
