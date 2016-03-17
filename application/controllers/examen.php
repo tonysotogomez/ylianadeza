@@ -187,6 +187,7 @@ class Examen extends CI_Controller {
 			//Creo la evaluacion
 			$data['idAula'] = $this->input->post('aula');
 			$data['nombre'] = $this->input->post('titulo');
+			$data['numero'] = $this->input->post('numero');
 			$data['fecha'] = date("Y-m-d");
 			$this->Evaluacion->Crear($data);
 

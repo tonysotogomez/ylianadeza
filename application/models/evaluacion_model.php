@@ -54,6 +54,7 @@ date_default_timezone_set('America/Lima');
       $arr = array(
                  'idAula' => $data['idAula'],
                  'nombre' => $data['nombre'],
+                 'numero' => $data['numero'],
                  'fecha' => date("Y-m-d H:i:s")
               );
       $this->db->insert('evaluacion', $arr);
@@ -87,6 +88,8 @@ date_default_timezone_set('America/Lima');
       $this->db->where('id', $id);
       $this->db->update('evaluacion', $arr);
     }
+
+
 
     //tabla  DETALLE_EVALUACION
     public function InsertarDetalle($data){
@@ -270,8 +273,7 @@ date_default_timezone_set('America/Lima');
 
     public function totales(){
       $query = $this->db->query("SELECT (SELECT count(id) from alumno where estado = 1 and genero='h') as hombres,
-          (SELECT count(id) from alumno where estado = 1 and genero='m') as mujeres,
-          count(id)  as totales
+          (SELECT count(id) from alumno where estado = 1 and genero='m') as mujeres, count(id)  as totales
           FROM alumno
           where estado = 1");
       $resultado = $query->result();
@@ -299,5 +301,32 @@ date_default_timezone_set('America/Lima');
       $resultado = $consulta->result();
       return $resultado;
     }
+    //obtengo numero de evaluaciones, completado y totales
+    public function getNumeroEvaluaciones(){
+      $query = $this->db->query("SELECT e.numero, DATE_FORMAT(MAX(e.fecha),'%d %b %Y - %h:%i %p') as fecha,count(e.id) as cantidad, (select count(*) from aula where estado=1) as total
+        FROM `evaluacion` e
+        JOIN aula a ON a.id = e.idAula
+        WHERE e.estado = 1
+        AND a.estado = 1
+        GROUP BY numero");
+      $resultado = $query->result();
+      return $resultado;
+    }
+
+    //obtengo el nombre de aula, evaluacion, fecha, diagnostico, cantidad
+    public function reporteEvaluacionAula($idEvaluacion){
+      $query = $this->db->query("SELECT a.nombre as aula, e.nombre as evaluacion,
+          date(e.fecha), d.nombre as diagnostico,count(de.idDiagnostico) as total
+          FROM `detalle_evaluacion` de
+          JOIN diagnostico d ON d.id = de.idDiagnostico
+          JOIN evaluacion e ON e.id = de.idEvaluacion
+          JOIN aula a ON a.id = de.idAula
+          WHERE de.estado = 1
+          AND de.idEvaluacion = $idEvaluacion
+          GROUP BY de.idDiagnostico");
+      $resultado = $query->result();
+      return $resultado;
+    }
+
 
  }

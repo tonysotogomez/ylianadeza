@@ -107,6 +107,7 @@
     $this->db->from('aula');
     $this->db->join('tipo', 'aula.idTipo = tipo.id');
     if($idAula) { $this->db->where('aula.id', $idAula); }
+    $this->db->where('aula.estado',1); //estado 0 es desactivado
     $consulta = $this->db->get();
     $resultado = $consulta->result();
     return $resultado;

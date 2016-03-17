@@ -206,8 +206,9 @@
             </li>
 
             <li class="header">MANTENIMIENTO</li>
-              <li><a href="<?php echo $url;?>aula/mantenimiento"><i class="fa fa-folder"></i> <span>Aula</span></a></li>
+            <li><a href="<?php echo $url;?>aula/mantenimiento"><i class="fa fa-folder"></i> <span>Aula</span></a></li>
             <li><a href="<?php echo $url;?>alumno"><i class="fa fa-male"></i> <span>Alumnos</span></a></li>
+            <li><a href="<?php echo $url;?>evaluacion"><i class="fa fa-book"></i> <span>Evaluaciones</span></a></li>
 
           </ul><!-- /.sidebar-menu -->
         </section>

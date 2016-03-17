@@ -82,9 +82,9 @@
                           <tr>
                             <th>N°</th>
                             <th>Nombre</th>
-                            <th>Descripcion</th>
                             <th>Evaluaciones<br>Completas</th>
                             <th>Evaluaciones<br>Incompletas</th>
+                            <th>Enlace</th>
                           </tr>
                           </thead>
                           <tbody>
@@ -94,9 +94,9 @@
                               echo '<tr>';
                               echo '<td>'.$con.'</td>';
                               echo '<td>'.$a['nombre'].'</td>';
-                              echo '<td>'.$a['descripcion'].'</td>';
                               echo '<td>'.$a['evaluaciones'].'</td>';
                               echo '<td>'.$a['incompletas'].'</td>';
+                              echo '<td><a href="'.$url.'examen/evaluacion/'.$a['id'].'"><button type="button" title="Ir al aula" class="btn btn-info btn-sm"><i class="fa fa-share-square-o"></i></button></a></td>';
                               echo '</tr>';
                               $con++;
                             }
@@ -116,8 +116,46 @@
           </section>
 
           <section class="col-lg-5 connectedSortable">
+            <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Evaluaciones</h3>
 
-          </section>
-        </section><!-- /.content -->
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <p class="text-center">
+                <strong>Cantidad de evaluaciones totales / aulas</strong>
+              </p>
+              <?php
+              foreach ($widget_2 as $w) {
+                $porcentaje = $w->cantidad*100/$w->total;
+                echo '<div class="col-sm-9">';
+                echo '<div class="progress-group">';
+                echo ' <span class="progress-text">Evaluación N°'.$w->numero.'</span>';
+                echo '  <span class="progress-number"><b>'.$w->cantidad.'</b>/'.$w->total.' aulas</span>';
+                echo '  <div class="progress sm">';
+                echo '    <div class="progress-bar progress-bar-green" style="width: '.$porcentaje.'%"></div>';
+                echo '  </div>';
+                echo '</div></div>';
+                echo '<div class="col-sm-3">';
+                echo '<a href="'.$url.'examen/evaluacion/'.$w->numero.'"><button type="button" class="btn btn-default btn-sm" title="Descargar Excel">
+                  <i class="fa fa-download"></i></button></a>';
+                echo ' <a href="'.$url.'examen/evaluacion/'.$w->numero.'"><button type="button" class="btn btn-info btn-sm" title="Ir a la Evaluación '.$w->numero.'">
+                    <i class="fa fa-share-square-o"></i></button></a>';
+                echo '</div>';
+              }
 
-      </div><!-- /.content-wrapper -->
+
+
+              ?>
+              <!-- /.progress-group -->
+            </div>
+          </div>
+        </section>
+      </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->

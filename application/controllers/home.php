@@ -41,6 +41,10 @@ class Home extends CI_Controller {
 			$array[$i]['incompletas'] = $cant_eval2;
 		}
 		$data['aulas'] = $array;
+
+		$data['widget_2'] = $this->Evaluacion->getNumeroEvaluaciones();//obtengo numero de evaluaciones
+
+
 		$this->load->view('header_view', $this->data);
 		$this->load->view('home_view',$data);
 		$this->load->view('footer_view');
