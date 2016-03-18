@@ -34,7 +34,7 @@ $(document).ready(function() {
         html+="<tr>"+
             "<td>N°"+data.numero+"</td>"+
             "<td>"+data.fecha+"</td>"+
-            "<td><label class='label bg-red'>"+data.cantidad+"</label> aulas</td>"+
+            "<td><label class='label bg-green'>"+data.cantidad+"</label> aulas</td>"+
             "<td>"+data.total+" aulas</td>"+
             '<td><button type="button" title="Ver" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></button>';
           //  ' <a href="'+url+'alumno/perfil/'+data.id+'"><button title="Historial" type="button" class="btn btn-sm btn-info"><i class="fa fa-area-chart"></i></button></a></td>';

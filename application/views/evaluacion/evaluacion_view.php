@@ -27,7 +27,7 @@
                       <tr>
                         <th style="width: 10px;">Evaluación</th>
                         <th style="width: 100px;">Ultima Evaluación</th>
-                        <th style="width: 100px;">Faltantes</th>
+                        <th style="width: 100px;">Aulas</th>
                         <th style="width: 10px;">Total Aulas</th>
                         <th style="width: 25px;">Opciones</th>
                       </tr>
@@ -38,8 +38,8 @@
                       <tr>
                         <th style="width: 10px;">Evaluación</th>
                         <th style="width: 100px;">Ultima Evaluación</th>
-                        <th style="width: 100px;">Cantidad</th>
-                        <th style="width: 10px;">Restantes</th>
+                        <th style="width: 100px;">Aulas</th>
+                        <th style="width: 10px;">Total Aulas</th>
                         <th style="width: 25px;">Opciones</th>
                       </tr>
                     </tfoot>
