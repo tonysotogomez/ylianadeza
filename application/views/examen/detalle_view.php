@@ -1,5 +1,5 @@
 <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="tony">
       <form id="form_datos" name="form_datos" action="" method="post">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -148,10 +148,10 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 col-sm-6 col-lg-6">
                           <div id="pie_container"></div>
                         </div>
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 col-sm-6 col-lg-6">
                           <div id="bar_container"></div>
                         </div>
                       </div>

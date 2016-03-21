@@ -169,7 +169,8 @@ class Examen extends CI_Controller {
 
 		$valores = $this->data['datos_num'];//obtengo aula y las cantidades de estados
 		//cargo script highcharts
- 		$this->footer['js_custom'] = script_pie($num, $valores).' '.script_barras($num, $valores);
+		$new = '<script>$("#tony").resize();</script>';
+ 		$this->footer['js_custom'] = script_pie($num, $valores).' '.script_barras($num, $valores).' '.$new;
 
 
 		$this->data['num'] = $num; //numero de evaluacion

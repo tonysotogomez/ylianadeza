@@ -5,6 +5,10 @@ function script_pie($num, $datos)
   $script = "<script>
   $(function () {
     $('#pie_container').highcharts({
+        credits: {
+              text: 'SoftGroup Perú',
+              href: 'http://softgroup-peru.com/'
+          },
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
@@ -12,7 +16,7 @@ function script_pie($num, $datos)
             type: 'pie'
         },
         title: {
-            text: 'Resultados Evaluacion N°1'
+            text: 'Resultados Evaluacion N°$num'
         },
         subtitle: {
             text: '".$datos[0]->aula."'
@@ -37,25 +41,25 @@ function script_pie($num, $datos)
             name: 'Alumnos',
             colorByPoint: true,
             data: [{
-                name: 'Normales',
+                name: 'Normal',
                 y: ".$datos[0]->normales.",
                 sliced: true,
                 selected: true
             }, {
-                name: 'Obesos',
+                name: 'Obesidad',
                 y: ".$datos[0]->obesos."
 
             }, {
-                name: 'Sobrepesos',
+                name: 'Sobrepeso',
                 y: ".$datos[0]->sobrepesos."
             }, {
-                name: 'Desnutricion Aguda',
+                name: 'Desnutrición Aguda',
                 y: ".$datos[0]->agudas."
             },{
-                name: 'Desnutricion Severa',
+                name: 'Desnutrición Severa',
                 y: ".$datos[0]->severos."
             }, {
-                name: 'Desnutricion Cronica',
+                name: 'Desnutrición Crónica',
                 y: ".$datos[0]->cronicos."
             }]
         }]
@@ -72,11 +76,15 @@ function script_barras($num, $datos)
   $(function () {
     // Create the chart
     $('#bar_container').highcharts({
+        credits: {
+              text: 'SoftGroup Perú',
+              href: 'http://softgroup-peru.com/'
+          },
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Resultados Evaluacion N°1'
+            text: 'Resultados Evaluacion N°$num'
         },
         subtitle: {
             text: '".$datos[0]->aula."'
@@ -112,22 +120,22 @@ function script_barras($num, $datos)
             name: 'Alumnos',
             colorByPoint: true,
             data: [{
-                name: 'Normales',
+                name: 'Normal',
                 y: ".$datos[0]->normales."
             }, {
-                name: 'Obesos',
+                name: 'Obesidad',
                 y: ".$datos[0]->obesos."
             }, {
-                name: 'Sobrepesos',
+                name: 'Sobrepeso',
                 y: ".$datos[0]->sobrepesos."
             }, {
-                name: 'Desnutricion Aguda',
+                name: 'Desnutrición Aguda',
                 y: ".$datos[0]->agudas."
             }, {
-                name: 'Desnutricion Severa',
+                name: 'Desnutrición Severa',
                 y: ".$datos[0]->severos."
             }, {
-                name: 'Desnutricion Cronica',
+                name: 'Desnutrición Crónica',
                 y: ".$datos[0]->cronicos."
             }]
         }]
