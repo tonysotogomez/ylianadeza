@@ -6,7 +6,7 @@
           <h1>Evaluación N°<?php echo $num; ?>:
             <?php echo $detalle[0]->evaluacion;?>
               <input type="hidden" name="txt_idEval" value="<?php echo $detalle[0]->idEvaluacion;?>">
-            <small>Fecha Evaluación <?php echo  date('d-m-Y H:i:s', strtotime($detalle[0]->fecha_e)); ?></small>
+            <small>Fecha Evaluación <?php echo  date('d/m/Y - h:i A', strtotime($evaluacion[0]->fecha)); ?></small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?php echo $url;?>"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -126,12 +126,12 @@
                             <dd><?php
                             $completado = ($evaluacion[0]->completado==1)?'<span class="label label-success">Completa</span>':'<span class="label label-warning">Incompleta</span>';
                             echo $completado;?></dt>
-                            <dt>Cantidad de Alumnos</dd>
-                            <dd><?php echo $evaluacion[0]->alumnos;?></dt>
                           </dl>
                         </div>
                         <div class="col-xs-12 col-sm-6">
                           <dl class="dl-horizontal">
+                            <dt>Cantidad de Alumnos</dd>
+                            <dd><?php echo $evaluacion[0]->alumnos;?></dt>
                             <dt>Normal</dt>
                             <dd><?php echo $datos_num[0]->normales; ?></dd>
                             <dt>Obeso</dt>
@@ -147,11 +147,13 @@
                           </dl>
                         </div>
                       </div>
-                      <div class="col-xs-12 col-sm-6">
-                        <div id="pie_container"></div>
-                      </div>
-                      <div class="col-xs-12 col-sm-6">
-                        <div id="bar_container"></div>
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                          <div id="pie_container"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                          <div id="bar_container"></div>
+                        </div>
                       </div>
                     </div>
                 </div><!-- /.tab-pane -->

@@ -31,12 +31,18 @@ $(document).ready(function() {
     $('#t_evaluaciones').dataTable().fnDestroy();
 
     $.each(datos,function(index,data){
+       if (data.cantidad == 1) var aulas = data.cantidad+' aula de <b>'+data.total+'</b>';
+       else var aulas = data.cantidad+' aulas de <b>'+data.total+'</b>';
+
+       if (data.cantidad == data.total) aulas = '<b>Todas</b> las aulas';
+
+       var descripcion = aulas+' han realizado la evaluación N°'+data.numero;
+
         html+="<tr>"+
             "<td>N°"+data.numero+"</td>"+
             "<td>"+data.fecha+"</td>"+
-            "<td><label class='label bg-green'>"+data.cantidad+"</label> aulas</td>"+
-            "<td>"+data.total+" aulas</td>"+
-            '<td><button type="button" title="Ver" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></button>';
+            "<td>"+descripcion+"</td>"+
+            '<td><button type="button" title="Descargar Excel" class="btn btn-sm btn-default disabled"><i class="fa fa-download"></i> Descargar Reporte</button>';
           //  ' <a href="'+url+'alumno/perfil/'+data.id+'"><button title="Historial" type="button" class="btn btn-sm btn-info"><i class="fa fa-area-chart"></i></button></a></td>';
         html+="</tr>";
     });

@@ -67,7 +67,7 @@
                           echo '<tr>';
                           echo '<td>'.$con.'</td>';
                           echo '<td>'.$eval->nombre.'</td>';
-                          echo '<td>'.date('d-m-Y h:m:s', strtotime($eval->fecha)).'</td>';
+                          echo '<td>'.date('d/m/Y - h:i A', strtotime($eval->fecha)).'</td>';
                           echo '<td>'.$completa.'</td>';
                           //echo '<td>'.$eval->observacion.'</td>';
                           echo '<td>';

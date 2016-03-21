@@ -129,17 +129,19 @@
             <!-- /.box-header -->
             <div class="box-body">
               <p class="text-center">
-                <strong>Cantidad de evaluaciones totales / aulas</strong>
+                <strong>Evaluaciones realizadas</strong> / Total de aulas
               </p>
               <?php
               foreach ($widget_2 as $w) {
                 $porcentaje = $w->cantidad*100/$w->total;
+                $color = ($porcentaje == 100)?'green':'yellow';
+                $style = ($porcentaje == 100)?'':'progress-striped active';
                 echo '<div class="col-sm-9">';
                 echo '<div class="progress-group">';
                 echo ' <span class="progress-text">Evaluación N°'.$w->numero.'</span>';
                 echo '  <span class="progress-number"><b>'.$w->cantidad.'</b>/'.$w->total.' aulas</span>';
-                echo '  <div class="progress sm">';
-                echo '    <div class="progress-bar progress-bar-green" style="width: '.$porcentaje.'%"></div>';
+                echo '  <div class="progress sm '.$style.'">';
+                echo '    <div class="progress-bar progress-bar-'.$color.'" style="width: '.$porcentaje.'%"></div>';
                 echo '  </div>';
                 echo '</div></div>';
                 echo '<div class="col-sm-3">';

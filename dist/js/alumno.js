@@ -126,7 +126,7 @@ function listar_todos(){
         con++;
         if(data.fecha_nacimiento != null){
           var nac = (data.fecha_nacimiento).split("-");
-          fecha = nac[2]+"-"+nac[1]+"-"+nac[0];
+          fecha = nac[2]+"/"+nac[1]+"/"+nac[0];
         } else fecha = "No registrado";
         if(nac[0] == 1970) fecha = " ";
 
