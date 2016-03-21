@@ -328,5 +328,27 @@ date_default_timezone_set('America/Lima');
       return $resultado;
     }
 
+    //cuenta el numero total de evaluaciones de todas las aulas
+    public function countEvaluaciones(){
+      $this->db->select('count(*) as totales');
+      $this->db->select('(SELECT count(id) FROM evaluacion WHERE completado = 1 and estado=1) as completo');
+      $this->db->select('(SELECT count(id) FROM evaluacion WHERE completado = 0 AND estado=1) as incompleto');
+      $this->db->from('evaluacion');
+      $this->db->where('estado', 1);
+      $consulta = $this->db->get();
+      $resultado = $consulta->result();
+      return $resultado;
+    }
 
+    //obtengo las evaluaciones  N°X de todas las aulas
+    public function getEvaluacioNumero($num,$completado = null){
+      $this->db->select('id, idAula');
+      $this->db->from('evaluacion');
+      $this->db->where('estado', 1);
+      $this->db->where('numero', $num);
+      if(isset($completado)) $this->db->where('completado', $completado);
+      $consulta = $this->db->get();
+      $resultado = $consulta->result();
+      return $resultado;
+    }
  }

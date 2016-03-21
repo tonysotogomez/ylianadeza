@@ -27,7 +27,8 @@ class Home extends CI_Controller {
 	{
 		// /$this->footer['js_home'] = '<script src="'.base_url().'dist/js/pages/dashboard.js"></script>';
 		$this->load->model("Evaluacion_model","Evaluacion");
-		$data['cantidad'] = $this->Evaluacion->totales();//hombres, mujeres, totales
+		$data['info_box1'] = $this->Evaluacion->totales();//hombres, mujeres, totales
+		$data['info_box2'] = $this->Evaluacion->countEvaluaciones();//count evaluaciones
 
 		$aulas = $this->Aula->CargarAula();
 
@@ -40,10 +41,9 @@ class Home extends CI_Controller {
 			$array[$i]['evaluaciones'] = $cant_eval;
 			$array[$i]['incompletas'] = $cant_eval2;
 		}
-		$data['aulas'] = $array;
+		$data['widget_1'] = $array;
 
 		$data['widget_2'] = $this->Evaluacion->getNumeroEvaluaciones();//obtengo numero de evaluaciones
-
 
 		$this->load->view('header_view', $this->data);
 		$this->load->view('home_view',$data);

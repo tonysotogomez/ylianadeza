@@ -4,7 +4,7 @@
         <section class="content-header">
           <h1>
             Evaluaciones
-            <small>asdf</small>
+            <small>Listado</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?php echo $url;?>"><i class="fa fa-dashboard"></i> Inicio</a></li>
@@ -19,16 +19,16 @@
 
               <div class="box box-success">
                 <div class="box-header">
-                  <h3 class="box-title">Listado de Evaluaciones</h3>
+                  <h3 class="box-title">Listado de Evaluaciones realizadas hasta la fecha</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="t_evaluaciones" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th style="width: 10px;">Evaluación</th>
-                        <th style="width: 100px;">Ultima Evaluación</th>
+                        <th style="width: 50px;">Ultima Evaluación</th>
                         <th style="width: 200px;">Descripción</th>
-                        <th style="width: 25px;">Opciones</th>
+                        <th style="width: 100px;">Opciones</th>
                       </tr>
                     </thead>
                     <tbody id="tb_evaluaciones">
@@ -36,9 +36,9 @@
                     <tfoot>
                       <tr>
                         <th style="width: 10px;">Evaluación</th>
-                        <th style="width: 100px;">Ultima Evaluación</th>
+                        <th style="width: 50px;">Ultima Evaluación</th>
                         <th style="width: 200px;">Descripción</th>
-                        <th style="width: 25px;">Opciones</th>
+                        <th style="width: 100px;">Opciones</th>
                       </tr>
                     </tfoot>
                   </table>

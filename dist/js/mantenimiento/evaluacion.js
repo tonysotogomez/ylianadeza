@@ -31,10 +31,8 @@ $(document).ready(function() {
     $('#t_evaluaciones').dataTable().fnDestroy();
 
     $.each(datos,function(index,data){
-       if (data.cantidad == 1) var aulas = data.cantidad+' aula de <b>'+data.total+'</b>';
-       else var aulas = data.cantidad+' aulas de <b>'+data.total+'</b>';
-
-       if (data.cantidad == data.total) aulas = '<b>Todas</b> las aulas';
+       var aulas = '<b class="text-light-blue">'+data.cantidad+'</b> de '+data.total+' aulas';
+       if (data.cantidad == data.total) aulas = '<b class="text-light-blue">Todas</b> las aulas';
 
        var descripcion = aulas+' han realizado la evaluación N°'+data.numero;
 
@@ -42,7 +40,8 @@ $(document).ready(function() {
             "<td>N°"+data.numero+"</td>"+
             "<td>"+data.fecha+"</td>"+
             "<td>"+descripcion+"</td>"+
-            '<td><button type="button" title="Descargar Excel" class="btn btn-sm btn-default disabled"><i class="fa fa-download"></i> Descargar Reporte</button>';
+            '<td><button type="button" title="Descargar Excel" class="btn btn-sm btn-default"><i class="fa fa-download"></i> Descargar Reporte</button>'+
+            ' <a href="'+url+'evaluacion/ver/'+data.numero+'"><button type="button" title="Ver" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Ver Reporte</button></a></td>';
           //  ' <a href="'+url+'alumno/perfil/'+data.id+'"><button title="Historial" type="button" class="btn btn-sm btn-info"><i class="fa fa-area-chart"></i></button></a></td>';
         html+="</tr>";
     });
@@ -52,7 +51,7 @@ $(document).ready(function() {
         "responsive": true,
         "paging": true,
         "lengthChange": true,
-        "searching": true,
+        "searching": false,
         "ordering": true,
         "info": true,
         "autoWidth": false,

@@ -19,21 +19,22 @@
               <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="ion ion-ios-people-outline"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-number"><?php echo $cantidad[0]->totales;?> Alumnos</span>
-                  <span class="info-box-text"><?php echo $cantidad[0]->hombres;?> Hombres</span>
-                  <span class="info-box-text"><?php echo $cantidad[0]->mujeres;?> Mujeres</span>
+                  <span class="info-box-number"><?php echo $info_box1[0]->totales;?> Alumnos</span>
+                  <span class="info-box-text"><?php echo $info_box1[0]->hombres;?> Hombres</span>
+                  <span class="info-box-text"><?php echo $info_box1[0]->mujeres;?> Mujeres</span>
                 </div>
               </div>
             </div>
 
               <div class="col-md-3 col-sm-6 col-xs-12">
-        <!--        <div class="info-box">
-                  <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+                <div class="info-box">
+                  <span class="info-box-icon bg-orange"><i class="fa fa-book"></i></span>
                   <div class="info-box-content">
-                    <span class="info-box-text">Likes</span>
-                    <span class="info-box-number">41,410</span>
+                    <span class="info-box-number"><?php echo $info_box2[0]->totales;?> Evaluaciones</span>
+                    <span class="info-box-text"><?php echo $info_box2[0]->completo;?> Completas</span>
+                    <span class="info-box-text"><?php echo $info_box2[0]->incompleto;?> Incompletas</span>
                   </div>
-                </div> -->
+                </div>
               </div>
               <!-- /.col -->
 
@@ -90,7 +91,7 @@
                           <tbody>
                           <?php
                             $con = 1;
-                            foreach ($aulas as $a) {
+                            foreach ($widget_1 as $a) {
                               echo '<tr>';
                               echo '<td>'.$con.'</td>';
                               echo '<td>'.$a['nombre'].'</td>';
@@ -145,9 +146,9 @@
                 echo '  </div>';
                 echo '</div></div>';
                 echo '<div class="col-sm-3">';
-                echo '<a href="'.$url.'examen/evaluacion/'.$w->numero.'"><button type="button" class="btn btn-default btn-sm" title="Descargar Excel">
+                echo '<a href="'.$url.'excel/evaluacion/'.$w->numero.'"><button type="button" class="btn btn-default btn-sm" title="Descargar Excel">
                   <i class="fa fa-download"></i></button></a>';
-                echo ' <a href="'.$url.'examen/evaluacion/'.$w->numero.'"><button type="button" class="btn btn-info btn-sm" title="Ir a la Evaluación '.$w->numero.'">
+                echo ' <a href="'.$url.'evaluacion/info/'.$w->numero.'"><button type="button" class="btn btn-info btn-sm" title="Ir a la Evaluación '.$w->numero.'">
                     <i class="fa fa-share-square-o"></i></button></a>';
                 echo '</div>';
               }

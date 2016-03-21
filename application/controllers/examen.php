@@ -168,11 +168,9 @@ class Examen extends CI_Controller {
 		//echo $this->db->last_query();
 
 		$valores = $this->data['datos_num'];//obtengo aula y las cantidades de estados
-		//cargo script highcharts
-		$new = '<script>$("#tony").resize();</script>';
- 		$this->footer['js_custom'] = script_pie($num, $valores).' '.script_barras($num, $valores).' '.$new;
-
-
+		//cargo script highcharts si es que esta completa la evaluacion
+		if(($this->data['evaluacion'][0]->completado) == 1)	$this->footer['js_custom'] = script_pie($num, $valores).' '.script_barras($num, $valores);
+		else $this->footer['js_custom'] = '';
 		$this->data['num'] = $num; //numero de evaluacion
 		$this->load->view('header_view', $this->header);
 		$this->load->view('examen/detalle_view',$this->data);
