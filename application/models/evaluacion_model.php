@@ -342,11 +342,13 @@ date_default_timezone_set('America/Lima');
 
     //obtengo las evaluaciones  N°X de todas las aulas
     public function getEvaluacioNumero($num,$completado = null){
-      $this->db->select('id, idAula');
-      $this->db->from('evaluacion');
-      $this->db->where('estado', 1);
-      $this->db->where('numero', $num);
-      if(isset($completado)) $this->db->where('completado', $completado);
+      $this->db->select('e.id, e.idAula');
+      $this->db->from('evaluacion e');
+      $this->db->join('aula a', 'a.id = e.idAula');
+      $this->db->where('e.estado', 1);
+      $this->db->where('e.numero', $num);
+      if(isset($completado)) $this->db->where('e.completado', $completado);
+      $this->db->order_by('a.idTipo', 'asc');
       $consulta = $this->db->get();
       $resultado = $consulta->result();
       return $resultado;

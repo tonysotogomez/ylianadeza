@@ -40,7 +40,7 @@ $(document).ready(function() {
             "<td>N°"+data.numero+"</td>"+
             "<td>"+data.fecha+"</td>"+
             "<td>"+descripcion+"</td>"+
-            '<td><button type="button" title="Descargar Excel" class="btn btn-sm btn-default"><i class="fa fa-download"></i> Descargar Reporte</button>'+
+            '<td><a href="'+url+'excel/evaluacionNumero/'+data.numero+'"><button type="button" title="Descargar Excel" class="btn btn-sm btn-default"><i class="fa fa-download"></i> Descargar Reporte</button></a>'+
             ' <a href="'+url+'evaluacion/ver/'+data.numero+'"><button type="button" title="Ver" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Ver Reporte</button></a></td>';
           //  ' <a href="'+url+'alumno/perfil/'+data.id+'"><button title="Historial" type="button" class="btn btn-sm btn-info"><i class="fa fa-area-chart"></i></button></a></td>';
         html+="</tr>";

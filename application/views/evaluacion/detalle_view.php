@@ -17,6 +17,7 @@
           <div class="row">
             <div class="col-xs-3">
 
+              <?php if(isset($completas)){ ?>
                 <div class="box box-success">
                   <div class="box-header">
                     <h3 class="box-title">Evaluaciones Completas</h3>
@@ -24,7 +25,7 @@
                   <div class="box-body">
                     <?php
                     echo '<ol>';
-                    foreach ($reporte as $key) {
+                    foreach ($completas as $key) {
                 			foreach ($key as $value) {
                 				echo '<li><span class="text-green">'.$value->aula.'</span></li>';
                 			}
@@ -33,7 +34,9 @@
                     ?>
                   </div><!-- /.box-body -->
                 </div><!-- /.box -->
-
+                <?php }
+                if(isset($incompletas)){
+                ?>
                 <div class="box box-warning">
                   <div class="box-header">
                     <h3 class="box-title">Evaluaciones Incompletas</h3>
@@ -41,7 +44,7 @@
                   <div class="box-body">
                     <?php
                     echo '<ol>';
-                    foreach ($reporte2 as $key) {
+                    foreach ($incompletas as $key) {
                       foreach ($key as $value) {
                         echo '<li><span class="text-orange">'.$value->aula.'</span></li>';
                       }
@@ -50,7 +53,9 @@
                     ?>
                   </div><!-- /.box-body -->
                 </div><!-- /.box -->
-
+                <?php }
+                if(isset($faltantes)){
+                ?>
                 <div class="box box-danger">
                   <div class="box-header">
                     <h3 class="box-title">Evaluaciones Faltantes</h3>
@@ -58,7 +63,7 @@
                   <div class="box-body">
                     <?php
                     echo '<ol>';
-                    foreach ($reporte3 as $key) {
+                    foreach ($faltantes as $key) {
                       foreach ($key as $value) {
                         echo '<li><span class="text-red">'.$value->titulo.'</span></li>';
                       }
@@ -67,7 +72,7 @@
                     ?>
                   </div><!-- /.box-body -->
                 </div><!-- /.box -->
-
+                <?php }?>
             </div>
 
             <div class="col-xs-9">

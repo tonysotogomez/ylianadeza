@@ -18,11 +18,15 @@ class Aula extends CI_Controller {
 	public function index($id)
 	{
 		//$this->data['listado'] = $this->Aula->CargarAlumnos($id);
-		$this->data['datos_aula'] = $this->Aula->CargarAula($id);
-		$this->data['active'] = '';
-		$this->data['id'] = $id;
+		$aulas = $this->Aula->CargarAula($id);
+
+		$this->header['tipo'] = $aulas[0]->idTipo;
+
+		$data['datos_aula'] = $aulas;
+		$data['id'] = $id;
+
 		$this->load->view('header_view', $this->header);
-		$this->load->view('alumno/alumno_view',$this->data);
+		$this->load->view('alumno/alumno_view',$data);
 		$this->load->view('footer_view', $this->footer);
 	}
 
@@ -77,6 +81,7 @@ class Aula extends CI_Controller {
 	public function mantenimiento()
 	{
 		$this->footer2['js_custom'] = '<script src="'.base_url().'dist/js/mantenimiento/aula.js"></script>';
+		$this->header['aula_m'] = true; //activa el menu
 		$this->load->view('header_view', $this->header);
 		$this->load->view('aula/aula_view');
 		$this->load->view('footer_view', $this->footer2);

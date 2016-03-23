@@ -97,7 +97,7 @@
                               echo '<td>'.$a['nombre'].'</td>';
                               echo '<td>'.$a['evaluaciones'].'</td>';
                               echo '<td>'.$a['incompletas'].'</td>';
-                              echo '<td><a href="'.$url.'examen/evaluacion/'.$a['id'].'"><button type="button" title="Ir al aula" class="btn btn-info btn-sm"><i class="fa fa-share-square-o"></i></button></a></td>';
+                              echo '<td><a href="'.$url.'examen/evaluacion/'.$a['id'].'"><button type="button" title="Ir al aula" class="btn btn-primary btn-sm"><i class="fa fa-share-square-o"></i></button></a></td>';
                               echo '</tr>';
                               $con++;
                             }
@@ -146,9 +146,9 @@
                 echo '  </div>';
                 echo '</div></div>';
                 echo '<div class="col-sm-3">';
-                echo '<a href="'.$url.'excel/evaluacion/'.$w->numero.'"><button type="button" class="btn btn-default btn-sm" title="Descargar Excel">
+                echo '<a href="'.$url.'excel/evaluacionNumero/'.$w->numero.'"><button type="button" class="btn btn-default btn-sm" title="Descargar Excel">
                   <i class="fa fa-download"></i></button></a>';
-                echo ' <a href="'.$url.'evaluacion/info/'.$w->numero.'"><button type="button" class="btn btn-info btn-sm" title="Ir a la Evaluación '.$w->numero.'">
+                echo ' <a href="'.$url.'evaluacion/ver/'.$w->numero.'"><button type="button" class="btn btn-primary btn-sm" title="Ir a la Evaluación '.$w->numero.'">
                     <i class="fa fa-share-square-o"></i></button></a>';
                 echo '</div>';
               }

@@ -24,6 +24,7 @@ class Examen extends CI_Controller {
 
 	public function index()
 	{
+		$this->header['examen_m'] = true; //activa el menu
 		$this->load->view('header_view', $this->header);
 		$this->load->view('examen_view');
 		$this->load->view('footer_view', $this->footer);

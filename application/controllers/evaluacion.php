@@ -20,6 +20,7 @@ class Evaluacion extends CI_Controller {
 
 	public function index()
 	{
+		$this->header['evaluacion_m'] = true; //activa el menu
 		$this->load->view('header_view', $this->header);
 		$this->load->view('evaluacion/evaluacion_view');
 		$this->load->view('footer_view', $this->footer);
@@ -58,26 +59,22 @@ class Evaluacion extends CI_Controller {
 		}*/
 		$conn = 1;
 		foreach ($faltantes_id as $v) {
-			$faltantes[$conn] = $this->Aula->CargarAula($v);
+			$data['faltantes'][$conn] = $this->Aula->CargarAula($v);
 			$conn++;
 		}
 
 		for ($i=0, $len = count($evaluaciones); $i < $len; $i++) {
-			$total_evaluaciones[$i] = $this->Evaluacion->count_diagnostico($evaluaciones[$i]->idAula, $evaluaciones[$i]->id);
+			$data['completas'][$i] = $this->Evaluacion->count_diagnostico($evaluaciones[$i]->idAula, $evaluaciones[$i]->id);
 		}
 		for ($i=0, $len = count($evaluaciones2); $i < $len; $i++) {
-			$total_evaluaciones2[$i] = $this->Evaluacion->count_diagnostico($evaluaciones2[$i]->idAula, $evaluaciones2[$i]->id);
+			$data['incompletas'][$i] = $this->Evaluacion->count_diagnostico($evaluaciones2[$i]->idAula, $evaluaciones2[$i]->id);
 		}
 		for ($i=0, $len = count($evaluaciones_all); $i < $len; $i++) {
-			$total_evaluaciones_all[$i] = $this->Evaluacion->count_diagnostico($evaluaciones_all[$i]->idAula, $evaluaciones_all[$i]->id);
+			$data['aulas'][$i] = $this->Evaluacion->count_diagnostico($evaluaciones_all[$i]->idAula, $evaluaciones_all[$i]->id);
 		}
-		$data['reporte'] = $total_evaluaciones;
-		$data['reporte2'] = $total_evaluaciones2;
-		$data['aulas'] = $total_evaluaciones_all;
-		$data['reporte3'] = $faltantes;
 
 		$data['num'] =	$num;
-
+		$this->header['evaluacion_m'] = true; //activa el menu
 		$this->load->view('header_view', $this->header);
 		$this->load->view('evaluacion/detalle_view', $data);
 		$this->load->view('footer_view', $this->footer);

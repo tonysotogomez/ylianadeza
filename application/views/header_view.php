@@ -161,54 +161,56 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
             <li class="header">EXAMEN</li>
-            <li><a href="<?php echo $url;?>examen"><i class="fa fa-user-md"></i> <span>Evaluación Nutricional</span></a></li>
+            <li class="<?php echo (isset($examen_m))?'active':'';?>"><a href="<?php echo $url;?>examen"><i class="fa fa-user-md"></i> <span>Evaluación Nutricional</span></a></li>
 
             <li class="header">AULAS</li>
-            <?php $uri = $this->uri->segment(3);?>
-            <li class="treeview <?php echo ($uri==1 or $uri==2)?'active':'';?>">
+            <?php
+            $tipo = (isset($tipo))?$tipo:0;
+            $uri = $this->uri->segment(3);?>
+            <li class="treeview <?php echo ($tipo==1)?'active':'';?>">
               <a href="#"><i class="fa fa-group"></i> <span>Lactantes</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($lactantes as $fila) {
-                  $active = ($this->uri->segment(3) == $fila->id)?'active':'';
+                  $active = ($uri == $fila->id && $this->uri->segment(1) == 'aula')?'active':'';
                   echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'"><i class="fa fa-caret-right"></i>'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
 
-            <li class="treeview <?php echo ($uri==3 or $uri==4 or $uri==5 or $uri==6)?'active':'';?>">
+            <li class="treeview <?php echo ($tipo==2)?'active':'';?>">
               <a href="#"><i class="fa fa-group"></i> <span>Andantes</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($andantes as $fila) {
-                  $active = ($this->uri->segment(3) == $fila->id)?'active':'';
+                  $active = ($uri == $fila->id && $this->uri->segment(1) == 'aula')?'active':'';
                   echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'"><i class="fa fa-caret-right"></i>'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
 
-            <li class="treeview <?php echo ($uri==7 or $uri==8 or $uri==9 or $uri==10 or $uri==11)?'active':'';?>">
+            <li class="treeview <?php echo ($tipo==3)?'active':'';?>">
               <a href="#"><i class="fa fa-group"></i> <span>Infantes</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($infantes as $fila) {
-                  $active = ($this->uri->segment(3) == $fila->id)?'active':'';
+                  $active = ($uri == $fila->id && $this->uri->segment(1) == 'aula')?'active':'';
                   echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'"><i class="fa fa-caret-right"></i>'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
 
-            <li class="treeview <?php echo ($uri==12 or $uri==14 or $uri==15 or $uri==33)?'active':'';?>">
+            <li class="treeview <?php echo ($tipo==4)?'active':'';?>">
               <a href="#"><i class="fa fa-group"></i> <span>Jardín</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($jardin as $fila) {
-                  $active = ($this->uri->segment(3) == $fila->id)?'active':'';
+                  $active = ($uri == $fila->id && $this->uri->segment(1) == 'aula')?'active':'';
                   echo '<li class="'.$active.'"><a href="'.$url.'aula/index/'.$fila->id.'"><i class="fa fa-caret-right"></i>'.$fila->nombre.'</a></li>';
                  } ?>
               </ul>
             </li>
             <li class="header">REPORTES</li>
-            <li><a href="<?php echo $url;?>evaluacion"><i class="fa fa-book"></i> <span>Evaluaciones</span></a></li>
+            <li class="<?php echo (isset($evaluacion_m))?'active':'';?>"><a href="<?php echo $url;?>evaluacion"><i class="fa fa-book"></i> <span>Evaluaciones</span></a></li>
             <li class="header">MANTENIMIENTO</li>
-            <li><a href="<?php echo $url;?>aula/mantenimiento"><i class="fa fa-folder"></i> <span>Aula</span></a></li>
-            <li><a href="<?php echo $url;?>alumno"><i class="fa fa-male"></i> <span>Alumnos</span></a></li>
+            <li class="<?php echo (isset($aula_m))?'active':'';?>"><a href="<?php echo $url;?>aula/mantenimiento"><i class="fa fa-folder"></i> <span>Aula</span></a></li>
+            <li class="<?php echo (isset($alumno_m))?'active':'';?>"><a href="<?php echo $url;?>alumno"><i class="fa fa-male"></i> <span>Alumnos</span></a></li>
 
 
           </ul><!-- /.sidebar-menu -->
