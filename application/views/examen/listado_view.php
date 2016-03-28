@@ -65,7 +65,7 @@
                             $completa='<span class="label label-success">Completa</span>';
                           }
                           echo '<tr>';
-                          echo '<td>'.$con.'</td>';
+                          echo '<td>'.$eval->numero.'</td>';
                           echo '<td>'.$eval->nombre.'</td>';
                           echo '<td>'.date('d/m/Y - h:i A', strtotime($eval->fecha)).'</td>';
                           echo '<td>'.$completa.'</td>';
@@ -77,7 +77,6 @@
                           echo ' <a href="'.$url.'excel/detalle/'.$eval->id.'/'.$datos_aula[0]->id.'"><button type="button" title="Excel" class="btn btn-default"><i class="fa fa-download"></i> Excel</button></a>';
                           echo '</td>';
                           echo '</tr>';
-                          $con++;
                         }
                       ?>
                     </tbody>
@@ -87,6 +86,7 @@
                         <th>Nombre</th>
                         <th>Fecha</th>
                         <!--<th>Observaciones</th>-->
+                        <th>Estado</th>
                         <th>Opciones</th>
                       </tr>
                     </tfoot>

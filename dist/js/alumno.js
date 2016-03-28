@@ -27,6 +27,7 @@ function Nuevo(){
   $("#txt_apellidos").val('');
   $("#txt_nombres").val('');
   $("#txt_titular").val('');
+  $("#txt_dni").val('');
   $('input[name="radiogenero"][value="h"]').prop('checked', true);
   $("#txt_fecha").val('');
   $("#slct_estado").val('1');
@@ -146,6 +147,7 @@ function listar_todos(){
             "<td>"+nombres+"</td>"+
             "<td>"+genero+"</td>"+
             "<td>"+fecha+"</td>"+
+            "<td>"+data.dni+"</td>"+
             "<td>"+data.titular+"</td>"+
             "<td>"+estadohtml+"</td>"+
             '<td><button type="button" title="Editar" onclick="Cargar('+data.id+')" class="btn btn-sm btn-primary btn-xs"><i class="fa fa-edit"></i></button>';
@@ -243,6 +245,9 @@ function listar_todos(){
                 $("#txt_titular").val(alumno['titular']);
                 $('input[name="radiogenero"][value="' + alumno['genero'] + '"]').prop('checked', true);
                 $("#txt_fecha").val(nac[2]+"-"+nac[1]+"-"+nac[0]);
+
+                if(nac[0] == '1970') $("#txt_fecha").val('');
+
                 $("#slct_estado").val(alumno['estado']);
                 $("#submit").val('1');
 

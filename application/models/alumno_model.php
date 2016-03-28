@@ -31,6 +31,7 @@
                'apellidos' => $data['apellidos'],
                'fecha_nacimiento' => $data['fecha'],
                'genero' => $data['genero'],
+               'dni' => $data['dni'],
                'titular' => $data['titular'],
                'estado' => $data['estado'],
                'register_at' => date("Y-m-d H:i:s")
@@ -66,6 +67,7 @@
                'apellidos' => $data['apellidos'],
                'fecha_nacimiento' => $data['fecha'],
                'genero' => $data['genero'],
+               'dni' => $data['dni'],
                'titular' => $data['titular'],
                'estado' => $data['estado'],
                'update_at' => date("Y-m-d H:i:s")

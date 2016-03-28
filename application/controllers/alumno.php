@@ -40,11 +40,17 @@ class Alumno extends CI_Controller {
 			$data['aula'] = $this->input->post('aula');
 			$data['nombres'] = $this->input->post('nombres');
 			$data['apellidos'] = $this->input->post('apellidos');
-			$date = str_replace('/', '-', $this->input->post('fecha'));
-			$data['fecha'] = date('Y-m-d', strtotime($date));
 			$data['genero'] = $this->input->post('radiogenero');
 			$data['titular'] = $this->input->post('titular');
+			$data['dni'] = $this->input->post('dni');
 			$data['estado'] = $this->input->post('estado');
+
+			if ($this->input->post('fecha')) {
+				$date = str_replace('/', '-', $this->input->post('fecha'));
+				$data['fecha'] = date('Y-m-d', strtotime($date));
+			} else {
+					$data['fecha'] = '1970-01-01';
+			}
 
 			if($this->Alumno->Insertar($data)) {
 				$data['rst'] = 1;
@@ -72,11 +78,18 @@ class Alumno extends CI_Controller {
 			$data['aula'] = $this->input->post('aula');
 			$data['nombres'] = $this->input->post('nombres');
 			$data['apellidos'] = $this->input->post('apellidos');
-			$date = str_replace('/', '-', $this->input->post('fecha'));
-			$data['fecha'] = date('Y-m-d', strtotime($date));
 			$data['genero'] = $this->input->post('radiogenero');
 			$data['titular'] = $this->input->post('titular');
+			$data['dni'] = $this->input->post('dni');
 			$data['estado'] = $this->input->post('estado');
+
+			if ($this->input->post('fecha')) {
+				$date = str_replace('/', '-', $this->input->post('fecha'));
+				$data['fecha'] = date('Y-m-d', strtotime($date));
+			} else {
+					$data['fecha'] = '1970-01-01';
+			}
+
 			if($this->Alumno->Editar($data)) {
 				$data['rst'] = 1;
 				$data['msj'] = 'Alumno actualizado correctamente';

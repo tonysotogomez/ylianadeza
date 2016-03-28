@@ -24,27 +24,42 @@
                       </div>
                     </div>
                   </div>
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Titular:</label>
-                      <input type="text" class="form-control" name="txt_titular" id="txt_titular" placeholder="Ingresa el titular">
-                    </div>
-
-                    <div class="form-group">
-                      <div class="radio">
-                        <label>
-                          <input type="radio" name="radiogenero" value="h" checked> Hombre <br>
-                          <input type="radio" name="radiogenero" value="m"> Mujer
-                        </label>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">DNI:</label>
+                        <input type="text" class="form-control" name="txt_dni" id="txt_dni" placeholder="Ingresa su DNI">
                       </div>
                     </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Titular:</label>
+                        <input type="text" class="form-control" name="txt_titular" id="txt_titular" placeholder="Ingresa el titular">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Fecha de Nacimiento:</label>
+                        <div class="input-group">
+                          <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                          <input type="text" class="form-control" id="txt_fecha" name="txt_fecha" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask>
+                        </div><!-- /.input group -->
+                      </div><!-- /.form group -->
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="radiogenero" value="h" checked> Hombre <br>
+                            <input type="radio" name="radiogenero" value="m"> Mujer
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-                    <div class="form-group">
-                      <label>Fecha de Nacimiento:</label>
-                      <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                        <input type="text" class="form-control" id="txt_fecha" name="txt_fecha" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask>
-                      </div><!-- /.input group -->
-                    </div><!-- /.form group -->
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">

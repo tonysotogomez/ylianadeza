@@ -129,7 +129,7 @@ class Examen extends CI_Controller {
 		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
 		$evaluaciones = $this->Evaluacion->CargarEvaluaciones($idAula);
 		$fecha = (empty($evaluaciones))?'no ha sido realizada':date('d-m-Y', strtotime($evaluaciones[0]->fecha));
-		$this->data['count_eval'] = count($evaluaciones);
+		$this->data['count_eval'] = count($evaluaciones)+1;
 		$this->data['ult_eval'] = $fecha;
 		$this->load->view('header_view', $this->header);
 		$this->load->view('alumno/examen_view',$this->data);

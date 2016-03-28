@@ -42,6 +42,7 @@
                         <th>Nombres</th>
                         <th style="width: 10px;">Sexo</th>
                         <th style="width: 100px;">F.Nacimiento</th>
+                        <th style="width: 25px;">DNI</th>
                         <th style="width: 250px;">Titular</th>
                         <th style="width: 10px;">Estado</th>
                         <th style="width: 25px;">Editar</th>
@@ -56,6 +57,7 @@
                         <th>Nombres</th>
                         <th style="width: 10px;">Sexo</th>
                         <th style="width: 10px;">F.Nacimiento</th>
+                        <th style="width: 25px;">DNI</th>
                         <th style="width: 250px;">Titular</th>
                         <th style="width: 10px;">Estado</th>
                         <th style="width: 25px;">Editar</th>

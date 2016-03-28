@@ -65,7 +65,7 @@
   }
 
   public function CargarAlumnos($idAula = null){
-    $this->db->select('a.id, nombres, apellidos, fecha_nacimiento, genero, titular, a.estado, aula.nombre as aula');
+    $this->db->select('a.id, nombres, apellidos, fecha_nacimiento, genero, dni, titular, a.estado, aula.nombre as aula');
     $this->db->from('alumno a');
     $this->db->join('aula', 'a.idAula = aula.id');
     if($idAula) { $this->db->where('idAula', $idAula); }
@@ -78,7 +78,7 @@
   }
 
   public function CargarAlumnos_all($idAula = null){
-    $this->db->select('a.id, nombres, apellidos, fecha_nacimiento, genero, titular, a.estado, aula.nombre as aula');
+    $this->db->select('a.id, nombres, apellidos, fecha_nacimiento, genero, dni, titular, a.estado, aula.nombre as aula');
     $this->db->from('alumno a');
     $this->db->join('aula', 'a.idAula = aula.id');
     if($idAula) { $this->db->where('idAula', $idAula); }

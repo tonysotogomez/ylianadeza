@@ -3,9 +3,9 @@
         <form id="form_datos" name="form_datos" action="" method="post">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>Evaluación N°
-            <input type="text" name="txt_numero" id="numero"
-            placeholder="<?php echo $num; ?>" value="<?php echo $detalle[0]->numero; ?>" style="width:40px;">:
+          <h1>Evaluación N°<?php echo (isset($detalle[0]->numero))?$detalle[0]->numero:$num; ?>
+            <input type="hidden" name="txt_numero" id="numero" readonly
+            placeholder="<?php echo $num; ?>" value="<?php echo (isset($detalle[0]->numero))?$detalle[0]->numero:$num; ?>" style="width:40px;">:
             <input type="text" name="txt_titulo"
               placeholder="Nombre de Evaluación" value="<?php echo $detalle[0]->evaluacion;?>">
               <input type="hidden" name="txt_idEval" value="<?php echo $detalle[0]->idEvaluacion;?>">
@@ -62,7 +62,7 @@
                           //if( $datos->edad > 6) $edad = ' ';
                           $edad = $CI->Edad->CargarEdad((float)$datos->edad);
                           $edad_texto = (empty($edad))?' ':$edad[0]->nombre;
-                          
+
                           echo '<tr>';
                               echo '<td>'.$con;
                               echo '<input type="hidden" class="form-control" name="txt_genero_'.$datos->idAlumno.'" value="'.$datos->genero.'">';
