@@ -153,16 +153,7 @@ class Examen extends CI_Controller {
 	{
 		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
 
-		$evaluaciones = $this->Evaluacion->CargarEvaluaciones($idAula);
-		for ($i=0, $len = count($evaluaciones); $i < $len; $i++) {
-			if ($idEvaluacion == $evaluaciones[$i]->id) {
-				if($i == 0){ $penul_eval = $idEvaluacion; break;}
-				$penul_eval = $evaluaciones[$i-1]->id; break;
-			} else {
-				$penul_eval = $idEvaluacion;
-			}
-		}
-		$this->data['detalle'] = $this->Evaluacion->VerDetalle($idEvaluacion, $penul_eval);
+		$this->data['detalle'] = $this->Evaluacion->VerDetalle($idEvaluacion);
 		$this->data['evaluacion'] = $this->Evaluacion->CargarEvaluacion($idEvaluacion);
 		//datos estadisticos
 		$this->data['datos_num'] = $this->Evaluacion->count_diagnostico($idAula, $idEvaluacion);
@@ -198,7 +189,7 @@ class Examen extends CI_Controller {
 			//idAula, nuevo campo para reportes
 			$data['idAula'] =  $this->input->post('aula');
 
-			//Ingreso los datos en el detallleEvaluacion
+			//Ingreso los datos en el detalleEvaluacion
 			for ($i=0, $len = count($alumnos); $i < $len; $i++) {
 				$fecha_nac = $this->input->post('fecha_'.$alumnos[$i]->id);
 				$data['genero'] = $this->input->post('genero_'.$alumnos[$i]->id);
@@ -267,13 +258,20 @@ class Examen extends CI_Controller {
 					if(! empty($detalle_ant)){
 						$data['gpeso'] = (float)$this->input->post('peso_'.$alumnos[$i]->id) - (float)$detalle_ant[0]->peso;
 						$data['gtalla'] = (float)$this->input->post('talla_'.$alumnos[$i]->id) - (float)$detalle_ant[0]->talla;
-						if($detalle_ant[0]->peso == 0 OR $detalle_ant[0]->talla){
+						//si no se han ingresado valores
+						if($detalle_ant[0]->peso == 0 OR $detalle_ant[0]->talla == 0){
 							$data['gpeso'] = 0;
 							$data['gtalla'] = 0;
 						}
+						if($alumnos[$i]->id != $detalle_ant[0]->idAlumno){
+							$data['gpeso'] = 0;
+							$data['gtalla'] = 0;
+						}
+					} else {
+						$data['gpeso'] = 0;
+						$data['gtalla'] = 0;
 					}
 				}
-
 
 				$data['idDetalle'] = $this->input->post('detalle_'.$alumnos[$i]->id);
 			  $data['genero'] = $this->input->post('genero_'.$alumnos[$i]->id);
@@ -283,7 +281,7 @@ class Examen extends CI_Controller {
 				$data['observaciones'] = $this->input->post('observaciones_'.$alumnos[$i]->id);
 				$data['final'] = $this->input->post('final_'.$alumnos[$i]->id);
 
-				//cuento los diagnosticos finales ingresados
+				//cuento los diagnosticos finales ingresados para ver si la evaluacion esta completa al final
 				if($data['final'] != '-') $con++;
 
 				/* Evaluacion Nutricional */
@@ -292,8 +290,16 @@ class Examen extends CI_Controller {
 				$data['peso_edad'] = $resultado['diagnostico3']; //peso_edad
 				$data['peso_talla'] = $resultado['diagnostico2']; //peso_talla
 
+				//si el niño no tiene edad, no se agregan diagnoaticos
+				if($data['edad'] == 0) {
+					$data['talla_edad'] = '-';
+					$data['peso_edad'] = '-';
+					$data['peso_talla'] = '-';
+				}
+
 				$result = $this->Evaluacion->EditarDetalle($data);
-			}
+			}//end foreach InsertarDetalle
+
 			//verifico si todos los diag.finales estan completos
 			$completado = ($len == $con)?1:0;
 

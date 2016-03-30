@@ -54,9 +54,9 @@
                               <th>Talla</th>
                               <th>G. Talla</th>
                               <th>Observaciones</th>
-                              <th>Talla Edad</th>
-                              <th>Peso Edad</th>
-                              <th>Peso Talla</th>
+                              <th>T/E</th>
+                              <th>P/E</th>
+                              <th>P/T</th>
                               <th>Diagnóstico Nutricional</th>
                             </tr>
                           </thead>
@@ -68,17 +68,17 @@
                             foreach ($detalle as $datos) {
                               $edad = $CI->Edad->CargarEdad((float)$datos->edad);
                               $edad_texto = (empty($edad))?' ':$edad[0]->nombre;
-                              $talla_creci = comparar($datos->talla_ant,$datos->talla);
-                              $peso_creci = comparar($datos->peso_ant,$datos->peso);
+                            //  $talla_creci = comparar($datos->talla_ant,$datos->talla);
+                          //    $peso_creci = comparar($datos->peso_ant,$datos->peso);
                               echo '<tr>';
                                   echo '<td>'.$con;
                                   echo '</td>';
                                   echo '<td>'.$datos->apellidos.', '.$datos->nombres.'</td>';
                                   echo '<td>'.$edad_texto.'</td>';
                                   echo '<td>'.$datos->peso.' </td>';
-                                  echo '<td>'.$peso_creci.'</td>';
+                                  echo '<td>'.colorear($datos->gpeso).'</td>';
                                   echo '<td>'.$datos->talla.'</td>';
-                                  echo '<td>'.$talla_creci.'</td>';
+                                  echo '<td>'.colorear($datos->gtalla).'</td>';
                                   echo '<td>'.$datos->observaciones.'</td>';
                                   echo '<td>'.diagnostico($datos->diagnosticoTE).'</td>';
                                   echo '<td>'.diagnostico($datos->diagnosticoPE).'</td>';

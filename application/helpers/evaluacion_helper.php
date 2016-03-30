@@ -120,34 +120,24 @@ if(!function_exists('evaluar'))
 		return $data;
 	}
 
-	//resta los valores y muestra en rojo si disminuyo o verde si aumento
-	if(!function_exists('comparar'))
+	//muestra en rojo si disminuyo o verde si aumento
+	if(!function_exists('colorear'))
 	{
-		function comparar($valor_ant, $valor_act)
+		function colorear($ganancia)
 		{
-			if ($valor_act != 0) {
-			$talla_dif = $valor_act-$valor_ant;
-			$talla_dif = number_format($talla_dif, 2);
-			if( $talla_dif > 0) $talla_creci = '<span class="text-green">+'.$talla_dif.'</span>';
-			elseif ($talla_dif < 0) $talla_creci = '<span class="text-red">'.$talla_dif.'</span>';
-			else $talla_creci = '<span class="text-muted">'.$talla_dif.'</span>';
-			} else {
-				$talla_creci = ' ';
+			//$talla_dif = number_format($talla_dif, 2);
+			if( $ganancia > 0) $talla_creci = '<span class="text-green"><i class="fa fa-caret-up"></i> '.$ganancia.'</span>';
+			if ($ganancia < 0) {
+				$ganancia *= (-1);
+				$talla_creci = '<span class="text-red"><i class="fa fa-caret-down"></i> '.$ganancia.'</span>';
 			}
+			if ($ganancia == 0) $talla_creci = '<span class="text-muted"><i class="fa fa-caret-left"></i> '.$ganancia.'</span>';
+
 			return $talla_creci;
 		}
 	}
 
-//sin estilos para el excel
-	if(!function_exists('comparar2'))
-	{
-		function comparar2($valor_ant, $valor_act)
-		{
-			if ($valor_act != 0) $talla_dif = ($valor_act-$valor_ant);
-			else $talla_dif = ' ';
-			return $talla_dif;
-		}
-	}
+
 
 	if(!function_exists('diagnostico'))
 	{

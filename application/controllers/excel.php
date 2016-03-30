@@ -137,16 +137,7 @@ class Excel extends CI_Controller {
       $datos_aula = $this->Aula->CargarAula($idAula);
       $evaluaciones = $this->Evaluacion->CargarEvaluaciones($idAula);
 
-      for ($i=0, $len = count($evaluaciones); $i < $len; $i++) {
-  			if ($idEvaluacion == $evaluaciones[$i]->id) {
-  				if($i == 0){ $penul_eval = $idEvaluacion; break;}
-  				$penul_eval = $evaluaciones[$i-1]->id; break;
-  			} else {
-  				$penul_eval = $idEvaluacion;
-  			}
-  		}
-
-      $detalle = $this->Evaluacion->VerDetalle($idEvaluacion, $penul_eval);
+      $detalle = $this->Evaluacion->VerDetalle($idEvaluacion);
       $eval = $this->Evaluacion->CargarID($idEvaluacion);
 
 
@@ -206,17 +197,15 @@ class Excel extends CI_Controller {
       foreach ($detalle as $datos) {
         $edad = $this->Edad->CargarEdad((float)$datos->edad);
         $edad = (empty($edad))?' ':$edad[0]->nombre;
-        $talla_creci = comparar2($datos->talla_ant,$datos->talla);
-        $peso_creci = comparar2($datos->peso_ant,$datos->peso);
 
         $this->phpexcel->setActiveSheetIndex(0)
                     ->setCellValue('A'.$f2, $con)
                     ->setCellValue('B'.$f2, $datos->apellidos.', '.$datos->nombres)
                     ->setCellValue('C'.$f2, $edad)
                     ->setCellValue('D'.$f2, $datos->peso)
-                    ->setCellValue('E'.$f2, $peso_creci)
+                    ->setCellValue('E'.$f2, $datos->gpeso)
                     ->setCellValue('F'.$f2, $datos->talla)
-                    ->setCellValue('G'.$f2, $talla_creci)
+                    ->setCellValue('G'.$f2, $datos->gpeso)
                     ->setCellValue('H'.$f2, $datos->observaciones)
                     ->setCellValue('I'.$f2, $datos->diagnosticoTE)
                     ->setCellValue('J'.$f2, $datos->diagnosticoPE)

@@ -154,7 +154,7 @@ date_default_timezone_set('America/Lima');
       $resultado = $consulta->result();
       return $resultado;
     }
-
+/*
     public function VerDetalle($idEvaluacion, $idEvalAnt){
       $query = $this->db->query('SELECT
                                 d.id,
@@ -187,6 +187,41 @@ date_default_timezone_set('America/Lima');
                                   FROM detalle_evaluacion d2
                                   where d2.idEvaluacion = '.$idEvalAnt.'
                                   and d2.estado != 2) ant ON ant.evalu = d.idAlumno
+                              WHERE
+                                idEvaluacion = '.$idEvaluacion.'
+                              AND d.estado != 2
+                            ORDER BY a.apellidos asc');
+      $resultado = $query->result();
+      return $resultado;
+    }*/
+
+    public function VerDetalle($idEvaluacion){
+      $query = $this->db->query('SELECT
+                                d.id,
+                                e.fecha as fecha_e,
+                                e.nombre AS evaluacion,
+                                d.idEvaluacion,
+                                d.idAlumno,
+                                a.nombres,
+                                a.apellidos,
+                                d.edad,
+                                a.genero,
+                                d.peso,
+                                d.gpeso,
+                                d.talla,
+                                d.gtalla,
+                                d.fecha,
+                                d.observaciones,
+                                d.estado,
+                                d.diagnosticoTE,
+                                d.diagnosticoPE,
+                                d.diagnosticoPT,
+                                di.nombre as idDiagnostico
+                              FROM
+                                (detalle_evaluacion d)
+                              JOIN alumno a ON a.id = d.idAlumno
+                              JOIN evaluacion e ON e.id = d.idEvaluacion
+                              LEFT JOIN diagnostico di ON di.id = d.idDiagnostico
                               WHERE
                                 idEvaluacion = '.$idEvaluacion.'
                               AND d.estado != 2
@@ -288,7 +323,7 @@ date_default_timezone_set('America/Lima');
 
     //carga el detalle de evaluacion de un alumno
     public function CargarDetalleID($idEvaluacion, $idAlumno){
-      $this->db->select('d.id, e.fecha, e.nombre as evaluacion, e.numero, d.idEvaluacion, d.idAlumno, a.nombres, a.apellidos, d.edad, a.genero, d.peso, d.talla, d.fecha, d.observaciones, d.estado, d.diagnosticoTE, d.diagnosticoPE, d.diagnosticoPT, d.idDiagnostico');
+      $this->db->select('d.id, e.fecha, e.nombre as evaluacion, e.numero, d.idEvaluacion, d.idAlumno, d.idAlumno as idAlumno, a.nombres, a.apellidos, d.edad, a.genero, d.peso, d.talla, d.fecha, d.observaciones, d.estado, d.diagnosticoTE, d.diagnosticoPE, d.diagnosticoPT, d.idDiagnostico');
       $this->db->from('detalle_evaluacion d');
       $this->db->join('alumno a', 'a.id = d.idAlumno');
       $this->db->join('evaluacion e', 'e.id = d.idEvaluacion');

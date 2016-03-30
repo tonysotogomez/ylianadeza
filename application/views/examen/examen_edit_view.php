@@ -27,8 +27,8 @@
 
               <div class="box box-success">
                 <div class="box-header">
-                  <h3 class="box-title">La evaluación se actualizará cuando de clic en el botón Editar</h3>
-                  <button type="button" class="btn btn-primary" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-edit"></i> Editar</button>
+                  <h3 class="box-title">La evaluación se guardará y evaluará de acuerdo a los datos ingresados.</h3>
+                  <button type="button" class="btn btn-primary" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-edit"></i> Guardar y Evaluar</button>
                   <a href="<?php echo $url;?>examen/evaluacion/<?php echo $datos_aula[0]->id;?>">
                     <button type="button" class="btn btn-danger pull-right">
                     <i class="fa fa-remove"></i> Cancelar
@@ -47,9 +47,9 @@
                           <th>Peso</th>
                           <th>Talla</th>
                           <th>Observaciones</th>
-                          <th>Talla Edad</th>
-                          <th>Peso Edad</th>
-                          <th>Peso Talla</th>
+                          <th>T/E</th>
+                          <th>P/E</th>
+                          <th>P/T</th>
                           <th>Diagnóstico Nutricional</th>
                         </tr>
                       </thead>
@@ -93,7 +93,7 @@
                       </tbody>
                     </table>
                     <div class="col-md-12 text-center">
-                      <button type="button" class="btn btn-primary" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-edit"></i> Editar</button>
+                      <button type="button" class="btn btn-primary" value="1" onclick="GuardarEvaluacion(1);"><i class="fa fa-edit"></i> Guardar y Evaluar</button>
                     </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->

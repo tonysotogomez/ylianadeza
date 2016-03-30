@@ -21,7 +21,6 @@
                 <div class="box-header">
                   <h3 class="box-title">Mantenimiento de Aulas<?php //echo $datos_aula[0]->aula; ?></h3>
                   <button type="button" class="btn btn-primary" onclick="Nuevo();"><i class="fa fa-user-plus"></i> Nuevo</button>
-                  <input class="flat-red" type="checkbox" name="txt_todos" id="txt_todos" onclick="listar_todos();"> Listar todos
                 </div><!-- /.box-header -->
                 <input type="hidden" value="0>" id="todos">
                 <div class="box-body">
