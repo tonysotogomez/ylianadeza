@@ -349,6 +349,17 @@ class Examen extends CI_Controller {
 	}
 
 
+		public function agregarAlumno($idEvaluacion)
+		{
+			//FALTA
+			$this->data['evaluacion'] = $this->Aula->CargarEvaluacion($idEvaluacion);
+
+			$this->load->view('header_view', $this->header);
+			$this->load->view('examen/examen_edit_view',$this->data);
+			$this->load->view('footer_view', $this->footer);
+		}
+
+
 }
 
 
