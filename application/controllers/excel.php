@@ -335,7 +335,7 @@ class Excel extends CI_Controller {
       $evaluaciones = $this->Evaluacion->CargarEvaluaciones($idAula);
 
     //  $temp = array();
-      //$temp = $this->Evaluacion->VerDetalle2();
+      //$temp = $this->Evaluacion->last_query();
       //$temp = $evaluaciones;
       $Z = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
       'AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AW','AX','AY','AZ',
@@ -431,7 +431,7 @@ class Excel extends CI_Controller {
         $c = 2;//a partir de la columna 2 :: (A,B)
         $con = 1;
         $y = false;
-        $temp = $this->Evaluacion->VerDetalle2($alumnos[$i]->id);
+        $temp = $this->Evaluacion->VerDetalle2($alumnos[$i]->id,$idAula);
         //si alumno no tiene ninguna evaluacion
         if(empty($temp)){
           $alumno = $this->Alumno->CargarAlumno($alumnos[$i]->id);

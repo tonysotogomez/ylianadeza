@@ -231,8 +231,9 @@ date_default_timezone_set('America/Lima');
       return $resultado;
     }
 
-    public function VerDetalle2($idAlumno = null){
-      $and = ($idAlumno)?'AND a.id='.$idAlumno:'';
+    public function VerDetalle2($idAlumno = null, $idAula = null){
+      $and = ($idAlumno)?' AND a.id='.$idAlumno:'';
+      $and .= ($idAula)?' AND d.idAula='.$idAula:'';
       $query = $this->db->query("SELECT
                                 	d.id as idDetalle,
                                 	date(e.fecha) as fecha,
