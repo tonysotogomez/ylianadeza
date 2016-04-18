@@ -80,9 +80,9 @@ class Excel extends CI_Controller {
         $f2++;
       }
       //totales
-      $hombres = $this->Aula->contarAlumnos('h', $idAula);
-      $mujeres = $this->Aula->contarAlumnos('m', $idAula);
-      $totales = $this->Aula->contarAlumnos('all', $idAula);
+      $hombres = $this->Aula->contarAlumnos2('h', $idAula);
+      $mujeres = $this->Aula->contarAlumnos2('m', $idAula);
+      $totales = $this->Aula->contarAlumnos2('all', $idAula);
 
       $this->phpexcel->setActiveSheetIndex(0)
                      ->setCellValue('D'.($f2+1), 'HOMBRES:'.$hombres[0]->num)
