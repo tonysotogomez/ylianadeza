@@ -132,6 +132,14 @@ date_default_timezone_set('America/Lima');
       else return false;
     }
 
+    public function EliminarDetallePermanente($idAlumno){
+      $arr = array(
+                 'estado' => 2
+              );
+      $this->db->where('idAlumno', $idAlumno);
+      $this->db->update('detalle_evaluacion', $arr);
+    }
+
     public function EliminarDetalle($id){
       $arr = array(
                  'estado' => 0

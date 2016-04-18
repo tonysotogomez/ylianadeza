@@ -45,7 +45,7 @@
                         <th style="width: 25px;">DNI</th>
                         <th style="width: 250px;">Titular</th>
                         <th style="width: 10px;">Estado</th>
-                        <th style="width: 25px;">Editar</th>
+                        <th style="width: 25px;">Opciones</th>
                       </tr>
                     </thead>
                     <tbody id="tb_alumnos">
@@ -60,7 +60,7 @@
                         <th style="width: 25px;">DNI</th>
                         <th style="width: 250px;">Titular</th>
                         <th style="width: 10px;">Estado</th>
-                        <th style="width: 25px;">Editar</th>
+                        <th style="width: 25px;">Opciones</th>
                       </tr>
                     </tfoot>
                   </table>

@@ -87,6 +87,16 @@
     else return false;
   }
 
+  public function Eliminar($id){
+    $arr = array(
+          'estado' => 2,
+        //  'deleted_at' => date("Y-m-d")  FALTA CAMPO EN LA BD
+         );
+    $this->db->where('id', $id);
+    if($this->db->update('alumno', $arr)) return true;
+    else return false;
+  }
+
 
   public function PerfilAlumno($id){
     $this->db->select('a.id, a.nombres, a.apellidos, a.fecha_nacimiento as fecha, a.genero, a.titular');

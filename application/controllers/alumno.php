@@ -118,6 +118,21 @@ class Alumno extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function eliminar()
+	{
+		$id = $this->input->post('id');
+
+		if($this->Alumno->Eliminar($id)) {
+			$this->Evaluacion->EliminarDetallePermanente($id);
+			$data['rst'] = 1;
+			$data['msj'] = 'Alumno eliminado permanentemente';
+		} else {
+			$data['rst'] = 0;
+			$data['msj'] = 'Ocurrio un error en la actualización';
+		}
+		echo json_encode($data);
+	}
+
 	public function perfil($idAlumno)
 	{
 		$this->load->model("Evaluacion_model","Evaluacion");

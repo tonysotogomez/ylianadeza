@@ -69,8 +69,8 @@
     $this->db->from('alumno a');
     $this->db->join('aula', 'a.idAula = aula.id');
     if($idAula) { $this->db->where('idAula', $idAula); }
-    //$this->db->where('estado != 3'); //estado 3 es eliminado
-      $this->db->where('a.estado != 0');
+    $this->db->where('a.estado != 2'); //estado 2 es eliminado
+    $this->db->where('a.estado != 0');
     $this->db->order_by('apellidos', 'asc');
     $consulta = $this->db->get();
     $resultado = $consulta->result();
@@ -81,6 +81,7 @@
     $this->db->select('a.id, nombres, apellidos, fecha_nacimiento, genero, dni, titular, a.estado, aula.nombre as aula');
     $this->db->from('alumno a');
     $this->db->join('aula', 'a.idAula = aula.id');
+    $this->db->where('a.estado != 2'); //estado 2 es eliminado
     if($idAula) { $this->db->where('idAula', $idAula); }
     $this->db->order_by('apellidos', 'asc');
     $consulta = $this->db->get();
@@ -93,7 +94,7 @@
     $this->db->select('id, nombres, apellidos, fecha_nacimiento, genero, titular, estado');
     $this->db->from('alumno');
     $this->db->where('idAula', $idAula);
-  //  $this->db->where('estado != 3'); //estado 3 es eliminado
+    $this->db->where('estado != 2'); //estado 2 es eliminado
     $this->db->where('estado != 0'); //estado 0 es desactivado
     $this->db->order_by('apellidos', 'asc');
     $consulta = $this->db->get();
