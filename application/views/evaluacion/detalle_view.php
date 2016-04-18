@@ -79,11 +79,16 @@
               <div class="box box-primary">
                 <div class="box-header">
                   <h3 class="box-title">Reporte</h3>
+                  <a href="<?php echo $url;?>excel/reporte/<?php echo $num;?>">
+                    <button type="button" class="btn btn-default" title="Descargar Excel" disabled>
+                      <i class="fa fa-download"></i> Descargar</button>
+                  </a>
                 </div><!-- /.box-header -->
                 <div class="box-body">
 
                   <?php
-                  $con = 1;
+                  $con = 1; $t_normales = 0; $t_obesos = 0; $t_sobrepesos = 0;
+                  $t_agudas = 0; $t_severos = 0; $t_cronicos= 0; $t_totales= 0;
                   echo '<div class="box-body no-padding">
                           <table class="table table-condensed">
                             <tbody><tr>
@@ -117,11 +122,30 @@
                       echo '<td align="center">'.$severos.'</td>';
                       echo '<td align="center">'.$cronicos.'</td>';
                       echo '<td align="center"><span class="badge bg-gray">'.$value->totales.'</span></td>';
+
+                      $t_normales += $value->normales;
+                      $t_obesos += $value->obesos;
+                      $t_sobrepesos += $value->sobrepesos;
+                      $t_agudas += $value->agudas;
+                      $t_severos += $value->severos;
+                      $t_cronicos += $value->cronicos;
+                      $t_totales += $value->totales;
                       $con++;
                     }
                     echo '</tr>';
-                  }
-                  echo '</tbody></table></div>';
+                  }//end foreach
+                  echo '</tbody>';
+                  echo '<tfooter align="center">';
+                  echo "<th style='width: 10px'> </th>
+                  <th>Totales</th>
+                  <td align='center'><span class='badge bg-blue'>$t_normales<span></td>
+                  <td align='center' style='width: 40px'><span class='badge bg-yellow'>$t_obesos<span></td>
+                  <td align='center'><span class='badge bg-yellow'>$t_sobrepesos<span></td>
+                  <td align='center'><span class='badge bg-red'>$t_agudas<span></td>
+                  <td align='center'><span class='badge bg-red'>$t_severos<span></td>
+                  <td align='center'><span class='badge bg-red'>$t_cronicos<span></td>
+                  <td align='center'><span class='badge bg-gray'>$t_totales<span></td></tfooter>
+                  </table></div>";
                   ?>
 
                 </div><!-- /.box-body -->
