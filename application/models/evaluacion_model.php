@@ -276,13 +276,13 @@ date_default_timezone_set('America/Lima');
 
     public function count_diagnostico($idAula, $idEvaluacion){
       $query = $this->db->query('SELECT e.nombre as evaluacion, a.nombre as aula,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 1 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as normales,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 2 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as obesos,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 3 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as sobrepesos,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 4 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as agudas,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 5 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as severos,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 6 and idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as cronicos,
-      (SELECT count(*) FROM detalle_evaluacion where idAula = '.$idAula.' and idEvaluacion = '.$idEvaluacion.') as totales
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 1 and idAula = a.id  and idEvaluacion = e.id) as normales,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 2 and idAula = a.id  and idEvaluacion = e.id) as obesos,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 3 and idAula = a.id  and idEvaluacion = e.id) as sobrepesos,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 4 and idAula = a.id  and idEvaluacion = e.id) as agudas,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 5 and idAula = a.id  and idEvaluacion = e.id) as severos,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 6 and idAula = a.id  and idEvaluacion = e.id) as cronicos,
+      (SELECT count(*) FROM detalle_evaluacion where idAula = a.id  and idEvaluacion = e.id) as totales
       FROM detalle_evaluacion d
       JOIN evaluacion e ON e.id = d.idEvaluacion
       JOIN alumno al ON al.id = d.idAlumno

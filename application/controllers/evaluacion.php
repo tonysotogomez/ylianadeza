@@ -62,7 +62,6 @@ class Evaluacion extends CI_Controller {
 			$data['faltantes'][$conn] = $this->Aula->CargarAula($v);
 			$conn++;
 		}
-
 		for ($i=0, $len = count($evaluaciones); $i < $len; $i++) {
 			$data['completas'][$i] = $this->Evaluacion->count_diagnostico($evaluaciones[$i]->idAula, $evaluaciones[$i]->id);
 		}

@@ -683,4 +683,134 @@ class Excel extends CI_Controller {
       $objWriter->save('php://output');
     }
 
+
+    public function reporteEvaluacion($num) {
+
+      $this->load->model("Aula_model","Aula");
+      $this->load->model("Evaluacion_model","Evaluacion");
+
+      $evaluaciones_all = $this->Evaluacion->getEvaluacioNumero($num);//todas
+
+      for ($i=0, $len = count($evaluaciones_all); $i < $len; $i++) {
+        $aulas[$i] = $this->Evaluacion->count_diagnostico($evaluaciones_all[$i]->idAula, $evaluaciones_all[$i]->id);
+      }
+
+
+      // configuramos las propiedades del documento
+      $this->phpexcel->getProperties()->setCreator("SoftGroup Perú")
+                                   ->setLastModifiedBy("SoftGroup Perú")
+                                   ->setTitle("Reporte Evaluacion")
+                                   ->setSubject("Evaluacion Nutricional")
+                                   ->setDescription("Reporte Total de Evaluacion")
+                                   ->setKeywords("office 2007 openxml php")
+                                   ->setCategory("Reporte");
+
+       //agrego estilos
+       $border_style= array(
+         'borders' => array(
+             'allborders' => array('style' =>PHPExcel_Style_Border::BORDER_THIN,'color' => array('argb' => '000'),)
+         )
+       );
+       $center_style = array(
+           'alignment' => array(
+               'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+           )
+       );
+       $color1_style = array(
+             'fill' => array(
+              'type' => PHPExcel_Style_Fill::FILL_SOLID,
+              'color' => array('rgb' => 'CEECF5')
+            )
+       );
+
+      $this->phpexcel->setActiveSheetIndex(0)
+                     ->setCellValue('B1', 'I.E.I. “DIVINO NIÑO JESÚS”')
+                     ->setCellValue('B2', 'EVALUACION N°'.$num)
+                     ->setCellValue('B3', '')
+                     ->setCellValue('B4', '');
+
+      $fila = 4; // a partir de que fila empezara el listado
+      $f2 = $fila+1;
+
+      $this->phpexcel->getActiveSheet()->getColumnDimension('A')->setWidth(7);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('B')->setWidth(25);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('C')->setWidth(10);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('D')->setWidth(10);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('E')->setWidth(10);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('F')->setWidth(10);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('G')->setWidth(10);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('H')->setWidth(10);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('I')->setWidth(10);
+
+      $sheet = $this->phpexcel->getActiveSheet();
+
+      $this->phpexcel->setActiveSheetIndex(0)
+                  ->setCellValue('A'.($f2), '#')
+                  ->setCellValue('B'.($f2), 'Aula')
+                  ->setCellValue('C'.($f2), 'Normal')
+                  ->setCellValue('D'.($f2), 'Obeso')
+                  ->setCellValue('E'.($f2), 'Sobrepeso')
+                  ->setCellValue('F'.($f2), 'D. Aguda')
+                  ->setCellValue('G'.($f2), 'D. Severa')
+                  ->setCellValue('H'.($f2), 'D. Crónica')
+                  ->setCellValue('I'.($f2), 'Total');
+
+
+      $con = 1;
+      $t_normales = 0; $t_obesos = 0; $t_sobrepesos = 0;
+      $t_agudas = 0; $t_severos = 0; $t_cronicos= 0; $t_totales= 0;
+      foreach ($aulas as $key) {
+        //fila + 1
+        foreach ($key as $v) {
+          $this->phpexcel->setActiveSheetIndex(0)
+                      ->setCellValue('A'.($f2+$con), $con)
+                      ->setCellValue('B'.($f2+$con), $v->aula)
+                      ->setCellValue('C'.($f2+$con), $v->normales)
+                      ->setCellValue('D'.($f2+$con), $v->obesos)
+                      ->setCellValue('E'.($f2+$con), $v->sobrepesos)
+                      ->setCellValue('F'.($f2+$con), $v->agudas)
+                      ->setCellValue('G'.($f2+$con), $v->severos)
+                      ->setCellValue('H'.($f2+$con), $v->cronicos)
+                      ->setCellValue('I'.($f2+$con), $v->totales);
+
+          $t_normales += $v->normales;
+          $t_obesos += $v->obesos;
+          $t_sobrepesos += $v->sobrepesos;
+          $t_agudas += $v->agudas;
+          $t_severos += $v->severos;
+          $t_cronicos += $v->cronicos;
+          $t_totales += $v->totales;
+        }//end foreach
+        $con++;
+      }//end forreach $aula
+
+      $f2+=$con;
+      $this->phpexcel->setActiveSheetIndex(0)
+                  ->setCellValue('A'.($f2), ' ')
+                  ->setCellValue('B'.($f2), 'Total')
+                  ->setCellValue('C'.($f2), $t_normales)
+                  ->setCellValue('D'.($f2), $t_obesos)
+                  ->setCellValue('E'.($f2), $t_sobrepesos)
+                  ->setCellValue('F'.($f2), $t_agudas)
+                  ->setCellValue('G'.($f2), $t_severos)
+                  ->setCellValue('H'.($f2), $t_cronicos)
+                  ->setCellValue('I'.($f2), $t_totales);
+
+      // renombro la hoja de trabajo con el nombre del aula
+      $this->phpexcel->getActiveSheet()->setTitle('Reporte');
+
+      $sheet->getStyle("A".($fila+1).":I".($f2))->applyFromArray($border_style);
+      $sheet->getStyle("A".($fila+1).":I".($fila+1))->applyFromArray($center_style)->getFont()->setBold(true);
+      $sheet->getStyle("A".($f2).":I".($f2))->applyFromArray($center_style)->getFont()->setBold(true);
+
+      $this->phpexcel->setActiveSheetIndex(0);
+      //redireccionamos la salida al navegador del cliente (Excel2007)
+      header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      header('Content-Disposition: attachment;filename="Reporte Evaluacion '.$num.'.xlsx"');
+      header('Cache-Control: max-age=0');
+
+      $objWriter = PHPExcel_IOFactory::createWriter($this->phpexcel, 'Excel2007');
+      $objWriter->save('php://output');
+    }
+
 }

@@ -79,8 +79,8 @@
               <div class="box box-primary">
                 <div class="box-header">
                   <h3 class="box-title">Reporte</h3>
-                  <a href="<?php echo $url;?>excel/reporte/<?php echo $num;?>">
-                    <button type="button" class="btn btn-default" title="Descargar Excel" disabled>
+                  <a href="<?php echo $url;?>excel/reporteEvaluacion/<?php echo $num;?>">
+                    <button type="button" class="btn btn-default" title="Descargar Excel">
                       <i class="fa fa-download"></i> Descargar</button>
                   </a>
                 </div><!-- /.box-header -->
