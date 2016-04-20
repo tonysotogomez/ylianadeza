@@ -149,10 +149,10 @@
                       </div>
                       <div class="row">
                         <div class="col-xs-12 col-sm-6 col-lg-6">
-                          <div id="pie_container"></div>
+                          <div  class="contains-chart" id="pie_container"></div>
                         </div>
                         <div class="col-xs-12 col-sm-6 col-lg-6">
-                          <div id="bar_container"></div>
+                          <div  class="contains-chart" id="bar_container"></div>
                         </div>
                       </div>
                     </div>

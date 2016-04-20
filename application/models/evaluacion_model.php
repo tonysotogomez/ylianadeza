@@ -398,4 +398,34 @@ date_default_timezone_set('America/Lima');
       $resultado = $consulta->result();
       return $resultado;
     }
+
+
+
+    public function reporteEvaluacionTotales($num){
+      $query = $this->db->query("SELECT
+        sum(t.normales) as normales,
+        sum(t.obesos) as obesos,
+        sum(t.sobrepesos) as sobrepesos,
+        sum(t.agudos) as agudas,
+        sum(t.severos) as severos,
+        sum(t.cronicos) as cronicos,
+        sum(t.totales) as totales
+        FROM
+        (
+        SELECT (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id) as totales,
+        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 1) as normales,
+        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 2) as obesos,
+        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 3) as sobrepesos,
+        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 4) as agudos,
+        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 5) as severos,
+        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 6) as cronicos
+        FROM `evaluacion` e
+        JOIN detalle_evaluacion d ON d.idEvaluacion = e.id
+        where e.numero = $num and e.estado = 1
+        GROUP BY e.id
+        ) as t");
+      $resultado = $query->result();
+      return $resultado;
+    }
+
  }

@@ -2,6 +2,13 @@
 
 function script_pie($num, $datos)
 {
+
+  if(isset($datos[0]->subtitulo)) $subtitulo = $datos[0]->subtitulo;
+  else $subtitulo = 'Subtitulo';
+
+  if(isset($datos[0]->titulo)) $titulo = $datos[0]->titulo;
+  else $titulo = 'Titulo';
+
   $script = "<script>
   $(function () {
     $('#pie_container').highcharts({
@@ -16,10 +23,10 @@ function script_pie($num, $datos)
             type: 'pie'
         },
         title: {
-            text: 'Resultados Evaluacion N°$num'
+            text: '$titulo'
         },
         subtitle: {
-            text: '".$datos[0]->aula."'
+            text: '".$subtitulo."'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -72,6 +79,12 @@ function script_pie($num, $datos)
 
 function script_barras($num, $datos)
 {
+  if(isset($datos[0]->subtitulo)) $subtitulo = $datos[0]->subtitulo;
+  else $subtitulo = 'Subtitulo';
+
+  if(isset($datos[0]->titulo)) $titulo = $datos[0]->titulo;
+  else $titulo = 'Titulo';
+
   $script = "<script>
   $(function () {
     // Create the chart
@@ -84,10 +97,10 @@ function script_barras($num, $datos)
             type: 'column'
         },
         title: {
-            text: 'Resultados Evaluacion N°$num'
+            text: '$titulo'
         },
         subtitle: {
-            text: '".$datos[0]->aula."'
+            text: '".$subtitulo."'
         },
         xAxis: {
             type: 'category'

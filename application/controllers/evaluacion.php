@@ -15,7 +15,7 @@ class Evaluacion extends CI_Controller {
 				 $this->header['infantes'] = $this->Aula->CargarMenu(3);
 				 $this->header['jardin'] = $this->Aula->CargarMenu(4);
 				 $this->footer['js_custom'] = '<script src="'.base_url().'dist/js/mantenimiento/evaluacion.js"></script>';
-				 $this->load->helper(array('form'));
+				 $this->load->helper(array('chart_helper','form'));
     }
 
 	public function index()
@@ -71,6 +71,12 @@ class Evaluacion extends CI_Controller {
 		for ($i=0, $len = count($evaluaciones_all); $i < $len; $i++) {
 			$data['aulas'][$i] = $this->Evaluacion->count_diagnostico($evaluaciones_all[$i]->idAula, $evaluaciones_all[$i]->id);
 		}
+
+		//graficas
+		$valores = $this->Evaluacion->reporteEvaluacionTotales($num);
+		$valores[0]->titulo = 'Reporte de las Evaluaciones N°'.$num;
+		$valores[0]->subtitulo = 'Resultados de todas las aulas';
+		$this->footer['js_custom'] .= script_pie($num, $valores).' '.script_barras($num, $valores);
 
 		$data['num'] =	$num;
 		$this->header['evaluacion_m'] = true; //activa el menu

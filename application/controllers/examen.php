@@ -160,6 +160,8 @@ class Examen extends CI_Controller {
 		//echo $this->db->last_query();
 
 		$valores = $this->data['datos_num'];//obtengo aula y las cantidades de estados
+		$valores[0]->titulo = 'Resultados Evaluacion N°'.$num;
+		$valores[0]->subtitulo = $this->data['datos_num'][0]->aula;;
 		//cargo script highcharts si es que esta completa la evaluacion
 		if(($this->data['evaluacion'][0]->completado) == 1)	$this->footer['js_custom'] = script_pie($num, $valores).' '.script_barras($num, $valores);
 		else $this->footer['js_custom'] = '';

@@ -1,6 +1,13 @@
 $(document).ready(function() {
   totalAlumnos();
 });
+
+jQuery(document).on( 'shown.bs.tab', 'a[data-toggle="tab"]', function (e) { // on tab selection event
+    jQuery( ".contains-chart" ).each(function() { // target each element with the .contains-chart class
+        var chart = jQuery(this).highcharts(); // target the chart itself
+        chart.reflow() // reflow that chart
+    });
+})
 /**
  * Muestra un mensaje al pie de la página
  *
