@@ -185,14 +185,54 @@ class Examen extends CI_Controller {
 			$this->Evaluacion->Crear($data);
 
 			//Obtengo el id de la evaluacion
-			$data['idEvaluacion'] = $this->db->insert_id();
+			$idEvaluacion = $this->db->insert_id();
+			$data['idEvaluacion'] = $idEvaluacion;
 			$data['fecha'] = $this->input->post('fecha_eval');
+
+			/* CALCULO DE LA EVALUACION ANTERIOR */
+			$evaluaciones = $this->Evaluacion->CargarEvaluaciones($this->input->post('aula')); //cargas las evaluaciones de la mas antigua a la actual
+			for ($i=0, $len = count($evaluaciones); $i < $len; $i++) {
+				if ($idEvaluacion == $evaluaciones[$i]->id) { //si el id es igual al actual
+					if($i == 0){ $ant_eval = false; break;}//pero es el primero, entonces no hay evaluacion anterior
+					$ant_eval = $evaluaciones[$i-1]->id; break;//pero si no, entonces restamos 1 para encontrar la evaluacion anterior
+				}
+			}
 
 			//idAula, nuevo campo para reportes
 			$data['idAula'] =  $this->input->post('aula');
 
 			//Ingreso los datos en el detalleEvaluacion
 			for ($i=0, $len = count($alumnos); $i < $len; $i++) {
+				//si la evaluacion anterior no existe
+				if($ant_eval == false){
+					$data['gpeso'] = 0;
+					$data['gtalla'] = 0;
+				} else {
+					//cargo de la evaluacion anterior el detalle del alumno
+					$detalle_ant = $this->Evaluacion->CargarDetalleID($ant_eval, $alumnos[$i]->id);
+					if(! empty($detalle_ant)){
+						$data['gpeso'] = (float)$this->input->post('peso_'.$alumnos[$i]->id) - (float)$detalle_ant[0]->peso;
+						$data['gtalla'] = (float)$this->input->post('talla_'.$alumnos[$i]->id) - (float)$detalle_ant[0]->talla;
+						//si la evaluacion anterior no tiene valores
+						if($detalle_ant[0]->peso == 0 OR $detalle_ant[0]->talla == 0){
+							$data['gpeso'] = 0;
+							$data['gtalla'] = 0;
+						}
+						//si la evaluacion actual no tiene valores
+						if($this->input->post('peso_'.$alumnos[$i]->id) == 0 OR $this->input->post('talla_'.$alumnos[$i]->id) == 0){
+							$data['gpeso'] = 0;
+							$data['gtalla'] = 0;
+						}
+						if($alumnos[$i]->id != $detalle_ant[0]->idAlumno){
+							$data['gpeso'] = 0;
+							$data['gtalla'] = 0;
+						}
+					} else {
+						$data['gpeso'] = 0;
+						$data['gtalla'] = 0;
+					}
+				}
+
 				$fecha_nac = $this->input->post('fecha_'.$alumnos[$i]->id);
 				$data['genero'] = $this->input->post('genero_'.$alumnos[$i]->id);
 				$edad_decimales = convertir_fecha($fecha_nac);
@@ -206,11 +246,15 @@ class Examen extends CI_Controller {
 				/* Evaluacion Nutricional */
 				$resultado = evaluar($data);//edad, peso, talla y genero (h o m)
 
-				$data['talla_edad'] = $resultado['diagnostico']; //talla_edad
-				$data['peso_edad'] = $resultado['diagnostico3']; //peso_edad
-				$data['peso_talla'] = $resultado['diagnostico2']; //peso_talla
-
-				//$data['obs'] = $resultado['q1'].' | '.$resultado['q2'].' | '.$resultado['q3']; guarda los queris de busqueda
+				if($data['edad'] != 0) {//si tiene edad
+					$data['talla_edad'] = $resultado['diagnostico']; //talla_edad
+					$data['peso_edad'] = $resultado['diagnostico3']; //peso_edad
+					$data['peso_talla'] = $resultado['diagnostico2']; //peso_talla
+				} else { //si el niño no tiene edad, no se agregan diagnoaticos
+					$data['talla_edad'] = '-';
+					$data['peso_edad'] = '-';
+					$data['peso_talla'] = '-';
+				}
 				$result = $this->Evaluacion->InsertarDetalle($data);
 			}//end for
 
@@ -260,8 +304,13 @@ class Examen extends CI_Controller {
 					if(! empty($detalle_ant)){
 						$data['gpeso'] = (float)$this->input->post('peso_'.$alumnos[$i]->id) - (float)$detalle_ant[0]->peso;
 						$data['gtalla'] = (float)$this->input->post('talla_'.$alumnos[$i]->id) - (float)$detalle_ant[0]->talla;
-						//si no se han ingresado valores
+						//si la evaluacion anterior no tiene valores
 						if($detalle_ant[0]->peso == 0 OR $detalle_ant[0]->talla == 0){
+							$data['gpeso'] = 0;
+							$data['gtalla'] = 0;
+						}
+						//si la evaluacion actual no tiene valores
+						if($this->input->post('peso_'.$alumnos[$i]->id) == 0 OR $this->input->post('talla_'.$alumnos[$i]->id) == 0){
 							$data['gpeso'] = 0;
 							$data['gtalla'] = 0;
 						}
@@ -287,13 +336,12 @@ class Examen extends CI_Controller {
 				if($data['final'] != '-') $con++;
 
 				/* Evaluacion Nutricional */
-				$resultado = evaluar($data);//edad, peso, talla y genero (h o m)
-				$data['talla_edad'] = $resultado['diagnostico']; //talla_edad
-				$data['peso_edad'] = $resultado['diagnostico3']; //peso_edad
-				$data['peso_talla'] = $resultado['diagnostico2']; //peso_talla
-
-				//si el niño no tiene edad, no se agregan diagnoaticos
-				if($data['edad'] == 0) {
+				if($data['edad'] != 0) {//si tiene edad
+					$resultado = evaluar($data);//edad, peso, talla y genero (h o m)
+					$data['talla_edad'] = $resultado['diagnostico']; //talla_edad
+					$data['peso_edad'] = $resultado['diagnostico3']; //peso_edad
+					$data['peso_talla'] = $resultado['diagnostico2']; //peso_talla
+				} else { //si el niño no tiene edad, no se agregan diagnoaticos
 					$data['talla_edad'] = '-';
 					$data['peso_edad'] = '-';
 					$data['peso_talla'] = '-';

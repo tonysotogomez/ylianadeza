@@ -7,7 +7,12 @@
             <small><a href="<?php echo $url;?>excel/reporteEvaluacion/<?php echo $num;?>">
               <button type="button" class="btn btn-default" title="Descargar Excel">
                 <i class="fa fa-download"></i> Descargar Reporte</button>
-            </a></small>
+            </a>&nbsp;
+            <a href="<?php echo $url;?>evaluacion">
+              <button type="button" class="btn btn-warning pull-right">
+              <i class="fa fa-reply"></i> Regresar
+            </button></a>
+            </small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?php echo $url;?>"><i class="fa fa-dashboard"></i> Inicio</a></li>
