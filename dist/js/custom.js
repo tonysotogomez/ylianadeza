@@ -31,13 +31,33 @@ function mensaje(tipo, texto, tiempo){
 function lock(){
     $('body').css('overflow', 'hidden');
     $("body").append('<div class="overlay lockscreen lock" id="block"></div>');
-    $('#block').load(url+'dist/lockscreen.html');
-}
+    $('#block').load(url+'dist/lockscreen.php');
 
+    // slight update to account for browsers not supporting e.which
+    function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
+    // To disable f5
+        /* jQuery < 1.7 */
+    $(document).bind("keydown", disableF5);
+    /* OR jQuery >= 1.7 */
+    $(document).on("keydown", disableF5);
+
+    // To re-enable f5
+        /* jQuery < 1.7 */
+    $(document).unbind("keydown", disableF5);
+    /* OR jQuery >= 1.7 */
+    $(document).off("keydown", disableF5);
+
+}
+$('#pass_lock').keypress(function (e) {
+  if (e.which == 13) {
+    $('form#lockscreen').submit();
+  }
+});
 function unlock(){
   var pass = $('#pass_lock').val();
+  console.log(pass);
   if($.trim(pass) != 'yliana'){
-    alert('Contraseña Incorrecta'); die();
+    alert('Contraseña Incorrecta');
   } else {
     $('body').css('overflow', 'scroll');
     $(".overlay,.lockscreen,.lock").remove();

@@ -76,8 +76,12 @@
     <script>
       $(function () {
         $("#txt_fecha").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-        $('#pie_container').highcharts().reflow();
-        $('#bar_container').highcharts().reflow();
+        if($('#pie_container').length > 0){
+          $('#pie_container').highcharts().reflow();
+          $('#bar_container').highcharts().reflow();
+        }
+
+
       });
     </script>
   </body>

@@ -10,10 +10,10 @@
   <div class="lockscreen-item">
     <!-- lockscreen image -->
     <div class="lockscreen-image">
-      <img src="images/foto.jpg" alt="User Image">
+      <img src="../../images/foto.jpg" alt="User Image">
     </div>
     <!-- /.lockscreen-image -->
-
+    <form id="lockscreen" class="lockscreen-credentials">
     <!-- lockscreen credentials (contains the form) -->
       <div class="input-group">
         <input type="password" id="pass_lock" class="form-control" placeholder="contraseña">
@@ -21,6 +21,7 @@
           <button class="btn"><i class="fa fa-arrow-right text-muted" onclick="unlock()"></i></button>
         </div>
       </div>
+    </form>
 
   </div><!-- /.lockscreen-item -->
   <div class="help-block text-center">
