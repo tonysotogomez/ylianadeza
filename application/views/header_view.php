@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Yliana Deza</title>
+    <title><?php echo (isset($title))?$title:'Yliana Deza'; ?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Sistema de Evaluación Nutricional">
@@ -161,14 +161,19 @@
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
             <li class="header">EXAMEN</li>
-            <li class="<?php echo (isset($examen_m))?'active':'';?>"><a href="<?php echo $url;?>examen"><i class="fa fa-user-md"></i> <span>Evaluación Nutricional</span></a></li>
+            <li class="<?php echo (isset($examen_m))?'active':'';?>">
+              <a href="<?php echo $url;?>examen">
+                <img src="<?php echo $url;?>images/icons/doctora.png" alt="imagen" width="22">
+                <span>Evaluación Nutricional</span>
+              </a>
+            </li>
 
             <li class="header">AULAS</li>
             <?php
             $tipo = (isset($tipo))?$tipo:0;
             $uri = $this->uri->segment(3);?>
             <li class="treeview <?php echo ($tipo==1)?'active':'';?>">
-              <a href="#"><i class="fa fa-group"></i> <span>Lactantes</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><img src="<?php echo $url;?>images/icons/lactante.png" alt="imagen" width="22">  <span>Lactantes</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($lactantes as $fila) {
                   $active = ($uri == $fila->id && $this->uri->segment(1) == 'aula')?'active':'';
@@ -178,7 +183,7 @@
             </li>
 
             <li class="treeview <?php echo ($tipo==2)?'active':'';?>">
-              <a href="#"><i class="fa fa-group"></i> <span>Andantes</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><img src="<?php echo $url;?>images/icons/andante.png" alt="imagen" width="22">  <span>Andantes</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($andantes as $fila) {
                   $active = ($uri == $fila->id && $this->uri->segment(1) == 'aula')?'active':'';
@@ -188,7 +193,7 @@
             </li>
 
             <li class="treeview <?php echo ($tipo==3)?'active':'';?>">
-              <a href="#"><i class="fa fa-group"></i> <span>Infantes</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><img src="<?php echo $url;?>images/icons/infante.png" alt="imagen" width="22">  <span>Infantes</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($infantes as $fila) {
                   $active = ($uri == $fila->id && $this->uri->segment(1) == 'aula')?'active':'';
@@ -198,7 +203,7 @@
             </li>
 
             <li class="treeview <?php echo ($tipo==4)?'active':'';?>">
-              <a href="#"><i class="fa fa-group"></i> <span>Jardín</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><img src="<?php echo $url;?>images/icons/jardin.png" alt="imagen" width="22">  <span>Jardín</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
                 <?php foreach($jardin as $fila) {
                   $active = ($uri == $fila->id && $this->uri->segment(1) == 'aula')?'active':'';
@@ -207,11 +212,16 @@
               </ul>
             </li>
             <li class="header">REPORTES</li>
-            <li class="<?php echo (isset($evaluacion_m))?'active':'';?>"><a href="<?php echo $url;?>evaluacion"><i class="fa fa-book"></i> <span>Evaluaciones</span></a></li>
+            <li class="<?php echo (isset($evaluacion_m))?'active':'';?>"><a href="<?php echo $url;?>evaluacion">
+              <img src="<?php echo $url;?>images/icons/evaluaciones.png" alt="imagen" width="22">  <span>Evaluaciones</span></a></li>
             <li class="header">MANTENIMIENTO</li>
-            <li class="<?php echo (isset($aula_m))?'active':'';?>"><a href="<?php echo $url;?>aula/mantenimiento"><i class="fa fa-folder"></i> <span>Aula</span></a></li>
-            <li class="<?php echo (isset($alumno_m))?'active':'';?>"><a href="<?php echo $url;?>alumno"><i class="fa fa-male"></i> <span>Alumnos</span></a></li>
-
+            <li class="<?php echo (isset($aula_m))?'active':'';?>"><a href="<?php echo $url;?>aula/mantenimiento">
+              <img src="<?php echo $url;?>images/icons/aula.png" alt="imagen" width="22">  <span>Aula</span></a></li>
+            <li class="<?php echo (isset($alumno_m))?'active':'';?>"><a href="<?php echo $url;?>alumno">
+              <img src="<?php echo $url;?>images/icons/alumnos.png" alt="imagen" width="22">  <span>Alumnos</span></a></li>
+            <li class="header">OTROS</li>
+            <li><a href="<?php echo $url;?>backup">
+              <img src="<?php echo $url;?>images/icons/backup.png" alt="imagen" width="22">Copia de Seguridad</a></li>
 
           </ul><!-- /.sidebar-menu -->
         </section>
