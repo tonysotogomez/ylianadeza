@@ -4,7 +4,7 @@
       <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-          <b>Version</b> 1.0
+          <b>Version</b> 1.5
         </div>
         <!-- Default to the left -->
         <strong>Copyright &copy; 2016 <a target="_blank" href="http://softgroup-peru.com/">SoftGroup Perú</a>.</strong> Todos los derechos reservados.

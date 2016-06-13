@@ -5,7 +5,7 @@ class Aula extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
-         $this->header['title']= "Localhost";
+         $this->header['title']= "Aulas";
 				 $this->header['url']= base_url();
 				 $this->load->model("Aula_model","Aula");
 				 $this->header['lactantes'] = $this->Aula->CargarMenu(1);

@@ -29,7 +29,7 @@
                     <div class="form-group">
                       <label for="inputName" class="col-sm-2 control-label">Edad</label>
                       <div class="col-sm-10">
-                        <select class="form-control select_fila" name="slct_anios" style="width: 175px!important;">
+                        <select class="form-control select_fila" name="slct_anios" style="width: 115px!important;">
                           <option value="0">0 años</option>
                           <option value="1">1 año</option>
                           <option value="2">2 años</option>
@@ -37,7 +37,7 @@
                           <option value="4">4 años</option>
                           <option value="5">5 años</option>
                         </select>
-                        <select class="form-control select_fila" name="slct_meses" style="width: 175px!important;">
+                        <select class="form-control select_fila" name="slct_meses" style="width: 115px!important;">
                           <option value="0">0 meses</option>
                           <option value="01">1 mes</option>
                           <option value="02">2 meses</option>

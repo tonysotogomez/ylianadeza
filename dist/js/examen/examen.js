@@ -32,7 +32,8 @@ $(document).ready(function() {
 
       var gender = $("input[type='radio'][name='txt_genero']:checked").val();
       var cond = (gender == 'h')?'45.1':'45';
-      if($("#talla").val() >= cond){
+      var talla = $("#talla").val();
+      if( parseFloat(talla) >= parseFloat(cond)){
         var datos=$("#form_examen").serialize().split("txt_").join("").split("slct_").join("");
         $.ajax({
             url         : url + 'examen/ejecutar',
