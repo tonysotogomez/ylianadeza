@@ -25,7 +25,7 @@
                 </div><!-- /.box-header -->
                 <input type="hidden" value="0>" id="todos">
                 <div class="box-body">
-                  <table id="t_alumnos" class="table table-bordered table-striped">
+                  <table id="t_alumnos" class="table table-bordered table-striped display responsive nowrap">
                     <thead>
                       <tr>
                         <th style="width: 10px;">Nro</th>

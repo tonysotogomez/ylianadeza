@@ -8,32 +8,32 @@
                 </button>
                 <h4 class="modal-title">Usuario</h4>
             </div>
-            <div class="modal-body">
-                <form id="form_alumno" name="form_alumno" action="" method="post">
+            <form id="form_alumno" name="form_alumno" action="" method="post">
+              <div class="modal-body">
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Apellidos:</label>
-                        <input type="text" class="form-control" name="txt_apellidos" id="txt_apellidos" placeholder="Ingresa sus apellidos">
+                        <label for="apellidos">Apellidos:</label>
+                        <input type="text" class="form-control" name="txt_apellidos" id="txt_apellidos" placeholder="Ingresa sus apellidos" required>
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Nombres:</label>
-                        <input type="text" class="form-control" name="txt_nombres" id="txt_nombres" placeholder="Ingresa sus nombres">
+                        <label for="nombres">Nombres:</label>
+                        <input type="text" class="form-control" name="txt_nombres" id="txt_nombres" placeholder="Ingresa sus nombres" required>
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">DNI:</label>
+                        <label for="dni">DNI:</label>
                         <input type="text" class="form-control" name="txt_dni" id="txt_dni" placeholder="Ingresa su DNI">
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Titular:</label>
+                        <label for="titular">Titular:</label>
                         <input type="text" class="form-control" name="txt_titular" id="txt_titular" placeholder="Ingresa el titular">
                       </div>
                     </div>
@@ -44,7 +44,7 @@
                         <label>Fecha de Nacimiento:</label>
                         <div class="input-group">
                           <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                          <input type="text" class="form-control" id="txt_fecha" name="txt_fecha" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask>
+                          <input type="text" class="form-control" id="txt_fecha" name="txt_fecha" data-inputmask="'alias': 'dd-mm-yyyy'" data-mask required>
                         </div><!-- /.input group -->
                       </div><!-- /.form group -->
                     </div>
@@ -80,12 +80,12 @@
                       </div>
                     </div>
                     <input type="hidden" name="txt_id" id="txt_id">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" id="submit" class="btn btn-primary" value="0" onclick="AgregarEditar(this.value)">Guardar</button>
-            </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  <button type="submit" id="submit" class="btn btn-primary" value="0">Guardar</button>
+              </div>
+            </form>
         </div>
     </div>
 </div>

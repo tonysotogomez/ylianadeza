@@ -27,6 +27,8 @@
     <!-- DataTables -->
     <script src="<?php echo $url;?>plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="<?php echo $url;?>plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="<?php echo $url;?>plugins/datatables/dataTables.responsive.min.js"></script>
+
 
     <!-- ChartJS 1.0.1 -->
     <script src="<?php echo $url;?>plugins/chartjs/Chart.min.js"></script>
@@ -59,8 +61,8 @@
     <script src="<?php echo $url;?>plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
     <script src="<?php echo $url;?>plugins/input-mask/jquery.inputmask.extensions.js"></script>
     <!-- Highcharts -->
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="<?php echo $url;?>plugins/highcharts/highcharts.js"></script>
+    <script src="<?php echo $url;?>plugins/highcharts/exporting.js"></script>
     <!-- Custom -->
     <script src="<?php echo $url;?>dist/js/custom.js"></script>
 
@@ -80,7 +82,6 @@
           $('#pie_container').highcharts().reflow();
           $('#bar_container').highcharts().reflow();
         }
-
 
       });
     </script>

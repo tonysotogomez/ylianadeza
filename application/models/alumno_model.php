@@ -40,8 +40,16 @@
    else return false;
   }
 
+  public function Verificar($data){
+    $this->db->select('id, nombres, apellidos');
+    $this->db->from('alumno');
+    $this->db->where('nombres', $data['nombres']);
+    $this->db->limit(1);
+    return $this->db->count_all_results();
+  }
+
   public function CargarAlumno($id){
-    $this->db->select('id, nombres, apellidos, fecha_nacimiento as fecha, genero, titular, estado');
+    $this->db->select('id, idAula, nombres, apellidos, fecha_nacimiento as fecha, genero, titular, estado');
     $this->db->from('alumno');
     $this->db->where('id', $id);
     $this->db->limit(1);

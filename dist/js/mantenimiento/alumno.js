@@ -1,27 +1,57 @@
 $(document).ready(function() {
   ListarAlumnos();
   calcularallTotales();
-  $('#alumnoModal').on('shown.bs.modal', function(e){
+  cargarAula(); //cargo las aulas en el modal
+
+  $('#txt_nombres').on('change', function(e){
+    var nombres = $('#txt_nombres').val();
     $.ajax({
-        url         : url + "aula/listado_select",
+        url         : url + "alumno/verificar",
         type        : 'POST',
         cache       : false,
         dataType    : 'json',
+        data : {nombres : nombres},
         success : function(data) {
-            var i, len, selected = '', opciones = '';
-            var aulas = data['aulas'];
-            var id = $('#aula_id').val();
-            for (i = 0, len = data['aulas'].length; i < len; i++) {
-              if (id == aulas[i]['id']) { selected = 'selected'; }
-              else { selected = ''; }
-              opciones += '<option value="'+aulas[i]['id']+'" '+selected+'>'+aulas[i]['nombre']+'</option>';
-            }
-            $('#slct_aula').append(opciones);
+          div = $('#txt_nombres').parent();
+          if ( data.rst == 1) {
+            $('#txt_nombres').prev().html(data.msj);
+            div.addClass("has-warning");
+          } else {
+            $('#txt_nombres').prev().html('Nombres:');
+            div.removeClass("has-warning");
+          }
         }
     });
   });
 
+  $('#form_alumno').submit(function(e) {
+    e.preventDefault();
+    var tipo = $("#submit").val();
+    AgregarEditar(tipo);
+  });
 });
+
+
+function cargarAula(){
+  $.ajax({
+      url         : url + "aula/listado_select",
+      type        : 'POST',
+      cache       : false,
+      dataType    : 'json',
+      success : function(data) {
+          var i, len, selected = '', opciones = '';
+          var aulas = data.aulas;
+          var id = $('#aula_id').val();
+          for (i = 0, len = data['aulas'].length; i < len; i++) {
+            if (id == aulas[i]['id']) { selected = 'selected'; }
+            else { selected = ''; }
+            opciones += '<option value="'+aulas[i]['id']+'" '+selected+'>'+aulas[i]['nombre']+'</option>';
+          }
+          $('#slct_aula').html('');
+          $('#slct_aula').append(opciones);
+      }
+  });
+}
 
 function Nuevo(){
   $("#txt_apellidos").val('');
@@ -163,30 +193,9 @@ function listar_todos(){
         "ordering": true,
         "info": true,
         "autoWidth": false,
-        "language": {
-          "sProcessing":     "Procesando...",
-          "sLengthMenu":     "Mostrar _MENU_ registros",
-          "sZeroRecords":    "No se encontraron resultados",
-          "sEmptyTable":     "Ningún dato disponible en esta tabla",
-          "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-          "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-          "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-          "sInfoPostFix":    "",
-          "sSearch":         "Buscar:",
-          "sUrl":            "",
-          "sInfoThousands":  ",",
-          "sLoadingRecords": "Cargando...",
-          "oPaginate": {
-            "sFirst":    "Primero",
-            "sLast":     "Ãšltimo",
-            "sNext":     "Siguiente",
-            "sPrevious": "Anterior"
-          },
-          "oAria": {
-            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-          }
-        }
+        "oLanguage": {
+          "sUrl": url+"plugins/datatables/language/esp.txt"
+        },
     });
   }
 
@@ -244,6 +253,7 @@ function listar_todos(){
                 $("#txt_titular").val(alumno['titular']);
                 $('input[name="radiogenero"][value="' + alumno['genero'] + '"]').prop('checked', true);
                 $("#txt_fecha").val(nac[2]+"-"+nac[1]+"-"+nac[0]);
+                $("#slct_aula").val(alumno['idAula']);
                 $("#slct_estado").val(alumno['estado']);
                 $("#submit").val('1');
 

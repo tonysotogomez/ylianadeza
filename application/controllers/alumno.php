@@ -34,6 +34,23 @@ class Alumno extends CI_Controller {
 		$this->load->view('footer_view');
 	}
 
+	public function verificar()
+	{
+		if($this->input->is_ajax_request()){
+			$data['nombres'] = $this->input->post('nombres');
+
+			if($this->Alumno->Verificar($data) == 1) {
+				$data['rst'] = 1;
+				$data['msj'] = 'Existe un alumno registrado con ese nombre. ';
+			} else {
+				$data['rst'] = 0;
+				$data['msj'] = 'No existe coincidencia';
+			}
+			echo json_encode($data);
+		}
+		else echo 'Funcion ajax';
+	}
+
 	public function crear()
 	{
 		if($this->input->is_ajax_request()){
