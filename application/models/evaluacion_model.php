@@ -14,11 +14,15 @@ date_default_timezone_set('America/Lima');
   }
 
   public function Cargar($idAlumno){
-    $this->db->select('id, idEvaluacion, idAlumno, edad, peso, talla, fecha, observaciones, diagnosticoTE, diagnosticoPE, diagnosticoPT, observaciones');
-    $this->db->from('detalle_evaluacion');
-    $this->db->where('estado', 1);
-    $this->db->where('idAlumno', $idAlumno);
-    $this->db->order_by('fecha', 'desc');
+    $this->db->select('e.nombre as evaluacion, e.numero as num');
+    $this->db->select('d.idEvaluacion, d.idAlumno, d.edad, d.peso, d.talla, d.fecha, d.diagnosticoTE, d.diagnosticoPE, d.diagnosticoPT, d.observaciones');
+    $this->db->select('dg.nombre as diagnostico');
+    $this->db->from('detalle_evaluacion d');
+    $this->db->join('evaluacion e', 'e.id = d.idEvaluacion');
+    $this->db->join('diagnostico dg', 'dg.id = d.idDiagnostico','left');
+    $this->db->where('d.estado', 1);
+    $this->db->where('d.idAlumno', $idAlumno);
+    $this->db->order_by('d.fecha', 'asc');
     $consulta = $this->db->get();
     $resultado = $consulta->result();
     return $resultado;

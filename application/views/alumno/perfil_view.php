@@ -4,11 +4,14 @@
         <section class="content-header">
           <h1>
             Perfil del Alumno
+            <button type="button" class="btn btn-warning" onclick="history.back();">
+              <i class="fa fa-reply"></i> Regresar
+            </button>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
             <li><a href="#">Alumno</a></li>
-            <li class="active">Diagnostico</li>
+            <li class="active">Perfil</li>
           </ol>
         </section>
 
@@ -16,108 +19,122 @@
         <section class="content">
 
           <div class="row">
-            <div class="col-md-3">
-<?php
-list($anio, $mes, $dia) = explode("-",$alumno[0]->fecha);
-$mes = (int)$mes;
-$dias = (int)$dia;
-$f1=mktime(0,0,0,$mes,$dias,$anio);
-$edad_s=time()-$f1;
-$edad_a=$edad_s/(60*60*24*365);
-$edad_m=($edad_a-(int)$edad_a)*12; //Multiplicamos la parte decimal de los años por 12 para obtener los meses.
-$edad_d=($edad_m-(int)$edad_m)*24;//Multiplicamos la parte decimal de los meses por 24 para sacar los días.
-$edad_meses=($edad_a)*12;//meses totales
-//Luego debemos coger únicamente la parte entera de cada numero;
-//$edad=(int)($edad_s/(60*60*24*365)); edad en años
-$edad_a=(int)$edad_a; //Años
-$edad_m=(int)$edad_m; //Meses
-$edad_d=(int)$edad_d; //Dias
-
-if($edad_a == 0) {
-  $edad = $edad_m.' meses';
-} elseif($edad_a > 0) {
-  $edad = $edad_a.' años y '.$edad_m.' meses';
-}
-$meses_totales = (int)$edad_meses;
-?>
+            <div class="col-sm-12 col-md-12 col-lg-3">
+              <?php
+              $edad = calcular_edad($alumno[0]->fecha_nacimiento);
+              ?>
               <!-- Profile Image -->
-              <div class="box box-success">
-                <div class="box-body box-profile">
-                  <img class="profile-user-img img-responsive img-circle" src="<?php echo $url;?>images/image.jpg" alt="User profile">
-                  <h3 class="profile-username text-center"><?php echo $alumno[0]->nombres.'<br>'.$alumno[0]->apellidos;?></h3>
-                  <p class="text-muted text-center"><?php echo date('d-m-Y', strtotime( $alumno[0]->fecha));?></p>
+              <div class="col-md-6 col-lg-12">
+                <div class="box box-success">
+                  <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" src="<?php echo $url;?>images/image.jpg" alt="User profile">
+                    <h3 class="profile-username text-center"><?php echo $alumno[0]->nombres.'<br>'.$alumno[0]->apellidos;?></h3>
+                    <p class="text-muted text-center"><?php echo date('d-m-Y', strtotime( $alumno[0]->fecha_nacimiento)).' ('.$edad.')';?></p>
 
-                  <ul class="list-group list-group-unbordered">
-                    <li class="list-group-item">
-                      <b>Edad</b> <a class="pull-right"><?php echo $edad;?></a>
-                    </li>
-                    <li class="list-group-item">
-                      <b>Peso</b> <a class="pull-right"><?php echo (isset($alumno[0]->peso))?$alumno[0]->peso:'No registrado';?></a>
-                    </li>
-                    <li class="list-group-item">
-                      <b>Talla</b> <a class="pull-right"><?php echo (isset($alumno[0]->talla))?$alumno[0]->talla:'No registrado';?></a>
-                    </li>
-                  </ul>
+                    <ul class="list-group list-group-unbordered">
+                      <li class="list-group-item">
+                        <b>Edad</b> (Ultima Evaluación) <a class="pull-right"><?php echo (isset($alumno[0]->edad))?traducir_edad($alumno[0]->edad):'No registrado';?></a>
+                      </li>
+                      <li class="list-group-item">
+                        <b>Peso</b> (Ultima Evaluación) <a class="pull-right"><?php echo (isset($alumno[0]->peso))?$alumno[0]->peso:'No registrado';?> kg</a>
+                      </li>
+                      <li class="list-group-item">
+                        <b>Talla</b> (Ultima Evaluación) <a class="pull-right"><?php echo (isset($alumno[0]->talla))?$alumno[0]->talla:'No registrado';?> cm</a>
+                      </li>
+                    </ul>
 
-                  <a href="#" class="btn btn-danger btn-block"><b>Generar Reporte</b></a>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-
+                    <a href="#" class="btn btn-danger btn-block"><b>Generar Reporte</b></a>
+                  </div><!-- /.box-body -->
+                </div><!-- /.box -->
+              </div>
               <!-- About Me Box -->
-              <div class="box box-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Resultados</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <strong><i class="fa fa-book margin-r-5"></i>  Peso para Edad</strong>
-                  <p class="text-muted">
-                    <?php echo (empty($historial))?'No se ha realizado ningun examen':$historial[0]->diagnosticoPE;?>
-                  </p>
-
-                  <hr>
-
-                  <strong><i class="fa fa-map-marker margin-r-5"></i> Peso para Talla</strong>
-                  <p class="text-muted">
-                    <?php echo (empty($historial))?'No se ha realizado ningun examen':$historial[0]->diagnosticoPT;?>
-                  </p>
-
-                  <hr>
-
-                  <strong><i class="fa fa-pencil margin-r-5"></i> Talla para Edad</strong>
-                  <p>
-                    <?php echo (empty($historial))?'No se ha realizado ningun examen':$historial[0]->diagnosticoTE;?>
-                  </p>
-
-                  <hr>
-
-                  <strong><i class="fa fa-file-text-o margin-r-5"></i> Observación</strong>
-                  <p><?php echo (empty($historial))?'Sin observaciones':$historial[0]->observaciones;?></p>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
+              <div class="col-md-6 col-lg-12">
+                <div class="box box-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Resultados</h3>
+                  </div><!-- /.box-header -->
+                  <div class="box-body">
+                    <strong><i class="fa fa-book margin-r-5"></i>  Peso para Edad</strong>
+                    <p class="pull-right ext-muted">
+                      <?php echo (empty($evaluaciones))?'No se ha realizado ningún examen':diagnostico($evaluaciones[0]->diagnosticoPE);?>
+                    </p>
+                    <hr>
+                    <strong><i class="fa fa-map-marker margin-r-5"></i> Peso para Talla</strong>
+                    <p class="pull-right text-muted">
+                      <?php echo (empty($evaluaciones))?'No se ha realizado ningún examen':diagnostico($evaluaciones[0]->diagnosticoPT);?>
+                    </p>
+                    <hr>
+                    <strong><i class="fa fa-pencil margin-r-5"></i> Talla para Edad</strong>
+                    <p class="pull-right text-muted">
+                      <?php echo (empty($evaluaciones))?'No se ha realizado ningún examen':diagnostico($evaluaciones[0]->diagnosticoTE);?>
+                    </p>
+                    <hr>
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Observación</strong>
+                    <p><?php echo (empty($evaluaciones))?'Sin observaciones':$evaluaciones[0]->observaciones;?></p>
+                  </div><!-- /.box-body -->
+                </div><!-- /.box -->
+              </div>
             </div><!-- /.col -->
-            <div class="col-md-9">
+            <div class="col-sm-12 col-md-12 col-lg-9">
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                  <li class="active"><a href="#settings" data-toggle="tab">Resultados</a></li>
+                  <li class="active"><a href="#evaluaciones" data-toggle="tab">Evaluaciones</a></li>
+                  <li><a href="#estadisticas" data-toggle="tab">Estadísticas</a></li>
                   <li><a href="#timeline" data-toggle="tab">Linea de Tiempo</a></li>
                 </ul>
                 <div class="tab-content">
 
-                  <div class="active tab-pane" id="settings">
+                  <div class="active tab-pane" id="evaluaciones">
 
                       <input type="hidden" class="form-control" name="txtid" value="<?php echo $alumno[0]->id;?>">
-                      <input type="hidden" class="form-control" name="txtedad" value="<?php echo $meses_totales;?>">
+                      <input type="hidden" class="form-control" name="txtedad" value="<?php echo $edad;?>">
                       <input type="hidden" class="form-control" name="txtsexo" value="<?php echo $alumno[0]->genero;?>">
                       <div>
-                        <p>Ultimo examen: <?php echo (empty($historial))?'No se ha realizado ningun examen':$historial[0]->fecha;?></p>
+                        <?php
+                          if(empty($evaluaciones)) $fecha = 'No se ha realizado ningun examen';
+                          else {
+                            $ult_eval = end($evaluaciones);
+                            $fecha = $ult_eval->fecha;
+                          }
+                        ?>
+                        <p>Ultimo examen: <b><?php echo $fecha;?></b></p>
+                        <div class="box-body table-responsive no-padding">
+                          <table class="table table-striped">
+                            <tbody>
+                              <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Evaluacion</th>
+                                <th>Edad</th>
+                                <th>Peso</th>
+                                <th>Talla</th>
+                                <th>T/E</th>
+                                <th>P/E</th>
+                                <th>P/T</th>
+                                <th>Diagnóstico</th>
+                              </tr>
+                              <?php foreach ($evaluaciones as $e) { ?>
+                                <tr>
+                                  <td><?=$e->num?></td>
+                                  <td><?=$e->evaluacion?></td>
+                                  <td><?=$e->edad?></td>
+                                  <td><?=$e->peso?></td>
+                                  <td><?=$e->talla?></td>
+                                  <td><?=$e->diagnosticoTE?></td>
+                                  <td><?=$e->diagnosticoPE?></td>
+                                  <td><?=$e->diagnosticoPT?></td>
+                                  <td><b><?=diagnostico($e->diagnostico)?></b></td>
+                                </tr>
+                              <?php } ?>
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
-                      
-
-
-
-
                   </div><!-- /.tab-pane -->
 
+
+                  <div class="active tab-pane" id="estadisticas">
+
+                  </div><!-- /.tab-pane -->
 
                   <div class="tab-pane" id="timeline">
                     <!-- The timeline -->

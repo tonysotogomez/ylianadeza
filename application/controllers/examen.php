@@ -163,8 +163,17 @@ class Examen extends CI_Controller {
 		$valores[0]->titulo = 'Resultados Evaluacion N°'.$num;
 		$valores[0]->subtitulo = $this->data['datos_num'][0]->aula;;
 		//cargo script highcharts si es que esta completa la evaluacion
-		if(($this->data['evaluacion'][0]->completado) == 1)	$this->footer['js_custom'] = script_pie($num, $valores).' '.script_barras($num, $valores);
-		else $this->footer['js_custom'] = '';
+		$this->footer['js_custom'] .= '<script>$(document).ready(function() {
+				$("#r_evaluacion").dataTable({
+						"responsive": true,
+						"paging": false,
+						"ordering": false,
+		        "oLanguage": {
+		          "sUrl": url+"plugins/datatables/language/esp.txt"
+		        }
+		  	}); });</script>';
+		if(($this->data['evaluacion'][0]->completado) == 1)	$this->footer['js_custom'] .= script_pie($num, $valores).' '.script_barras($num, $valores);
+		else $this->footer['js_custom'] .= '';
 		$this->data['num'] = $num; //numero de evaluacion
 		$this->load->view('header_view', $this->header);
 		$this->load->view('examen/detalle_view',$this->data);

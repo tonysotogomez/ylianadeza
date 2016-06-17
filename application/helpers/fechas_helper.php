@@ -40,6 +40,31 @@ if(!function_exists('convertir_fecha'))
 	}
 }
 
+//convierte la edad del sistema (1.10) al formato narutal (1 año 10 meses)
+if(!function_exists('traducir_edad'))
+{
+	function traducir_edad($edad)
+	{
+			$array = explode('.', $edad);
+			if (count($array) > 1) {
+				$r_anios = $array[0];
+				$r_meses = $array[1];
+
+				if ($edad >= 1 ) {
+					if($r_anios == 1) $anios = $r_anios.'año';
+					else $anios = $r_anios.'años';
+				} else $anios = '';
+
+				if($r_meses < 12){
+					if($r_meses == 1) $meses = $r_meses.'mes';
+					else $meses = $r_meses.'meses';
+				}
+
+				$edad = $anios.' '.$meses;
+			}
+			return $edad;
+	}
+}
 
 if(!function_exists('calcular_edad'))
 {

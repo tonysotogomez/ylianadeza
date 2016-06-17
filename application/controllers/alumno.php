@@ -15,7 +15,7 @@ class Alumno extends CI_Controller {
 				 $this->header['infantes'] = $this->Aula->CargarMenu(3);
 				 $this->header['jardin'] = $this->Aula->CargarMenu(4);
 				 $this->footer['js_custom'] = '<script src="'.base_url().'dist/js/mantenimiento/alumno.js"></script>';
-				 $this->load->helper(array('form'));
+				 $this->load->helper(array('form', 'fechas_helper'));
     }
 
 	public function index()
@@ -85,7 +85,7 @@ class Alumno extends CI_Controller {
 	{
 		$id = $this->input->post('id');
 		$data['alumno'] = $this->Alumno->CargarAlumno($id);
-		echo json_encode ($data) ;
+		echo json_encode ($data);
 	}
 
 	public function editar()
@@ -152,10 +152,11 @@ class Alumno extends CI_Controller {
 
 	public function perfil($idAlumno)
 	{
+		$this->load->helper(array('evaluacion_helper'));
 		$this->load->model("Evaluacion_model","Evaluacion");
 
 		$data['alumno'] = $this->Alumno->PerfilAlumno($idAlumno);
-		$data['historial'] = $this->Evaluacion->Cargar($idAlumno);
+		$data['evaluaciones'] = $this->Evaluacion->Cargar($idAlumno);
 
 		$this->load->view('header_view', $this->header);
 		$this->load->view('alumno/perfil_view',$data);

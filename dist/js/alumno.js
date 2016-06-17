@@ -1,27 +1,58 @@
 $(document).ready(function() {
   ListarAlumnos();
-  calcularTotales()
-  $('#alumnoModal').on('shown.bs.modal', function(e){
+  calcularTotales();
+  cargarAula(); //cargo las aulas en el modal
+
+  $('#txt_nombres').on('change', function(e){
+    var nombres = $('#txt_nombres').val();
     $.ajax({
-        url         : url + "aula/listado_select",
+        url         : url + "alumno/verificar",
         type        : 'POST',
         cache       : false,
         dataType    : 'json',
+        data : {nombres : nombres},
         success : function(data) {
-            var i, len, selected = '', opciones = '';
-            var aulas = data['aulas'];
-            var id = $('#aula_id').val();
-            for (i = 0, len = data['aulas'].length; i < len; i++) {
-              if (id == aulas[i]['id']) { selected = 'selected'; }
-              else { selected = ''; }
-              opciones += '<option value="'+aulas[i]['id']+'" '+selected+'>'+aulas[i]['nombre']+'</option>';
-            }
-            $('#slct_aula').append(opciones);
+          div = $('#txt_nombres').parent();
+          if ( data.rst == 1) {
+            $('#txt_nombres').prev().html(data.msj);
+            div.addClass("has-warning");
+          } else {
+            $('#txt_nombres').prev().html('Nombres:');
+            div.removeClass("has-warning");
+          }
         }
     });
   });
 
+  $('#form_alumno').submit(function(e) {
+    e.preventDefault();
+    var tipo = $("#submit").val();
+    AgregarEditar(tipo);
+  });
+
 });
+
+
+function cargarAula(){
+  $.ajax({
+      url         : url + "aula/listado_select",
+      type        : 'POST',
+      cache       : false,
+      dataType    : 'json',
+      success : function(data) {
+          var i, len, selected = '', opciones = '';
+          var aulas = data.aulas;
+          var id = $('#aula_id').val();
+          for (i = 0, len = data['aulas'].length; i < len; i++) {
+            if (id == aulas[i]['id']) { selected = 'selected'; }
+            else { selected = ''; }
+            opciones += '<option value="'+aulas[i]['id']+'" '+selected+'>'+aulas[i]['nombre']+'</option>';
+          }
+          $('#slct_aula').html('');
+          $('#slct_aula').append(opciones);
+      }
+  });
+}
 
 function Nuevo(){
   $("#txt_apellidos").val('');

@@ -66,6 +66,27 @@ function Nuevo(){
   $('#submit').text('Guardar');
 }
 
+function calcularTotales(){
+  var id = $('#aula_id').val();
+  $.ajax({
+        url         : url + 'aula/calcularTotales',
+        type        : 'POST',
+        cache       : false,
+        dataType    : 'json',
+        data        : {idAula: id},
+        success : function(obj) {
+            html = '';
+            if(obj.rst==1){
+              html+='<span class="text-muted well well-sm no-shadow" style="color:#001F3F;"><i class="fa fa-male"></i> <i class="fa fa-arrow-right"></i>'+obj.hombres+'</span>';
+              html+='<span class="text-muted well well-sm no-shadow" style="color:#D81B60;"><i class="fa fa-female"></i> <i class="fa fa-arrow-right"></i>'+obj.mujeres+'</span>';
+              html+='<span class="text-muted well well-sm no-shadow" style="color:#111111;"><i class="fa fa-users"></i> <i class="fa fa-arrow-right"></i>'+obj.totales+'</span>';
+              $('#contenedor_totales').html(html);
+
+            }
+        }
+    });
+}
+
 function calcularallTotales(){
   $.ajax({
         url         : url + 'aula/calcularTotales',
@@ -178,7 +199,9 @@ function listar_todos(){
             "<td>"+data.aula+"</td>"+
             "<td>"+estadohtml+"</td>"+
             '<td>'+
-            '<button type="button" title="Editar" onclick="Cargar('+data.id+')" class="btn btn-sm btn-primary btn-xs"><i class="fa fa-edit"></i></button> '+
+            '<button type="button" title="Editar" onclick="Cargar('+data.id+')" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></button> '+
+            '<button type="button" title="Eliminar" onclick="Eliminar('+data.id+')" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button> '+
+            '<a href="'+url+'alumno/perfil/'+data.id+'"><button title="Perfil" type="button" class="btn btn-xs btn-info"><i class="fa fa-area-chart"></i></button></a></td>'+
             '</td>';
           //  ' <a href="'+url+'alumno/perfil/'+data.id+'"><button title="Historial" type="button" class="btn btn-sm btn-info"><i class="fa fa-area-chart"></i></button></a></td>';
         html+="</tr>";
@@ -294,3 +317,37 @@ function listar_todos(){
         });
 
     }
+
+    function Eliminar(id){
+      if (confirm('¿Estas seguro de eliminar el alumno?')){
+          $.ajax({
+              url         : url + 'alumno/eliminar',
+              type        : 'POST',
+              cache       : false,
+              dataType    : 'json',
+              data        : {id:id},
+              beforeSend : function() {
+                  $("body").append('<div class="overlay"></div><div class="loading-img"></div>');
+              },
+              success : function(obj) {
+                  $(".overlay,.loading-img").remove();
+                  if(obj.rst==1){
+                      $('#t_alumnos').dataTable().fnDestroy();
+                      ListarAlumnos();
+                      calcularTotales();
+                  }
+                  else{
+                      $.each(obj.msj,function(index,datos){
+                          $("#error_"+index).attr("data-original-title",datos);
+                          $('#error_'+index).css('display','');
+                      });
+                  }
+              },
+              error: function(){
+                  $(".overlay,.loading-img").remove();
+                  mensaje('danger', 'Ocurrio una interrupción en el proceso,Favor de intentar nuevamente.', 6000);
+
+              }
+          });
+        }
+      }

@@ -23,7 +23,6 @@
     <!--<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">-->
     <link rel="stylesheet" href="<?php echo $url;?>dist/ionicons/css/ionicons.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="<?php echo $url;?>plugins/datatables/jquery.dataTables.min.css">
     <link rel="stylesheet" href="<?php echo $url;?>plugins/datatables/dataTables.bootstrap.css">
     <link rel="stylesheet" href="<?php echo $url;?>plugins/datatables/responsive.dataTables.min.css">
     <!-- Theme style -->

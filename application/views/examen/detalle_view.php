@@ -43,7 +43,7 @@
                       </h2>
                     </div><!-- /.box-header -->
                     <div class="box-body">
-                        <table class="table table-bordered table-striped">
+                        <table id="r_evaluacion" class="table table-bordered table-striped display responsive nowrap">
                           <thead>
                             <tr>
                               <th>Nro</th>
@@ -110,7 +110,7 @@
                     </div><!-- /.box-header -->
                     <div class="box-body">
                       <div class="row">
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
                           <dl class="dl-horizontal">
                             <dt>Nombre de Aula</dt>
                             <dd><?php echo $evaluacion[0]->aula;?></dd>
@@ -128,7 +128,7 @@
                             echo $completado;?></dt>
                           </dl>
                         </div>
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
                           <dl class="dl-horizontal">
                             <dt>Cantidad de Alumnos</dd>
                             <dd><?php echo $evaluacion[0]->alumnos;?></dt>
