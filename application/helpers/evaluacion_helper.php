@@ -58,9 +58,9 @@ if(!function_exists('evaluar'))
 				$data['diagnostico'] = 'Normal';
 				$data['color'] = 'light-blue';
 				$data['porcentaje'] = '50';
-			}elseif($talla >= $TallaEdad[0]->DE2menos && $talla <= $TallaEdad[0]->DE1menos) {
+			}elseif($talla >= $TallaEdad[0]->DE2menos && $talla < $TallaEdad[0]->DE1menos) {
 				$data['diagnostico'] = 'Riesgo Talla Baja';
-				$data['color'] = 'yellow';
+				$data['color'] = 'olive';
 				$data['porcentaje'] = '40';
 			}elseif($talla < $TallaEdad[0]->DE3menos) {
 				$data['diagnostico'] = 'Talla Baja Severa';
@@ -82,13 +82,17 @@ if(!function_exists('evaluar'))
 				$data['diagnostico3'] = 'Sobrepeso';
 				$data['color3'] = 'yellow';
 				$data['porcentaje3'] = '70';
-			}elseif($peso >= $PesoEdad[0]->DE1menos && $peso <= $PesoEdad[0]->DE2) {
+			}elseif($peso > $PesoEdad[0]->DE1 && $peso <= $PesoEdad[0]->DE2) {
+				$data['diagnostico3'] = 'Riesgo Sobrepeso';
+				$data['color3'] = 'olive';
+				$data['porcentaje3'] = '60';
+			}elseif($peso >= $PesoEdad[0]->DE1menos && $peso <= $PesoEdad[0]->DE1) {
 				$data['diagnostico3'] = 'Normal';
 				$data['color3'] = 'light-blue';
 				$data['porcentaje3'] = '50';
-			}elseif($peso >= $PesoEdad[0]->DE2menos && $peso <= $PesoEdad[0]->DE1menos) {
+			}elseif($peso >= $PesoEdad[0]->DE2menos && $peso < $PesoEdad[0]->DE1menos) {
 				$data['diagnostico3'] = 'Riesgo Desnutrición';
-				$data['color3'] = 'yellow';
+				$data['color3'] = 'olive';
 				$data['porcentaje3'] = '40';
 			}elseif($peso < $PesoEdad[0]->DE3menos) {
 				$data['diagnostico3'] = 'Desnutrición';//Desnutrición +
@@ -110,13 +114,17 @@ if(!function_exists('evaluar'))
 				$data['diagnostico2'] = 'Sobrepeso';
 				$data['color2'] = 'yellow';
 				$data['porcentaje2'] = '70';
+			}elseif($peso > $PesoEdad[0]->DE1 && $peso <= $PesoEdad[0]->DE2) {
+				$data['diagnostico2'] = 'Riesgo Sobrepeso';
+				$data['color3'] = 'olive';
+				$data['porcentaje2'] = '60';
 			}elseif($peso >= $PesoTalla[0]->DE1menos && $peso <= $PesoTalla[0]->DE2) {
 				$data['diagnostico2'] = 'Normal';
 				$data['color2'] = 'light-blue';
 				$data['porcentaje2'] = '50';
-			}elseif($peso >= $PesoTalla[0]->DE2menos && $peso <= $PesoTalla[0]->DE1menos) {
-				$data['diagnostico2'] = 'Riego Desnutrición';
-				$data['color2'] = 'yellow';
+			}elseif($peso >= $PesoTalla[0]->DE2menos && $peso < $PesoTalla[0]->DE1menos) {
+				$data['diagnostico2'] = 'Riesgo Desnutrición';
+				$data['color2'] = 'olive';
 				$data['porcentaje2'] = '40';
 			}elseif($peso < $PesoTalla[0]->DE3menos) {
 				$data['diagnostico2'] = 'Desnutrición Severa';
@@ -176,6 +184,11 @@ if(!function_exists('evaluar'))
 				case 'Desnutrición': $color = '<span class="text-red">'.$resultado.'</span>';
 					break;
 				case 'Normal': $color = '<span class="text-light-blue">'.$resultado.'</span>';
+					break;
+				case 'Riesgo Desnutrición':
+				case 'Riesgo Sobrepeso':
+				case 'Riesgo Talla Baja':
+					$color = '<span class="text-olive">'.$resultado.'</span>';
 					break;
 				default: $color = '<span class="text-muted">'.$resultado.'</span>';
 					break;

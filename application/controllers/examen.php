@@ -286,7 +286,7 @@ class Examen extends CI_Controller {
 			$result = false;
 			$con = 0; //contado para completar la evaluacion
 			$alumnos = $this->Alumno->CargarAlumnoID($this->input->post('aula'));
-
+			$completo = TRUE;
 
 			/* CALCULO DE LA EVALUACION ANTERIOR */
 			$idEvaluacion = $this->input->post('idEval');
@@ -334,8 +334,8 @@ class Examen extends CI_Controller {
 				}
 
 				$data['idDetalle'] = $this->input->post('detalle_'.$alumnos[$i]->id);
-			  $data['genero'] = $this->input->post('genero_'.$alumnos[$i]->id);
-			  $data['edad'] = (float)$this->input->post('edad_'.$alumnos[$i]->id);
+			    $data['genero'] = $this->input->post('genero_'.$alumnos[$i]->id);
+			    $data['edad'] = (float)$this->input->post('edad_'.$alumnos[$i]->id);
 				$data['peso'] = (float)$this->input->post('peso_'.$alumnos[$i]->id);
 				$data['talla'] = (float)$this->input->post('talla_'.$alumnos[$i]->id);
 				$data['observaciones'] = $this->input->post('observaciones_'.$alumnos[$i]->id);
@@ -343,6 +343,8 @@ class Examen extends CI_Controller {
 
 				//cuento los diagnosticos finales ingresados para ver si la evaluacion esta completa al final
 				if($data['final'] != '-') $con++;
+
+				if($data['final'] == '-') $completo = FALSE;
 
 				/* Evaluacion Nutricional */
 				if($data['edad'] != 0) {//si tiene edad
@@ -361,6 +363,7 @@ class Examen extends CI_Controller {
 
 			//verifico si todos los diag.finales estan completos
 			$completado = ($len == $con)?1:0;
+			$completado = ($completo)?1:0;//NUEVA VALIDACION 04/07/16
 
 			/* DATOS DE LA EVALUACION*/
 			$data['nombre'] = $this->input->post('titulo');
@@ -371,7 +374,7 @@ class Examen extends CI_Controller {
 
 			if($result) {
 				$data['rst'] = 1;
-				$data['msj'] = 'Evaluación Actualizada correctamente';
+				$data['msj'] = 'Evaluación Actualizada correctamente'.$completado;
 				$data['aula'] = $this->input->post('aula');
 			} else {
 				$data['rst'] = 0;
