@@ -71,15 +71,15 @@
 
   public function Editar($data){
     $arr = array(
-               'idAula' => $data['aula'],
-               'nombres' => $data['nombres'],
-               'apellidos' => $data['apellidos'],
+               'idAula'           => $data['aula'],
+               'nombres'          => $data['nombres'],
+               'apellidos'        => $data['apellidos'],
                'fecha_nacimiento' => $data['fecha'],
-               'genero' => $data['genero'],
-               'dni' => $data['dni'],
-               'titular' => $data['titular'],
-               'estado' => $data['estado'],
-               'update_at' => date("Y-m-d H:i:s")
+               'genero'           => $data['genero'],
+               'dni'              => $data['dni'],
+               'titular'          => $data['titular'],
+               'estado'           => $data['estado'],
+               'update_at'        => date("Y-m-d H:i:s")
             );
     $this->db->where('id', $data['id']);
     if ($this->db->update('alumno', $arr)) return true;
@@ -123,9 +123,9 @@
 
   public function ActualizarDatos($data){
     $arr = array(
-               'idEdad' => $data['idEdad'],
+               'idEdad'  => $data['idEdad'],
                'idTalla' => $data['idTalla'],
-               'idPeso' => $data['idPeso'],
+               'idPeso'  => $data['idPeso'],
             );
     $this->db->where('id', $data['idAlumno']);
     $this->db->update('alumno', $arr);

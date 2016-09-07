@@ -239,18 +239,17 @@ function listar_todos(){
                 $("body").append('<div class="overlay"></div><div class="loading-img"></div>');
             },
             success : function(data) {
+              console.log(data);
                 $(".overlay,.loading-img").remove();
                 if(data.rst==1){
                       $('#t_alumnos').dataTable().fnDestroy();
                       ListarAlumnos();
                       calcularallTotales();
                       $('#alumnoModal .modal-footer [data-dismiss="modal"]').click();
-                      mensaje('success', data.msj, 5000);
+                      mensaje(data.tipo, data.msj, 5000);
                   }
                   else{
-                      $.each(obj.msj,function(index,datos){
-                          mensaje('error', data.msj, 5000);
-                      });
+                      mensaje('error', data.msj, 5000);
                   }
             }
         });

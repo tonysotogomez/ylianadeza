@@ -407,7 +407,26 @@ date_default_timezone_set('America/Lima');
       return $resultado;
     }
 
+    public function CargarEvaluacionAula($data){
+      $this->db->select('id');
+      $this->db->from('evaluacion');
+      $this->db->where('idAula', $data['idAula']);
+      $this->db->where('numero', $data['numero']);
+      $this->db->where('estado', 1);
+      $consulta = $this->db->get();
+      $resultado = $consulta->result();
+      return $resultado;
+    }
 
+    //cuando se cambia de aula un alumno, se deben pasar sus datos
+    public function updateAulaEvaluacion($data){
+      $arr = array(
+                 'idAula'       => $data['idAula'],
+                 'idEvaluacion' => $data['idEvaluacion']
+              );
+      $this->db->where('idAlumno', $data['idAlumno']);
+      $this->db->update('detalle_evaluacion', $arr);
+    }
 
     public function reporteEvaluacionTotales($num){
       $query = $this->db->query("SELECT

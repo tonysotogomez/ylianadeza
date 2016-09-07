@@ -91,14 +91,14 @@ class Alumno extends CI_Controller {
 	public function editar()
 	{
 		if($this->input->is_ajax_request()){
-			$data['id'] = $this->input->post('id');
-			$data['aula'] = $this->input->post('aula');
-			$data['nombres'] = $this->input->post('nombres');
+			$data['id']        = $this->input->post('id');
+			$data['aula']      = $this->input->post('aula');
+			$data['nombres']   = $this->input->post('nombres');
 			$data['apellidos'] = $this->input->post('apellidos');
-			$data['genero'] = $this->input->post('radiogenero');
-			$data['titular'] = $this->input->post('titular');
-			$data['dni'] = $this->input->post('dni');
-			$data['estado'] = $this->input->post('estado');
+			$data['genero']    = $this->input->post('radiogenero');
+			$data['titular']   = $this->input->post('titular');
+			$data['dni']       = $this->input->post('dni');
+			$data['estado']    = $this->input->post('estado');
 
 			if ($this->input->post('fecha')) {
 				$date = str_replace('/', '-', $this->input->post('fecha'));
@@ -106,15 +106,53 @@ class Alumno extends CI_Controller {
 			} else {
 					$data['fecha'] = '1970-01-01';
 			}
+			/** CAMBIO DE AULA **/
+			$idAlumno   = $this->input->post('id');
+			$idAula     = $this->input->post('aula');;
+			$alumno     = $this->Alumno->CargarAlumno($idAlumno);
+			$errorArray = Array();
+			$msj        = '';
+			$result['tipo'] = 'success';
+			//si las aulas son diferentes, se procede a verificar el cambio
+			if ($alumno[0]->idAula != $idAula) {
+				//verifico si el alumno tiene evaluaciones, sino no pasa nada
+				$evaluaciones = $this->Evaluacion->Cargar($idAlumno);
+				if (isset($evaluaciones) && (count($evaluaciones)>0)) {
+					$numEvalAntiguaAula = count($this->Evaluacion->CargarEvaluaciones($alumno[0]->idAula));
+					$numEvalNuevaAula   = count($this->Evaluacion->CargarEvaluaciones($idAula));
+
+					//verifico si tienen la misma cantidad de evaluaciones para pasar los datos
+					if ($numEvalAntiguaAula == $numEvalNuevaAula) {
+						//se buscara pasar las evaluaciones del aula antigua al aula nueva
+						foreach ($evaluaciones as $e) {
+							$buscar['numero']    = $e->num;
+							$buscar['idAula']    = $idAula;
+							$evaluacionNuevaAula = $this->Evaluacion->CargarEvaluacionAula($buscar); //evaluacion de la nueva aula
+							if (count($evaluacionNuevaAula)>0) {
+								//si se encontro la evaluacion compatible, es decir con el mismo "numero"
+								$update['idAlumno']     = $idAlumno;
+								$update['idEvaluacion'] = $evaluacionNuevaAula[0]->id;
+								$update['idAula']       = $idAula;
+								$estado                 = $this->Evaluacion->updateAulaEvaluacion($update);
+								$msj                    = 'Se cambio de aula.';
+							}
+						} //end foreach
+					} else {
+						$data['aula']   = $alumno[0]->idAula; //le asigno el aula que ya tenia
+						$msj            = 'No se cambio de aula, alguna de las aulas tienen diferente cantidad de evalauciones.';
+						$result['tipo'] = 'warning'; //mensaje naranja de advertencia
+					}
+				}
+			}
 
 			if($this->Alumno->Editar($data)) {
-				$data['rst'] = 1;
-				$data['msj'] = 'Alumno actualizado correctamente';
+				$result['rst'] = 1;
+				$result['msj'] = 'Alumno actualizado correctamente. '.$msj;
 			} else {
-				$data['rst'] = 0;
-				$data['msj'] = 'Ocurrio un error en la actualización';
+				$result['rst'] = 0;
+				$result['msj'] = 'Ocurrio un error en la actualización.';
 			}
-			echo json_encode($data);
+			echo json_encode($result);
 		}
 	}
 
@@ -123,7 +161,7 @@ class Alumno extends CI_Controller {
 		$estado = $this->input->post('estado');
 
 		$data['estado'] = ($estado == 1)?'0':'1';
-		$data['id'] = $this->input->post('id');
+		$data['id']     = $this->input->post('id');
 
 		if($this->Alumno->activardesactivar($data)) {
 			$data['rst'] = 1;

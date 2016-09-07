@@ -390,14 +390,14 @@ class Examen extends CI_Controller {
 		if($this->input->is_ajax_request()){
 			$result = false;
 			$idEvaluacion = $this->input->post('id');
-			$this->Evaluacion->Eliminar($idEvaluacion); //cambio estado a 0
+			
 			$detalle = $this->Evaluacion->CargarDetalle($idEvaluacion);
 
 			for ($i=0, $len = count($detalle); $i < $len; $i++) {
 				//cambio los detalles a estado 0
 				$result = $this->Evaluacion->EliminarDetalle($detalle[$i]->id);
 			}
-
+			$this->Evaluacion->Eliminar($idEvaluacion); //cambio estado a 0
 			if($result) {
 				$data['rst'] = 1;
 				$data['msj'] = 'Evaluacion Eliminada';
