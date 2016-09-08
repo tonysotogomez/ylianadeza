@@ -83,7 +83,8 @@ function calcularTotales(){
               html+='<span class="text-muted well well-sm no-shadow" style="color:#D81B60;"><i class="fa fa-female"></i> <i class="fa fa-arrow-right"></i>'+obj.mujeres+'</span>';
               html+='<span class="text-muted well well-sm no-shadow" style="color:#111111;"><i class="fa fa-users"></i> <i class="fa fa-arrow-right"></i>'+obj.totales+'</span>';
               $('#contenedor_totales').html(html);
-
+              if (obj.totales <= 0) $("#btn_evaluaciones").hide();
+              else $("#btn_evaluaciones").show();
             }
         }
     });
@@ -226,7 +227,7 @@ function listar_todos(){
                       ListarAlumnos();
                       calcularTotales();
                       $('#alumnoModal .modal-footer [data-dismiss="modal"]').click();
-                      mensaje('success', data.msj, 5000);
+                      mensaje(data.tipo, data.msj, 5000);
                   }
                   else{
                       $.each(obj.msj,function(index,datos){
@@ -257,7 +258,7 @@ function listar_todos(){
                 $("#txt_titular").val(alumno['titular']);
                 $('input[name="radiogenero"][value="' + alumno['genero'] + '"]').prop('checked', true);
                 $("#txt_fecha").val(nac[2]+"-"+nac[1]+"-"+nac[0]);
-
+                $("#slct_aula").val(alumno['idAula']);
                 if(nac[0] == '1970') $("#txt_fecha").val('');
 
                 $("#slct_estado").val(alumno['estado']);

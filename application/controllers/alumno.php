@@ -117,18 +117,32 @@ class Alumno extends CI_Controller {
 			if ($alumno[0]->idAula != $idAula) {
 				//verifico si el alumno tiene evaluaciones, sino no pasa nada
 				$evaluaciones = $this->Evaluacion->Cargar($idAlumno);
+
 				if (isset($evaluaciones) && (count($evaluaciones)>0)) {
-					$numEvalAntiguaAula = count($this->Evaluacion->CargarEvaluaciones($alumno[0]->idAula));
+					$numEvalAntiguaAula = count($this->Evaluacion->CargarEvaluaciones($alumno[0]->idAula)); //cuenta evaluaciones pero no el detalle
 					$numEvalNuevaAula   = count($this->Evaluacion->CargarEvaluaciones($idAula));
 
 					//verifico si tienen la misma cantidad de evaluaciones para pasar los datos
 					if ($numEvalAntiguaAula == $numEvalNuevaAula) {
+
+						$contador = 1;
 						//se buscara pasar las evaluaciones del aula antigua al aula nueva
 						foreach ($evaluaciones as $e) {
 							$buscar['numero']    = $e->num;
-							$buscar['idAula']    = $idAula;
+							$buscar['idAula']    = $idAula; //aula nueva
 							$evaluacionNuevaAula = $this->Evaluacion->CargarEvaluacionAula($buscar); //evaluacion de la nueva aula
-							if (count($evaluacionNuevaAula)>0) {
+
+							$result['rst'] = 1;
+							$result['msj'.$contador] = $evaluacionNuevaAula;
+								$result['num'.$contador] = $e->num;
+								$result['count'] = count($evaluaciones);
+							if ($contador ==2) break;
+							else {
+								$contador++;
+								continue;
+							}
+
+							if (count($evaluaciones)>0) {
 								//si se encontro la evaluacion compatible, es decir con el mismo "numero"
 								$update['idAlumno']     = $idAlumno;
 								$update['idEvaluacion'] = $evaluacionNuevaAula[0]->id;
@@ -139,12 +153,13 @@ class Alumno extends CI_Controller {
 						} //end foreach
 					} else {
 						$data['aula']   = $alumno[0]->idAula; //le asigno el aula que ya tenia
-						$msj            = 'No se cambio de aula, alguna de las aulas tienen diferente cantidad de evalauciones.';
+						$msj            = 'No se cambio de aula, alguna de las aulas tienen diferente cantidad de evaluaciones.';
 						$result['tipo'] = 'warning'; //mensaje naranja de advertencia
 					}
 				}
 			}
 
+//$this->Alumno->Editar($data)
 			if($this->Alumno->Editar($data)) {
 				$result['rst'] = 1;
 				$result['msj'] = 'Alumno actualizado correctamente. '.$msj;

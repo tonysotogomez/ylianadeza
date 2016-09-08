@@ -90,7 +90,8 @@ date_default_timezone_set('America/Lima');
                  'estado' => 0
               );
       $this->db->where('id', $id);
-      $this->db->update('evaluacion', $arr);
+      if ($this->db->update('evaluacion', $arr)) return true;
+      else return false;
     }
 
 
@@ -425,6 +426,7 @@ date_default_timezone_set('America/Lima');
                  'idEvaluacion' => $data['idEvaluacion']
               );
       $this->db->where('idAlumno', $data['idAlumno']);
+      $this->db->where('estado', 1);
       $this->db->update('detalle_evaluacion', $arr);
     }
 
