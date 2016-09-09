@@ -107,6 +107,7 @@ class Alumno extends CI_Controller {
 					$data['fecha'] = '1970-01-01';
 			}
 			/** CAMBIO DE AULA **/
+			//las aulas pueden tener la misma cantidad de evaluaciones, pero el alumno puede tener igual o MENOS, asi que se debe hacer 2 validaciones
 			$idAlumno   = $this->input->post('id');
 			$idAula     = $this->input->post('aula');;
 			$alumno     = $this->Alumno->CargarAlumno($idAlumno);
