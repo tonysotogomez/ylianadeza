@@ -27,19 +27,29 @@
               <div class="col-md-6 col-lg-12">
                 <div class="box box-success">
                   <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive img-circle" src="<?php echo $url;?>images/image.jpg" alt="User profile">
+                    <?php
+                    switch ($alumno[0]->genero) {
+                      case 'h': $foto = 'boy.png';
+                        break;
+                      case 'm': $foto = 'girl.png';
+                        break;
+                      default: $foto = 'image.jpg';
+                        break;
+                    }
+                    ?>
+                    <img class="profile-user-img img-responsive img-circle" src="<?php echo $url.'images/'.$foto;?>" alt="User profile">
                     <h3 class="profile-username text-center"><?php echo $alumno[0]->nombres.'<br>'.$alumno[0]->apellidos;?></h3>
                     <p class="text-muted text-center"><?php echo date('d-m-Y', strtotime( $alumno[0]->fecha_nacimiento)).' ('.$edad.')';?></p>
 
                     <ul class="list-group list-group-unbordered">
                       <li class="list-group-item">
-                        <b>Edad</b> (Ultima Evaluación) <a class="pull-right"><?php echo (isset($alumno[0]->edad))?traducir_edad($alumno[0]->edad):'No registrado';?></a>
+                        <b>Edad</b> (Ult. Eval) <a class="pull-right"><?php echo (isset($alumno[0]->edad))?traducir_edad($alumno[0]->edad):'No registrado';?></a>
                       </li>
                       <li class="list-group-item">
-                        <b>Peso</b> (Ultima Evaluación) <a class="pull-right"><?php echo (isset($alumno[0]->peso))?$alumno[0]->peso:'No registrado';?> kg</a>
+                        <b>Peso</b> (Ult. Eval) <a class="pull-right"><?php echo (isset($alumno[0]->peso))?$alumno[0]->peso:'No registrado';?> kg</a>
                       </li>
                       <li class="list-group-item">
-                        <b>Talla</b> (Ultima Evaluación) <a class="pull-right"><?php echo (isset($alumno[0]->talla))?$alumno[0]->talla:'No registrado';?> cm</a>
+                        <b>Talla</b> (Ult. Evaln) <a class="pull-right"><?php echo (isset($alumno[0]->talla))?$alumno[0]->talla:'No registrado';?> cm</a>
                       </li>
                     </ul>
 

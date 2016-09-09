@@ -163,8 +163,14 @@ function listar_todos(){
         } else fecha = "No registrado";
         if(nac[0] == 1970) fecha = " ";
 
-        if(data.genero != null) genero = data.genero.toUpperCase();
-        else genero = "No registrado";
+        if(data.genero != null) {
+          // genero = data.genero.toUpperCase();
+          switch (data.genero) {
+            case 'h': icono = 'male.png'; break;
+            case 'm': icono = 'female.png'; break;
+          }
+          genero = '<img src="'+url+'images/icons/'+icono+'" alt="'+data.genero.toUpperCase()+'"/>';
+        } else genero = "No registrado";
 
         if(data.nombres != null) nombres = data.nombres;
         else nombres = "No registrado";
