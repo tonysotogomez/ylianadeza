@@ -122,7 +122,7 @@ class Alumno extends CI_Controller {
 					$numEvalAntiguaAula = count($this->Evaluacion->CargarEvaluaciones($alumno[0]->idAula)); //cuenta evaluaciones pero no el detalle
 					$numEvalNuevaAula   = count($this->Evaluacion->CargarEvaluaciones($idAula));
 
-					//verifico si tienen la misma cantidad de evaluaciones para pasar los datos
+					// 1ra Validacion: verifico si tienen la misma cantidad de evaluaciones
 					if ($numEvalAntiguaAula == $numEvalNuevaAula) {
 
 						$contador = 1;
@@ -132,20 +132,13 @@ class Alumno extends CI_Controller {
 							$buscar['idAula']    = $idAula; //aula nueva
 							$evaluacionNuevaAula = $this->Evaluacion->CargarEvaluacionAula($buscar); //evaluacion de la nueva aula
 
-							$result['rst'] = 1;
-							$result['msj'.$contador] = $evaluacionNuevaAula;
-								$result['num'.$contador] = $e->num;
-								$result['count'] = count($evaluaciones);
-							if ($contador ==2) break;
-							else {
-								$contador++;
-								continue;
-							}
+
 
 							if (count($evaluaciones)>0) {
 								//si se encontro la evaluacion compatible, es decir con el mismo "numero"
+								$update['idDetalle']    = $e->idDetalle; //id del Detalle de evaluacion antiguo
 								$update['idAlumno']     = $idAlumno;
-								$update['idEvaluacion'] = $evaluacionNuevaAula[0]->id;
+								$update['idEvaluacion'] = $evaluacionNuevaAula[0]->id;  //id del Detalle de evaluacion nuevo
 								$update['idAula']       = $idAula;
 								$estado                 = $this->Evaluacion->updateAulaEvaluacion($update);
 								$msj                    = 'Se cambio de aula.';
