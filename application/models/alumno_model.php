@@ -109,9 +109,13 @@
 
   public function PerfilAlumno($id){
     $this->db->select('a.id, a.nombres, a.apellidos, a.fecha_nacimiento, a.genero, a.titular');
-    $this->db->select('d.edad, d.peso, d.talla');
+
+    $this->db->select("IF(d.estado = 1, d.edad,'Sin Evaluación') as edad,
+IF(d.estado = 1, d.peso,'0') as peso,
+IF(d.estado = 1, d.talla,'0') as talla", FALSE);
+
     $this->db->from('alumno a');
-    $this->db->join('detalle_evaluacion d', 'd.idAlumno = a.id');
+    $this->db->join('detalle_evaluacion d', 'd.idAlumno = a.id', 'left');
     $this->db->where('a.id', $id);
     $this->db->where('a.estado', 1);
     $this->db->order_by('d.fecha', 'desc');

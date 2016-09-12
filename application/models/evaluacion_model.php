@@ -42,7 +42,7 @@ date_default_timezone_set('America/Lima');
 
     //carga la evaluacion por id
     public function CargarEvaluacion($idEvaluacion){
-      $query = $this->db->query('SELECT e.nombre, e.numero, e.fecha, a.nombre as aula, count(d.id) as alumnos, e.completado
+      $query = $this->db->query('SELECT e.nombre, e.numero, e.fecha, e.idAula, a.nombre as aula, count(d.id) as alumnos, e.completado
                                 FROM detalle_evaluacion d
                                 JOIN evaluacion e ON e.id = d.idEvaluacion
                                 JOIN aula a ON a.id = e.idAula
@@ -65,7 +65,7 @@ date_default_timezone_set('America/Lima');
     }
 
     public function CargarID($id){
-      $this->db->select('id, idAula, nombre, fecha, observacion, estado');
+      $this->db->select('id, idAula, numero, nombre, fecha, observacion, estado');
       $this->db->from('evaluacion');
       $this->db->where('id', $id);
       $this->db->where('estado', 1);
@@ -408,6 +408,7 @@ date_default_timezone_set('America/Lima');
       return $resultado;
     }
 
+    //cargo las evaluaciones por el aula X y el numero Y
     public function CargarEvaluacionAula($data){
       $this->db->select('id');
       $this->db->from('evaluacion');

@@ -237,7 +237,7 @@ class Excel extends CI_Controller {
     //  $sheet->getStyle("C".$fila.":C".($f2-1))->applyFromArray($center_style);
 
       $this->phpexcel->setActiveSheetIndex(0)->mergeCells('A'.($fila-1).':M'.($fila-1));
-      $this->phpexcel->setActiveSheetIndex(0)->setCellValue('A'.($fila-1), 'EVALUACION: '.strtoupper($eval[0]->nombre));
+      $this->phpexcel->setActiveSheetIndex(0)->setCellValue('A'.($fila-1), 'EVALUACION '.$eval[0]->numero.': '.strtoupper($eval[0]->nombre));
       //agrego la fecha de evaluacion
       $this->phpexcel->setActiveSheetIndex(0)->setCellValue('B'.($f2+2), 'Fecha: '.date("d-m-Y",strtotime($eval[0]->fecha)));
 
@@ -340,7 +340,7 @@ class Excel extends CI_Controller {
              $sheet->addChart($chart2);
 
       // renombro la hoja de trabajo con el nombre del aula
-      $this->phpexcel->getActiveSheet()->setTitle('Evaluacion');
+      $this->phpexcel->getActiveSheet()->setTitle('Evaluacion '.$eval[0]->numero);
 
 
       // configuramos el documento para que la hoja
@@ -351,7 +351,7 @@ class Excel extends CI_Controller {
 
       //redireccionamos la salida al navegador del cliente (Excel2007)
       header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      header('Content-Disposition: attachment;filename="Evaluacion_'.$datos_aula[0]->titulo.'_'.date('d/m/Y', strtotime($eval[0]->fecha)).'.xlsx"');
+      header('Content-Disposition: attachment;filename="Evaluacion_'.$eval[0]->numero.'_'.$datos_aula[0]->titulo.'.xlsx"');
       header('Cache-Control: max-age=0');
 
       $objWriter = PHPExcel_IOFactory::createWriter($this->phpexcel, 'Excel2007');

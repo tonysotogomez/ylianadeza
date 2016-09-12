@@ -69,6 +69,7 @@ class Alumno extends CI_Controller {
 					$data['fecha'] = '1970-01-01';
 			}
 
+			$data['tipo'] = 'success';
 			if($this->Alumno->Insertar($data)) {
 				$data['rst'] = 1;
 				$data['msj'] = 'Alumno registrado correctamente';
@@ -203,6 +204,7 @@ class Alumno extends CI_Controller {
 		$this->load->model("Evaluacion_model","Evaluacion");
 
 		$data['alumno'] = $this->Alumno->PerfilAlumno($idAlumno);
+		echo $this->db->last_query();
 		$data['evaluaciones'] = $this->Evaluacion->Cargar($idAlumno);
 
 		$this->load->view('header_view', $this->header);

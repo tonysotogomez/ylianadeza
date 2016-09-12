@@ -54,7 +54,6 @@
                     </thead>
                     <tbody id="tb_evaluaciones">
                       <?php
-                        $con = 1;
                         foreach ($evaluaciones as $eval) {
                           $estadohtml='<span id="'.$eval->id.'" onClick="CambiarEstadoEval('.$eval->id.','.$eval->estado.')" class="btn btn-danger btn-sm">Inactivo</span>';
                           if($eval->estado==1){
@@ -71,9 +70,9 @@
                           echo '<td>'.$completa.'</td>';
                           //echo '<td>'.$eval->observacion.'</td>';
                           echo '<td>';
-                          echo ' <a href="'.$url.'examen/cargarDetalle/'.$datos_aula[0]->id.'/'.$eval->id.'/'.$con.'"><button type="button" title="Editar" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar</button></a>';
+                          echo ' <a href="'.$url.'examen/cargarDetalle/'.$datos_aula[0]->id.'/'.$eval->id.'"><button type="button" title="Editar" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Editar</button></a>';
                           echo ' <button type="button" title="Eliminar" class="btn btn-sm btn-danger pull-right" onClick="EliminarEvaluacion('.$eval->id.')"><i class="fa fa-trash"></i> Eliminar</button>';
-                          echo ' <a href="'.$url.'examen/verDetalle/'.$datos_aula[0]->id.'/'.$eval->id.'/'.$con.'"><button type="button" title="Ver" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Ver</button></a>';
+                          echo ' <a href="'.$url.'examen/verDetalle/'.$datos_aula[0]->id.'/'.$eval->id.'"><button type="button" title="Ver" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Ver</button></a>';
                           echo ' <a href="'.$url.'excel/detalle/'.$eval->id.'/'.$datos_aula[0]->id.'"><button type="button" title="Excel" class="btn btn-default"><i class="fa fa-download"></i> Excel</button></a>';
                           //echo ' <a href="'.$url.'examen/agregarAlumno/'.$eval->id.'"><button type="button" title="Agregar nuevo alumno" class="btn btn-success" disabled><i class="fa fa-user-plus"></i> Agregar Alumnos</button></a>';
                           echo '</td>';

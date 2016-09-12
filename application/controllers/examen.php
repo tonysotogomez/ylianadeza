@@ -136,25 +136,29 @@ class Examen extends CI_Controller {
 		$this->load->view('footer_view', $this->footer);
 	}
 
-	public function cargarDetalle($idAula, $idEvaluacion,$num)
+	public function cargarDetalle($idAula, $idEvaluacion)
 	{
 		$this->load->model("Diagnostico_model","Diagnostico");
 		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
 		$this->data['detalle'] = $this->Evaluacion->CargarDetalle($idEvaluacion);
 		$this->data['diagnostico'] = $this->Diagnostico->Listar();
 
-		$this->data['num'] = $num;
+		if (empty($this->data['detalle'])) {
+			redirect('login', 'refresh');
+		}
+
 		$this->load->view('header_view', $this->header);
 		$this->load->view('examen/examen_edit_view',$this->data);
 		$this->load->view('footer_view', $this->footer);
 	}
 
-	public function verDetalle($idAula, $idEvaluacion,$num)
+	public function verDetalle($idAula, $idEvaluacion)
 	{
 		$this->data['datos_aula'] = $this->Aula->CargarAula($idAula);
 
 		$this->data['detalle'] = $this->Evaluacion->VerDetalle($idEvaluacion);
 		$this->data['evaluacion'] = $this->Evaluacion->CargarEvaluacion($idEvaluacion);
+		$num = $this->data['evaluacion'][0]->numero;
 		//datos estadisticos
 		$this->data['datos_num'] = $this->Evaluacion->count_diagnostico($idAula, $idEvaluacion);
 		//echo $this->db->last_query();
@@ -389,8 +393,7 @@ class Examen extends CI_Controller {
 	{
 		if($this->input->is_ajax_request()){
 			$result = false;
-			$idEvaluacion = $this->input->post('id');
-
+			$idEvaluacion = $this->input->post('id');					
 			$detalle = $this->Evaluacion->CargarDetalle($idEvaluacion);
 
 			for ($i=0, $len = count($detalle); $i < $len; $i++) {
@@ -403,7 +406,7 @@ class Examen extends CI_Controller {
 				$data['msj'] = 'Evaluacion Eliminada';
 			} else {
 				$data['rst'] = 0;
-				$data['msj'] = 'Errror en el proceso.';
+				$data['msj'] = 'Error en el proceso.';
 			}
 			echo json_encode($data);
 		}
