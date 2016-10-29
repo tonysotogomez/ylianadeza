@@ -25,6 +25,13 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
+		$this->db->where('id', 27)->update('peso_edad_h', array('DE1menos'=> '11.2'));
+		$existe = $this->db->query('INSERT INTO diagnostico (nombre)
+								SELECT * FROM (SELECT "Sin Diagnostico") AS tmp
+								WHERE NOT EXISTS (
+								    SELECT id FROM diagnostico WHERE nombre = "Sin Diagnostico"
+								) LIMIT 1;');
+
 		// /$this->footer['js_home'] = '<script src="'.base_url().'dist/js/pages/dashboard.js"></script>';
 		$this->load->model("Evaluacion_model","Evaluacion");
 		$data['info_box1'] = $this->Evaluacion->totales();//hombres, mujeres, totales
