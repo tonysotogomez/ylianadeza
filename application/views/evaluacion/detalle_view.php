@@ -95,7 +95,7 @@
                     <div class="box-body">
                         <?php
                         $con = 1; $t_normales = 0; $t_obesos = 0; $t_sobrepesos = 0;
-                        $t_agudas = 0; $t_severos = 0; $t_cronicos= 0; $t_totales= 0;
+                        $t_agudas = 0; $t_severos = 0; $t_cronicos= 0; $t_sindiag = 0;$t_totales= 0;
                         echo '<div class="box-body no-padding">
                                 <table class="table table-condensed">
                                   <tbody><tr>
@@ -107,6 +107,7 @@
                                     <th>Desnutrición Aguda</th>
                                     <th>Desnutrición Severa</th>
                                     <th>Desnutrición Crónica</th>
+                                    <th>Sin Diagnóstico</th>
                                     <th>Total</th>
                                   </tr>';
                         foreach ($aulas as $key) {
@@ -118,7 +119,7 @@
                             $agudas = ($value->agudas>0)?'<span class="badge bg-red">'.$value->agudas.'<span>':'0';
                             $severos = ($value->severos>0)?'<span class="badge bg-red">'.$value->severos.'<span>':'0';
                             $cronicos = ($value->cronicos>0)?'<span class="badge bg-red">'.$value->cronicos.'<span>':'0';
-
+                            $sindiag = ($value->sindiag>0)?'<span class="badge bg-gray">'.$value->sindiag.'<span>':'0';
 
                             echo '<td>'.$con.'</td>';
                             echo '<td>'.$value->aula.'</td>';
@@ -128,6 +129,7 @@
                             echo '<td align="center">'.$agudas.'</td>';
                             echo '<td align="center">'.$severos.'</td>';
                             echo '<td align="center">'.$cronicos.'</td>';
+                            echo '<td align="center">'.$sindiag.'</td>';
                             echo '<td align="center"><span class="badge bg-gray">'.$value->totales.'</span></td>';
 
                             $t_normales += $value->normales;
@@ -136,6 +138,7 @@
                             $t_agudas += $value->agudas;
                             $t_severos += $value->severos;
                             $t_cronicos += $value->cronicos;
+                            $t_sindiag += $value->sindiag;
                             $t_totales += $value->totales;
                             $con++;
                           }
@@ -151,6 +154,7 @@
                         <td align='center'><span class='badge bg-red'>$t_agudas<span></td>
                         <td align='center'><span class='badge bg-red'>$t_severos<span></td>
                         <td align='center'><span class='badge bg-red'>$t_cronicos<span></td>
+                        <td align='center'><span class='badge bg-gray'>$t_sindiag<span></td>
                         <td align='center'><span class='badge bg-gray'>$t_totales<span></td></tfooter>
                         </table></div>";
                         ?>
@@ -167,16 +171,18 @@
                             <dd><?php echo $t_normales; ?></dd>
                             <dt>Obeso</dt>
                             <dd><?php echo $t_obesos; ?></dd>
-                            <dt>Sobrepeso</dd>
-                            <dd><?php echo $t_sobrepesos; ?></dt>
-                            <dt>Desnutrición Aguda</dd>
-                            <dd><?php echo $t_agudas; ?></dt>
-                            <dt>Desnutrición Severa</dd>
-                            <dd><?php echo $t_severos; ?></dt>
-                            <dt>Desnutrición Crónica</dd>
-                            <dd><?php echo $t_cronicos; ?></dt>
-                            <dt>Totales</dd>
-                            <dd><?php echo $t_totales;?></dt>
+                            <dt>Sobrepeso</dt>
+                            <dd><?php echo $t_sobrepesos; ?></dd>
+                            <dt>Desnutrición Aguda</dt>
+                            <dd><?php echo $t_agudas; ?></dd>
+                            <dt>Desnutrición Severa</dt>
+                            <dd><?php echo $t_severos; ?></dd>
+                            <dt>Desnutrición Crónica</dt>
+                            <dd><?php echo $t_cronicos; ?></dd>
+                            <dt>Sin Diagnóstico</dt>
+                            <dd><?php echo $t_sindiag; ?></dd>
+                            <dt>Totales</dt>
+                            <dd><?php echo $t_totales;?></dd>
                           </dl>
                         </div>
                       </div>

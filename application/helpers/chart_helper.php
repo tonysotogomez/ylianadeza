@@ -68,6 +68,9 @@ function script_pie($num, $datos)
             }, {
                 name: 'Desnutrición Crónica',
                 y: ".$datos[0]->cronicos."
+            }, {
+                name: 'Sin Diagnóstico',
+                y: ".$datos[0]->sindiag."
             }]
         }]
     });
@@ -150,6 +153,9 @@ function script_barras($num, $datos)
             }, {
                 name: 'Desnutrición Crónica',
                 y: ".$datos[0]->cronicos."
+            }, {
+                name: 'Sin Diagnóstico',
+                y: ".$datos[0]->sindiag."
             }]
         }]
     });

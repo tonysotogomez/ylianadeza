@@ -255,12 +255,14 @@ class Excel extends CI_Controller {
                      ->setCellValue('E'.($f2+5), 'Desnutrición Aguda')
                      ->setCellValue('E'.($f2+6), 'Desnutrición Severa')
                      ->setCellValue('E'.($f2+7), 'Desnutrición Crónica')
+                     ->setCellValue('E'.($f2+8), 'Sin Diagnóstico')
                      ->setCellValue('H'.($f2+2), $datos_num[0]->normales)
                      ->setCellValue('H'.($f2+3), $datos_num[0]->obesos)
                      ->setCellValue('H'.($f2+4), $datos_num[0]->sobrepesos)
                      ->setCellValue('H'.($f2+5), $datos_num[0]->agudas)
                      ->setCellValue('H'.($f2+6), $datos_num[0]->severos)
-                     ->setCellValue('H'.($f2+7), $datos_num[0]->cronicos);
+                     ->setCellValue('H'.($f2+7), $datos_num[0]->cronicos)
+                     ->setCellValue('H'.($f2+8), $datos_num[0]->sindiag);
 
 
        //GRAFICA DE BARRAS
@@ -268,10 +270,10 @@ class Excel extends CI_Controller {
            new PHPExcel_Chart_DataSeriesValues('String', 'Evaluacion!$B$'.($f2+6), NULL, 1),   // leyenda
        );
        $xAxisTickValues = array(
-           new PHPExcel_Chart_DataSeriesValues('String', 'Evaluacion!$E$'.($f2+2).':$E$'.($f2+7), NULL, 6),    //  Normal a Desnutrucion
+           new PHPExcel_Chart_DataSeriesValues('String', 'Evaluacion!$E$'.($f2+2).':$E$'.($f2+8), NULL, 6),    //  Normal a Desnutrucion
        );
        $dataSeriesValues1 = array(
-           new PHPExcel_Chart_DataSeriesValues('Number', 'Evaluacion!$H$'.($f2+2).':$H$'.($f2+7), NULL, 6),//datos
+           new PHPExcel_Chart_DataSeriesValues('Number', 'Evaluacion!$H$'.($f2+2).':$H$'.($f2+8), NULL, 6),//datos
        );
        //  Build the dataseries
        $series1 = new PHPExcel_Chart_DataSeries(
@@ -340,7 +342,7 @@ class Excel extends CI_Controller {
              $sheet->addChart($chart2);
 
       // renombro la hoja de trabajo con el nombre del aula
-      $this->phpexcel->getActiveSheet()->setTitle('Evaluacion '.$eval[0]->numero);
+      $this->phpexcel->getActiveSheet()->setTitle('Evaluacion');
 
 
       // configuramos el documento para que la hoja
@@ -651,7 +653,8 @@ class Excel extends CI_Controller {
                       ->setCellValue('B'.($f2+4), 'Desnutrición Aguda')
                       ->setCellValue('B'.($f2+5), 'Desnutrición Severa')
                       ->setCellValue('B'.($f2+6), 'Desnutrición Crónica')
-                      ->setCellValue('B'.($f2+7), 'Alumnos');
+                      ->setCellValue('B'.($f2+7), 'Sin Diagnostico')
+                      ->setCellValue('B'.($f2+8), 'Alumnos');
 
           $this->phpexcel->setActiveSheetIndex(0)
                       ->setCellValue('B'.$f2, $v->aula)
@@ -661,18 +664,19 @@ class Excel extends CI_Controller {
                       ->setCellValue('C'.($f2+4), $v->agudas)
                       ->setCellValue('C'.($f2+5), $v->severos)
                       ->setCellValue('C'.($f2+6), $v->cronicos)
-                      ->setCellValue('C'.($f2+7), $v->totales);
+                      ->setCellValue('C'.($f2+7), $v->sindiag)
+                      ->setCellValue('C'.($f2+8), $v->totales);
                       $sheet->getStyle("B".$f2)->applyFromArray($center_style);
                       $sheet->getStyle("B".$f2)->applyFromArray($color1_style);
 
                       $dataseriesLabels1 = array(
-                          new PHPExcel_Chart_DataSeriesValues('String', 'Evaluaciones!$B$'.($f2+7), NULL, 1),   // leyenda
+                          new PHPExcel_Chart_DataSeriesValues('String', 'Evaluaciones!$B$'.($f2+8), NULL, 1),   // leyenda
                       );
                       $xAxisTickValues = array(
-                          new PHPExcel_Chart_DataSeriesValues('String', 'Evaluaciones!$B$'.($f2+1).':$B$'.($f2+6), NULL, 6),    //  Normal a Desnutrucion
+                          new PHPExcel_Chart_DataSeriesValues('String', 'Evaluaciones!$B$'.($f2+1).':$B$'.($f2+8), NULL, 6),    //  Normal a Desnutrucion
                       );
                       $dataSeriesValues1 = array(
-                          new PHPExcel_Chart_DataSeriesValues('Number', 'Evaluaciones!$C$'.($f2+1).':$C$'.($f2+6), NULL, 6),//datos
+                          new PHPExcel_Chart_DataSeriesValues('Number', 'Evaluaciones!$C$'.($f2+1).':$C$'.($f2+8), NULL, 6),//datos
                       );
                       //  Build the dataseries
                       $series1 = new PHPExcel_Chart_DataSeries(
@@ -709,7 +713,7 @@ class Excel extends CI_Controller {
 
                       $f2 = $f2+12;//separacion entre aulas
         }//end foreach
-        $sheet->getStyle("B".$f1.":C".($f2-5))->applyFromArray($border_style); //border a cada cuadro
+        $sheet->getStyle("B".$f1.":C".($f2-4))->applyFromArray($border_style); //border a cada cuadro
       }//end forreach $aula
 
 
@@ -794,7 +798,8 @@ class Excel extends CI_Controller {
       $this->phpexcel->getActiveSheet()->getColumnDimension('F')->setWidth(10);
       $this->phpexcel->getActiveSheet()->getColumnDimension('G')->setWidth(10);
       $this->phpexcel->getActiveSheet()->getColumnDimension('H')->setWidth(10);
-      $this->phpexcel->getActiveSheet()->getColumnDimension('I')->setWidth(10);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('I')->setWidth(15);
+      $this->phpexcel->getActiveSheet()->getColumnDimension('J')->setWidth(10);
 
       $sheet = $this->phpexcel->getActiveSheet();
 
@@ -807,12 +812,13 @@ class Excel extends CI_Controller {
                   ->setCellValue('F'.($f2), 'D. Aguda')
                   ->setCellValue('G'.($f2), 'D. Severa')
                   ->setCellValue('H'.($f2), 'D. Crónica')
-                  ->setCellValue('I'.($f2), 'Total');
+                  ->setCellValue('I'.($f2), 'Sin Diagnóstico')
+                  ->setCellValue('J'.($f2), 'Total');
 
 
       $con = 1;
       $t_normales = 0; $t_obesos = 0; $t_sobrepesos = 0;
-      $t_agudas = 0; $t_severos = 0; $t_cronicos= 0; $t_totales= 0;
+      $t_agudas = 0; $t_severos = 0; $t_cronicos= 0; $t_sindiag= 0; $t_totales= 0;
       foreach ($aulas as $key) {
         //fila + 1
         foreach ($key as $v) {
@@ -825,7 +831,8 @@ class Excel extends CI_Controller {
                       ->setCellValue('F'.($f2+$con), $v->agudas)
                       ->setCellValue('G'.($f2+$con), $v->severos)
                       ->setCellValue('H'.($f2+$con), $v->cronicos)
-                      ->setCellValue('I'.($f2+$con), $v->totales);
+                      ->setCellValue('I'.($f2+$con), $v->sindiag)
+                      ->setCellValue('J'.($f2+$con), $v->totales);
 
           $t_normales += $v->normales;
           $t_obesos += $v->obesos;
@@ -833,6 +840,7 @@ class Excel extends CI_Controller {
           $t_agudas += $v->agudas;
           $t_severos += $v->severos;
           $t_cronicos += $v->cronicos;
+          $t_sindiag += $v->sindiag;
           $t_totales += $v->totales;
         }//end foreach
         $con++;
@@ -848,17 +856,18 @@ class Excel extends CI_Controller {
                   ->setCellValue('F'.($f2), $t_agudas)
                   ->setCellValue('G'.($f2), $t_severos)
                   ->setCellValue('H'.($f2), $t_cronicos)
-                  ->setCellValue('I'.($f2), $t_totales);
+                  ->setCellValue('I'.($f2), $t_sindiag)
+                  ->setCellValue('J'.($f2), $t_totales);
 
       //GRAFICAS
       $dataseriesLabels1 = array(
-          new PHPExcel_Chart_DataSeriesValues('String', 'Reporte!$I$'.($f2), NULL, 1),   // leyenda
+          new PHPExcel_Chart_DataSeriesValues('String', 'Reporte!$J$'.($f2), NULL, 1),   // leyenda
       );
       $xAxisTickValues = array(
-          new PHPExcel_Chart_DataSeriesValues('String', 'Reporte!$C$'.($fila+1).':$H$'.($fila+1), NULL, 5),//columnas
+          new PHPExcel_Chart_DataSeriesValues('String', 'Reporte!$C$'.($fila+1).':$J$'.($fila+1), NULL, 5),//columnas
       );
       $dataSeriesValues1 = array(
-          new PHPExcel_Chart_DataSeriesValues('Number', 'Reporte!$C$'.($f2).':$H$'.($f2), NULL, 5),//datos
+          new PHPExcel_Chart_DataSeriesValues('Number', 'Reporte!$C$'.($f2).':$J$'.($f2), NULL, 5),//datos
       );
       //  Build the dataseries
       $series1 = new PHPExcel_Chart_DataSeries(
@@ -929,11 +938,11 @@ class Excel extends CI_Controller {
       // renombro la hoja de trabajo con el nombre del aula
       $this->phpexcel->getActiveSheet()->setTitle('Reporte');
 
-      $sheet->getStyle("A".($fila+1).":I".($f2))->applyFromArray($border_style);
-      $sheet->getStyle("A".($fila+1).":I".($fila+1))->applyFromArray($center_style)->getFont()->setBold(true);
-      $sheet->getStyle("A".$f2.":I".$f2)->applyFromArray($center_style)->getFont()->setBold(true);
-      $sheet->getStyle("A".($fila+1).":I".($fila+1))->applyFromArray($color1_style);
-      $sheet->getStyle("A".$f2.":I".$f2)->applyFromArray($color1_style);
+      $sheet->getStyle("A".($fila+1).":J".($f2))->applyFromArray($border_style);
+      $sheet->getStyle("A".($fila+1).":J".($fila+1))->applyFromArray($center_style)->getFont()->setBold(true);
+      $sheet->getStyle("A".$f2.":J".$f2)->applyFromArray($center_style)->getFont()->setBold(true);
+      $sheet->getStyle("A".($fila+1).":J".($fila+1))->applyFromArray($color1_style);
+      $sheet->getStyle("A".$f2.":J".$f2)->applyFromArray($color1_style);
 
       $this->phpexcel->setActiveSheetIndex(0);
       //redireccionamos la salida al navegador del cliente (Excel2007)

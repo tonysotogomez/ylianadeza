@@ -291,6 +291,7 @@ date_default_timezone_set('America/Lima');
       (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 4 and idAula = a.id  and idEvaluacion = e.id) as agudas,
       (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 5 and idAula = a.id  and idEvaluacion = e.id) as severos,
       (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 6 and idAula = a.id  and idEvaluacion = e.id) as cronicos,
+      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 7 and idAula = a.id  and idEvaluacion = e.id) as sindiag,
       (SELECT count(*) FROM detalle_evaluacion where idAula = a.id  and idEvaluacion = e.id) as totales
       FROM detalle_evaluacion d
       JOIN evaluacion e ON e.id = d.idEvaluacion
@@ -440,6 +441,7 @@ date_default_timezone_set('America/Lima');
         sum(t.agudos) as agudas,
         sum(t.severos) as severos,
         sum(t.cronicos) as cronicos,
+        sum(t.sindiag) as sindiag,
         sum(t.totales) as totales
         FROM
         (
@@ -449,7 +451,8 @@ date_default_timezone_set('America/Lima');
         (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 3) as sobrepesos,
         (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 4) as agudos,
         (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 5) as severos,
-        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 6) as cronicos
+        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 6) as cronicos,
+        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 7) as sindiag
         FROM `evaluacion` e
         JOIN detalle_evaluacion d ON d.idEvaluacion = e.id
         where e.numero = $num and e.estado = 1

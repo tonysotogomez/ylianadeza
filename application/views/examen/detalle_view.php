@@ -144,6 +144,8 @@
                             <dd><?php echo $datos_num[0]->severos; ?></dt>
                             <dt>Desnutrición Crónica</dd>
                             <dd><?php echo $datos_num[0]->cronicos; ?></dt>
+                            <dt>Sin Diagnostico</dd>
+                            <dd><?php echo $datos_num[0]->sindiag; ?></dt>
                           </dl>
                         </div>
                       </div>
