@@ -45,9 +45,11 @@ date_default_timezone_set('America/Lima');
       $query = $this->db->query('SELECT e.nombre, e.numero, e.fecha, e.idAula, a.nombre as aula, count(d.id) as alumnos, e.completado
                                 FROM detalle_evaluacion d
                                 JOIN evaluacion e ON e.id = d.idEvaluacion
+                                JOIN alumno al ON al.id = d.idAlumno
                                 JOIN aula a ON a.id = e.idAula
                                 WHERE e.id= '.$idEvaluacion.'
-                                AND e.estado = 1');
+                                AND e.estado = 1
+                                AND al.estado = 1');
       $resultado = $query->result();
       return $resultado;
     }
@@ -242,6 +244,7 @@ date_default_timezone_set('America/Lima');
                               WHERE
                                 idEvaluacion = '.$idEvaluacion.'
                               AND d.estado != 2
+                              AND a.estado = 1
                             ORDER BY a.apellidos asc');
       $resultado = $query->result();
       return $resultado;
@@ -285,14 +288,14 @@ date_default_timezone_set('America/Lima');
 
     public function count_diagnostico($idAula, $idEvaluacion){
       $query = $this->db->query('SELECT e.nombre as evaluacion, a.nombre as aula,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 1 and idAula = a.id  and idEvaluacion = e.id) as normales,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 2 and idAula = a.id  and idEvaluacion = e.id) as obesos,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 3 and idAula = a.id  and idEvaluacion = e.id) as sobrepesos,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 4 and idAula = a.id  and idEvaluacion = e.id) as agudas,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 5 and idAula = a.id  and idEvaluacion = e.id) as severos,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 6 and idAula = a.id  and idEvaluacion = e.id) as cronicos,
-      (SELECT count(*) FROM detalle_evaluacion where idDiagnostico = 7 and idAula = a.id  and idEvaluacion = e.id) as sindiag,
-      (SELECT count(*) FROM detalle_evaluacion where idAula = a.id  and idEvaluacion = e.id) as totales
+      (SELECT count(*) FROM detalle_evaluacion d2 JOIN alumno al2 ON al2.id = d2.idAlumno where d2.idDiagnostico = 1 and d.idAula = a.id  and d2.idEvaluacion = e.id AND al2.estado = 1) as normales,
+      (SELECT count(*) FROM detalle_evaluacion d2 JOIN alumno al2 ON al2.id = d2.idAlumno where d2.idDiagnostico = 2 and d.idAula = a.id  and d2.idEvaluacion = e.id AND al2.estado = 1) as obesos,
+      (SELECT count(*) FROM detalle_evaluacion d2 JOIN alumno al2 ON al2.id = d2.idAlumno where d2.idDiagnostico = 3 and d.idAula = a.id  and d2.idEvaluacion = e.id AND al2.estado = 1) as sobrepesos,
+      (SELECT count(*) FROM detalle_evaluacion d2 JOIN alumno al2 ON al2.id = d2.idAlumno where d2.idDiagnostico = 4 and d.idAula = a.id  and d2.idEvaluacion = e.id AND al2.estado = 1) as agudas,
+      (SELECT count(*) FROM detalle_evaluacion d2 JOIN alumno al2 ON al2.id = d2.idAlumno where d2.idDiagnostico = 5 and d.idAula = a.id  and d2.idEvaluacion = e.id AND al2.estado = 1) as severos,
+      (SELECT count(*) FROM detalle_evaluacion d2 JOIN alumno al2 ON al2.id = d2.idAlumno where d2.idDiagnostico = 6 and d.idAula = a.id  and d2.idEvaluacion = e.id AND al2.estado = 1) as cronicos,
+      (SELECT count(*) FROM detalle_evaluacion d2 JOIN alumno al2 ON al2.id = d2.idAlumno where d2.idDiagnostico = 7 and d.idAula = a.id  and d2.idEvaluacion = e.id AND al2.estado = 1) as sindiag,
+      (SELECT count(*) FROM detalle_evaluacion d2 JOIN alumno al2 ON al2.id = d2.idAlumno where d.idAula = a.id  and d2.idEvaluacion = e.id AND al2.estado = 1) as totales
       FROM detalle_evaluacion d
       JOIN evaluacion e ON e.id = d.idEvaluacion
       JOIN alumno al ON al.id = d.idAlumno
@@ -308,13 +311,13 @@ date_default_timezone_set('America/Lima');
       $query = $this->db->query('  SELECT e.nombre as evaluacion, a.nombre as aula,
           (SELECT count(*) FROM detalle_evaluacion d
     			JOIN alumno al ON al.id = d.idAlumno
-    			where idEvaluacion = '.$idEvaluacion.' and al.genero = "m") as mujeres,
+    			where idEvaluacion = e.id and al.genero = "m" and al.estado=1) as mujeres,
     			(SELECT count(*) FROM detalle_evaluacion d
           JOIN alumno al ON al.id = d.idAlumno
-          where idEvaluacion = '.$idEvaluacion.' and al.genero = "h") as hombres,
+          where idEvaluacion = e.id and al.genero = "h" and al.estado=1) as hombres,
           (SELECT count(*) FROM detalle_evaluacion d
           JOIN alumno al ON al.id = d.idAlumno
-          where idEvaluacion = '.$idEvaluacion.') as totales
+          where idEvaluacion = e.id and al.estado=1) as totales
           FROM detalle_evaluacion d
           JOIN evaluacion e ON e.id = d.idEvaluacion
           JOIN alumno al ON al.id = d.idAlumno
@@ -446,13 +449,13 @@ date_default_timezone_set('America/Lima');
         FROM
         (
         SELECT (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id) as totales,
-        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 1) as normales,
-        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 2) as obesos,
-        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 3) as sobrepesos,
-        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 4) as agudos,
-        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 5) as severos,
-        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 6) as cronicos,
-        (SELECT count(d2.id) from detalle_evaluacion d2 where d2.idEvaluacion = e.id and d2.idDiagnostico = 7) as sindiag
+        (SELECT count(d2.id) from detalle_evaluacion d2 JOIN alumno al ON al.id = d2.idAlumno where al.estado = 1 and d2.idEvaluacion = e.id and d2.idDiagnostico = 1) as normales,
+        (SELECT count(d2.id) from detalle_evaluacion d2 JOIN alumno al ON al.id = d2.idAlumno where al.estado = 1 and d2.idEvaluacion = e.id and d2.idDiagnostico = 2) as obesos,
+        (SELECT count(d2.id) from detalle_evaluacion d2 JOIN alumno al ON al.id = d2.idAlumno where al.estado = 1 and d2.idEvaluacion = e.id and d2.idDiagnostico = 3) as sobrepesos,
+        (SELECT count(d2.id) from detalle_evaluacion d2 JOIN alumno al ON al.id = d2.idAlumno where al.estado = 1 and d2.idEvaluacion = e.id and d2.idDiagnostico = 4) as agudos,
+        (SELECT count(d2.id) from detalle_evaluacion d2 JOIN alumno al ON al.id = d2.idAlumno where al.estado = 1 and d2.idEvaluacion = e.id and d2.idDiagnostico = 5) as severos,
+        (SELECT count(d2.id) from detalle_evaluacion d2 JOIN alumno al ON al.id = d2.idAlumno where al.estado = 1 and d2.idEvaluacion = e.id and d2.idDiagnostico = 6) as cronicos,
+        (SELECT count(d2.id) from detalle_evaluacion d2 JOIN alumno al ON al.id = d2.idAlumno where al.estado = 1 and d2.idEvaluacion = e.id and d2.idDiagnostico = 7) as sindiag
         FROM `evaluacion` e
         JOIN detalle_evaluacion d ON d.idEvaluacion = e.id
         where e.numero = $num and e.estado = 1
