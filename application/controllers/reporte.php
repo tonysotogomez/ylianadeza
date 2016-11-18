@@ -15,7 +15,8 @@ class Reporte extends CI_Controller {
 				 $this->load->helper(array('form'));
 
 				 $this->footer['js_custom'] = '<script src="'.base_url().'dist/js/examen/cred.js"></script>';
-
+	//		$this->footer['js_custom'] = '';
+				 $this->load->helper(array('curva'));
 				 $data['home'] = strtolower(__CLASS__).'/';
  			 	 $this->load->vars($data);
     }
@@ -25,6 +26,10 @@ class Reporte extends CI_Controller {
 	public function cred()
 	{
 		$this->load->view('header_view', $this->header);
+		// $data = '[2.3, 3.1, 4.2, 5.2, 6.5, 7.5, 8.3, 9.3, 10.4, 11.7, 12.9, 14]';
+		//
+		// $this->footer['js_custom'] .= script_curva( $data);
+
 		$this->load->view('reporte/cred_prueba_view');
 		$this->load->view('footer_view',$this->footer);
 	}
