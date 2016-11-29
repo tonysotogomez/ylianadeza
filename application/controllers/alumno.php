@@ -15,7 +15,7 @@ class Alumno extends CI_Controller {
 				 $this->header['infantes'] = $this->Aula->CargarMenu(3);
 				 $this->header['jardin'] = $this->Aula->CargarMenu(4);
 				 $this->footer['js_custom'] = '<script src="'.base_url().'dist/js/mantenimiento/alumno.js"></script>';
-				 $this->load->helper(array('form', 'fechas_helper'));
+				 $this->load->helper(array('form', 'fechas_helper','chart_helper'));
     }
 
 	public function index()
@@ -54,13 +54,13 @@ class Alumno extends CI_Controller {
 	public function crear()
 	{
 		if($this->input->is_ajax_request()){
-			$data['aula'] = $this->input->post('aula');
-			$data['nombres'] = $this->input->post('nombres');
+			$data['aula']      = $this->input->post('aula');
+			$data['nombres']   = $this->input->post('nombres');
 			$data['apellidos'] = $this->input->post('apellidos');
-			$data['genero'] = $this->input->post('radiogenero');
-			$data['titular'] = $this->input->post('titular');
-			$data['dni'] = $this->input->post('dni');
-			$data['estado'] = $this->input->post('estado');
+			$data['genero']    = $this->input->post('radiogenero');
+			$data['titular']   = $this->input->post('titular');
+			$data['dni']       = $this->input->post('dni');
+			$data['estado']    = $this->input->post('estado');
 
 			if ($this->input->post('fecha')) {
 				$date = str_replace('/', '-', $this->input->post('fecha'));
@@ -200,16 +200,41 @@ class Alumno extends CI_Controller {
 
 	public function perfil($idAlumno)
 	{
+		$string_peso = '';
+		$string_evaluacion = '';
 		$this->load->helper(array('evaluacion_helper'));
 		$this->load->model("Evaluacion_model","Evaluacion");
 
 		$data['alumno'] = $this->Alumno->PerfilAlumno($idAlumno);
-		echo $this->db->last_query();
-		$data['evaluaciones'] = $this->Evaluacion->Cargar($idAlumno);
+		$evaluaciones = $this->Evaluacion->Cargar($idAlumno);
+//print_r($evaluaciones);
+		foreach ($evaluaciones as $evaluacion) {
+
+			if ($evaluacion->diagnostico_id == 7) continue;
+
+			foreach ($evaluacion as $key => $value) {
+
+				if ($key == 'peso') {
+						$string_peso .= $value.',';
+				}
+				if ($key == 'num') {
+						$string_evaluacion .= $value.',';
+				}
+			}
+		}
+
+
+
+		$valores['peso'] = $string_peso;
+		$valores['evaluaciones'] = $string_evaluacion;
+// print_r($peso);
+// echo $string_evaluacion;
+		$data['evaluaciones'] = $evaluaciones;
+		$this->footer['js_custom'] .= script_line($valores);
 
 		$this->load->view('header_view', $this->header);
 		$this->load->view('alumno/perfil_view',$data);
-		$this->load->view('footer_view');
+		$this->load->view('footer_view',$this->footer);
 	}
 
 	public function examen()

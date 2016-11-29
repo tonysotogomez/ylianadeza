@@ -163,3 +163,51 @@ function script_barras($num, $datos)
 </script>";
   return $script;
 }
+
+
+function script_line($valores)
+{
+
+
+  $script = "<script>
+  $(function () {
+      $('#line_container').highcharts({
+          title: {
+              text: 'Titulo',
+              x: -20 //center
+          },
+          subtitle: {
+              text: 'Subtitulo',
+              x: -20
+          },
+          xAxis: {
+              categories: [".$valores['evaluaciones']."]
+          },
+          yAxis: {
+              title: {
+                  text: 'peso o altura'
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }]
+          },
+          tooltip: {
+              valueSuffix: 'kg o cm'
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'middle',
+              borderWidth: 0
+          },
+          series: [{
+              name: 'Alumno nombre',
+              data: [".$valores['peso']."]
+          }]
+      });
+  });
+</script>";
+  return $script;
+}

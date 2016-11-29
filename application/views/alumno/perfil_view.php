@@ -143,6 +143,9 @@
 
 
                   <div class="active tab-pane" id="estadisticas">
+                    <div class="col-xs-12 col-sm-6 col-lg-6">
+                      <div  class="contains-chart" id="line_container"></div>
+                    </div>
 
                   </div><!-- /.tab-pane -->
 
