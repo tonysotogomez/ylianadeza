@@ -53,7 +53,7 @@
                       </li>
                     </ul>
 
-                    <a href="#" class="btn btn-danger btn-block"><b>Generar Reporte</b></a>
+                    <a href="<?php echo $url;?>excel/reporteAlumno/<?php echo $alumno[0]->id;?>" class="btn btn-danger btn-block"><b>Generar Reporte</b></a>
                   </div><!-- /.box-body -->
                 </div><!-- /.box -->
               </div>
@@ -144,7 +144,11 @@
 
                   <div class="active tab-pane" id="estadisticas">
                     <div class="col-xs-12 col-sm-6 col-lg-6">
-                      <div  class="contains-chart" id="line_container"></div>
+                      <div  class="contains-chart" id="talla_line_container"></div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-lg-6">
+                      <div  class="contains-chart" id="peso_line_container"></div>
                     </div>
 
                   </div><!-- /.tab-pane -->

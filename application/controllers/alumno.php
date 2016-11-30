@@ -200,22 +200,25 @@ class Alumno extends CI_Controller {
 
 	public function perfil($idAlumno)
 	{
-		$string_peso = '';
+		$string_peso       = '';
+		$string_talla      = '';
 		$string_evaluacion = '';
 		$this->load->helper(array('evaluacion_helper'));
 		$this->load->model("Evaluacion_model","Evaluacion");
 
-		$data['alumno'] = $this->Alumno->PerfilAlumno($idAlumno);
-		$evaluaciones = $this->Evaluacion->Cargar($idAlumno);
-//print_r($evaluaciones);
+		$alumno               = $this->Alumno->PerfilAlumno($idAlumno);
+		$evaluaciones         = $this->Evaluacion->Cargar($idAlumno);
+		$data['alumno']       = $alumno;
+		$data['evaluaciones'] = $evaluaciones;
+
 		foreach ($evaluaciones as $evaluacion) {
-
 			if ($evaluacion->diagnostico_id == 7) continue;
-
 			foreach ($evaluacion as $key => $value) {
-
 				if ($key == 'peso') {
 						$string_peso .= $value.',';
+				}
+				if ($key == 'talla') {
+						$string_talla .= $value.',';
 				}
 				if ($key == 'num') {
 						$string_evaluacion .= $value.',';
@@ -223,14 +226,29 @@ class Alumno extends CI_Controller {
 			}
 		}
 
+		$pesovalores['serie']         = $string_peso;
+		$pesovalores['categorias']    = $string_evaluacion; // numero de evaluacion
+		$pesovalores['nombre_serie']  = 'Peso';
+
+		$tallavalores['serie']        = $string_talla;
+		$tallavalores['categorias']   = $string_evaluacion; // numero de evaluacion
+		$tallavalores['nombre_serie'] = 'Talla';
+
+		$pesodatos['titulo']          = 'Peso';
+		$pesodatos['subtitulo']       = $alumno[0]->nombres.' '. $alumno[0]->apellidos;
+		$pesodatos['container_id']    = 'peso_line_container';
+		$pesodatos['yaxis']           = 'Kilogramos';
+		$pesodatos['unidad']          = 'kg';
 
 
-		$valores['peso'] = $string_peso;
-		$valores['evaluaciones'] = $string_evaluacion;
-// print_r($peso);
-// echo $string_evaluacion;
-		$data['evaluaciones'] = $evaluaciones;
-		$this->footer['js_custom'] .= script_line($valores);
+		$talladatos['titulo']         = 'Talla';
+		$talladatos['subtitulo']      = $alumno[0]->nombres.' '. $alumno[0]->apellidos;
+		$talladatos['container_id']   = 'talla_line_container';
+		$talladatos['yaxis']          = 'Centímetros';
+		$talladatos['unidad']         = 'cm';
+
+
+		$this->footer['js_custom'] .= script_line($pesovalores, $pesodatos).' '. script_line($tallavalores, $talladatos);
 
 		$this->load->view('header_view', $this->header);
 		$this->load->view('alumno/perfil_view',$data);

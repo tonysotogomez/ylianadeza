@@ -165,27 +165,25 @@ function script_barras($num, $datos)
 }
 
 
-function script_line($valores)
+function script_line($valores, $datos)
 {
-
-
   $script = "<script>
   $(function () {
-      $('#line_container').highcharts({
+      $('#".$datos['container_id']."').highcharts({
           title: {
-              text: 'Titulo',
+              text: '".$datos['titulo']."',
               x: -20 //center
           },
           subtitle: {
-              text: 'Subtitulo',
+              text: '".$datos['subtitulo']."',
               x: -20
           },
           xAxis: {
-              categories: [".$valores['evaluaciones']."]
+              categories: [".$valores['categorias']."]
           },
           yAxis: {
               title: {
-                  text: 'peso o altura'
+                  text: '".$datos['yaxis']."'
               },
               plotLines: [{
                   value: 0,
@@ -194,7 +192,7 @@ function script_line($valores)
               }]
           },
           tooltip: {
-              valueSuffix: 'kg o cm'
+              valueSuffix: '".$datos['unidad']."'
           },
           legend: {
               layout: 'vertical',
@@ -203,8 +201,8 @@ function script_line($valores)
               borderWidth: 0
           },
           series: [{
-              name: 'Alumno nombre',
-              data: [".$valores['peso']."]
+              name: '".$valores['nombre_serie']."',
+              data: [".$valores['serie']."]
           }]
       });
   });

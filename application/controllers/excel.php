@@ -955,4 +955,12 @@ class Excel extends CI_Controller {
       $objWriter->save('php://output');
     }
 
+    public function reporteAlumno($idAlumno) {
+      //cargo los alumnos
+      $this->load->model("Alumno_model","Alumno");
+
+
+
+    }
+
 }
