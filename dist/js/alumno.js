@@ -190,6 +190,7 @@ function listar_todos(){
             "<td>"+estadohtml+"</td>"+
             '<td><button type="button" title="Editar" onclick="Cargar('+data.id+')" class="btn btn-sm btn-primary btn-xs"><i class="fa fa-edit"></i></button> '+
             '<button type="button" title="Eliminar" onclick="Eliminar('+data.id+')" class="btn btn-sm btn-danger btn-xs"><i class="fa fa-trash"></i></button> '+
+            '<a href="'+url+'alumno/perfil/'+data.id+'"><button title="Perfil" type="button" class="btn btn-xs btn-info"><i class="fa fa-area-chart"></i></button></a></td>'+
             '</td>';
           //  ' <a href="'+url+'alumno/perfil/'+data.id+'"><button title="Historial" type="button" class="btn btn-sm btn-info"><i class="fa fa-area-chart"></i></button></a></td>';
         html+="</tr>";

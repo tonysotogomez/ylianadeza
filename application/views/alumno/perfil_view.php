@@ -90,67 +90,76 @@
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#evaluaciones" data-toggle="tab">Evaluaciones</a></li>
                   <li><a href="#estadisticas" data-toggle="tab">Estadísticas</a></li>
-                  <li><a href="#timeline" data-toggle="tab">Linea de Tiempo</a></li>
+                  <!-- <li><a href="#timeline" data-toggle="tab">Linea de Tiempo</a></li> -->
                 </ul>
                 <div class="tab-content">
 
                   <div class="active tab-pane" id="evaluaciones">
-
-                      <input type="hidden" class="form-control" name="txtid" value="<?php echo $alumno[0]->id;?>">
-                      <input type="hidden" class="form-control" name="txtedad" value="<?php echo $edad;?>">
-                      <input type="hidden" class="form-control" name="txtsexo" value="<?php echo $alumno[0]->genero;?>">
-                      <div>
-                        <?php
-                          if(empty($evaluaciones)) $fecha = 'No se ha realizado ningun examen';
-                          else {
-                            $ult_eval = end($evaluaciones);
-                            $fecha = $ult_eval->fecha;
-                          }
-                        ?>
-                        <p>Ultimo examen: <b><?php echo $fecha;?></b></p>
-                        <div class="box-body table-responsive no-padding">
-                          <table class="table table-striped">
-                            <tbody>
-                              <tr>
-                                <th style="width: 10px">#</th>
-                                <th>Evaluacion</th>
-                                <th>Edad</th>
-                                <th>Peso</th>
-                                <th>Talla</th>
-                                <th>T/E</th>
-                                <th>P/E</th>
-                                <th>P/T</th>
-                                <th>Diagnóstico</th>
-                              </tr>
-                              <?php foreach ($evaluaciones as $e) { ?>
+                    <div class="box-body">
+                      <div class="row">
+                        <input type="hidden" class="form-control" name="txtid" value="<?php echo $alumno[0]->id;?>">
+                        <input type="hidden" class="form-control" name="txtedad" value="<?php echo $edad;?>">
+                        <input type="hidden" class="form-control" name="txtsexo" value="<?php echo $alumno[0]->genero;?>">
+                        <div>
+                          <?php
+                            if(empty($evaluaciones)) $fecha = 'No se ha realizado ningun examen';
+                            else {
+                              $ult_eval = end($evaluaciones);
+                              $fecha = $ult_eval->fecha;
+                            }
+                          ?>
+                          <p>Ultimo examen: <b><?php echo $fecha;?></b></p>
+                          <div class="box-body table-responsive no-padding">
+                            <table class="table table-striped">
+                              <tbody>
                                 <tr>
-                                  <td><?=$e->num?></td>
-                                  <td><?=$e->evaluacion?></td>
-                                  <td><?=$e->edad?></td>
-                                  <td><?=$e->peso?></td>
-                                  <td><?=$e->talla?></td>
-                                  <td><?=$e->diagnosticoTE?></td>
-                                  <td><?=$e->diagnosticoPE?></td>
-                                  <td><?=$e->diagnosticoPT?></td>
-                                  <td><b><?=diagnostico($e->diagnostico)?></b></td>
+                                  <th style="width: 10px">#</th>
+                                  <th>Evaluacion</th>
+                                  <th>Fecha</th>
+                                  <th>Edad</th>
+                                  <th>Peso</th>
+                                  <th>Talla</th>
+                                  <th>T/E</th>
+                                  <th>P/E</th>
+                                  <th>P/T</th>
+                                  <th>Diagnóstico</th>
                                 </tr>
-                              <?php } ?>
-                            </tbody>
-                          </table>
+                                <?php foreach ($evaluaciones as $e) { ?>
+                                  <tr>
+                                    <td><?=$e->num?></td>
+                                    <td><?=$e->evaluacion?></td>
+                                    <td><?=$e->fecha?></td>
+                                    <td><?=traducir_edad($e->edad)?></td>
+                                    <td><?=$e->peso?></td>
+                                    <td><?=$e->talla?></td>
+                                    <td><?=$e->diagnosticoTE?></td>
+                                    <td><?=$e->diagnosticoPE?></td>
+                                    <td><?=$e->diagnosticoPT?></td>
+                                    <td><b><?=diagnostico($e->diagnostico)?></b></td>
+                                  </tr>
+                                <?php } ?>
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       </div>
+                    </div>
+
                   </div><!-- /.tab-pane -->
 
 
-                  <div class="active tab-pane" id="estadisticas">
-                    <div class="col-xs-12 col-sm-6 col-lg-6">
-                      <div  class="contains-chart" id="talla_line_container"></div>
-                    </div>
+                  <div class="tab-pane" id="estadisticas">
+                    <div class="box-body">
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-lg-6">
+                          <div  class="contains-chart" id="talla_line_container"></div>
+                        </div>
 
-                    <div class="col-xs-12 col-sm-6 col-lg-6">
-                      <div  class="contains-chart" id="peso_line_container"></div>
+                        <div class="col-xs-12 col-sm-6 col-lg-6">
+                          <div  class="contains-chart" id="peso_line_container"></div>
+                        </div>
+                      </div>
                     </div>
-
                   </div><!-- /.tab-pane -->
 
                   <div class="tab-pane" id="timeline">

@@ -108,14 +108,16 @@
 
 
   public function PerfilAlumno($id){
-    $this->db->select('a.id, a.nombres, a.apellidos, a.fecha_nacimiento, a.genero, a.titular');
-
+    $this->db->select('a.id, a.nombres, a.apellidos, a.fecha_nacimiento, a.genero, a.titular, a.dni');
+    $this->db->select("CONCAT( a.nombres, ' ', a.apellidos) as nombre_alumno", false);
     $this->db->select("IF(d.estado = 1, d.edad,'Sin Evaluación') as edad,
-IF(d.estado = 1, d.peso,'0') as peso,
-IF(d.estado = 1, d.talla,'0') as talla", FALSE);
-
+                      IF(d.estado = 1, d.peso,'0') as peso,
+                      IF(d.estado = 1, d.talla,'0') as talla", FALSE);
+    $this->db->select('di.nombre as diagnostico,al.nombre as aula');
     $this->db->from('alumno a');
     $this->db->join('detalle_evaluacion d', 'd.idAlumno = a.id', 'left');
+    $this->db->join('diagnostico di', 'd.idDiagnostico = di.id', 'left');
+    $this->db->join('aula al', 'a.idAula = al.id');
     $this->db->where('a.id', $id);
     $this->db->where('a.estado', 1);
     $this->db->order_by('d.fecha', 'desc');

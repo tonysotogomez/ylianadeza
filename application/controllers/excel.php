@@ -864,10 +864,10 @@ class Excel extends CI_Controller {
           new PHPExcel_Chart_DataSeriesValues('String', 'Reporte!$J$'.($f2), NULL, 1),   // leyenda
       );
       $xAxisTickValues = array(
-          new PHPExcel_Chart_DataSeriesValues('String', 'Reporte!$C$'.($fila+1).':$J$'.($fila+1), NULL, 5),//columnas
+          new PHPExcel_Chart_DataSeriesValues('String', 'Reporte!$C$'.($fila+1).':$I$'.($fila+1), NULL, 5),//columnas
       );
       $dataSeriesValues1 = array(
-          new PHPExcel_Chart_DataSeriesValues('Number', 'Reporte!$C$'.($f2).':$J$'.($f2), NULL, 5),//datos
+          new PHPExcel_Chart_DataSeriesValues('Number', 'Reporte!$C$'.($f2).':$I$'.($f2), NULL, 5),//datos
       );
       //  Build the dataseries
       $series1 = new PHPExcel_Chart_DataSeries(
@@ -955,11 +955,222 @@ class Excel extends CI_Controller {
       $objWriter->save('php://output');
     }
 
+
     public function reporteAlumno($idAlumno) {
-      //cargo los alumnos
+
       $this->load->model("Alumno_model","Alumno");
+      $this->load->helper(array('evaluacion_helper'));
+  		$this->load->model("Evaluacion_model","Evaluacion");
+
+      $alumno = $this->Alumno->PerfilAlumno($idAlumno);
+      $evaluaciones = $this->Evaluacion->Cargar($idAlumno);
+
+      // configuramos las propiedades del documento
+      $this->phpexcel->getProperties()->setCreator("SoftGroup Perú")
+                                   ->setLastModifiedBy("SoftGroup Perú")
+                                   ->setTitle("Reporte Alumno")
+                                   ->setSubject("Evaluacion Nutricional")
+                                   ->setDescription("Reporte de Alumno")
+                                   ->setKeywords("office 2007 openxml php")
+                                   ->setCategory("Reporte");
+       //agrego estilos
+       $border_style= array(
+         'borders' => array(
+             'allborders' => array('style' =>PHPExcel_Style_Border::BORDER_THIN,'color' => array('argb' => '000'),)
+         )
+       );
+       $center_style = array(
+           'alignment' => array(
+               'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+           )
+       );
+       $color1_style = array(
+             'fill' => array(
+              'type' => PHPExcel_Style_Fill::FILL_SOLID,
+              'color' => array('rgb' => 'CEECF5')
+            )
+       );
+
+      $this->phpexcel->setActiveSheetIndex(0)
+                     ->setCellValue('C1', 'I.E.I. “DIVINO NIÑO JESÚS”')
+                     ->setCellValue('C2', 'REPORTE DE ALUMNO');
+
+       $fila = 4; // a partir de que fila empezara el listado
+
+       $this->phpexcel->getActiveSheet()->getColumnDimension('A')->setWidth(7);
+       $this->phpexcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+       $this->phpexcel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
+       $this->phpexcel->getActiveSheet()->getColumnDimension('D')->setWidth(14);
+       $this->phpexcel->getActiveSheet()->getColumnDimension('E')->setWidth(11);
+       $this->phpexcel->getActiveSheet()->getColumnDimension('F')->setWidth(10);
+       $this->phpexcel->getActiveSheet()->getColumnDimension('G')->setWidth(15);
+
+       $sheet = $this->phpexcel->getActiveSheet();
+
+       $this->phpexcel->setActiveSheetIndex(0)
+                   ->setCellValue('B'.($fila+1), 'Apellidos:')
+                   ->setCellValue('B'.($fila+2), 'Nombres:')
+                   ->setCellValue('B'.($fila+3), 'F. Nacimiento:')
+                   ->setCellValue('B'.($fila+4), 'Género:')
+                   ->setCellValue('B'.($fila+5), 'DNI:')
+                   ->setCellValue('B'.($fila+6), 'Titular:');
 
 
+                   $this->phpexcel->setActiveSheetIndex(0)
+                               ->setCellValue('C'.($fila+1), $alumno[0]->apellidos)
+                               ->setCellValue('C'.($fila+2), $alumno[0]->nombres)
+                               ->setCellValue('C'.($fila+3), $alumno[0]->fecha_nacimiento)
+                               ->setCellValue('C'.($fila+4), ($alumno[0]->genero=='h')?'Masculino':'Femenino')
+                               ->setCellValue('C'.($fila+5), ($alumno[0]->dni==0)?'':$alumno[0]->dni)
+                               ->setCellValue('C'.($fila+6), $alumno[0]->titular);
+
+      $this->phpexcel->setActiveSheetIndex(0)
+                   ->setCellValue('E'.($fila+1), 'Aula:')
+                   ->setCellValue('E'.($fila+2), 'Edad:')
+                   ->setCellValue('E'.($fila+3), 'Peso:')
+                   ->setCellValue('E'.($fila+4), 'Talla:')
+                   ->setCellValue('E'.($fila+5), 'Diagnóstico:');
+
+                   $this->phpexcel->setActiveSheetIndex(0)
+                               ->setCellValue('F'.($fila+1), $alumno[0]->aula)
+                               ->setCellValue('F'.($fila+2), traducir_edad($alumno[0]->edad))
+                               ->setCellValue('F'.($fila+3), $alumno[0]->peso.'kg')
+                               ->setCellValue('F'.($fila+4), $alumno[0]->talla.'cm')
+                               ->setCellValue('F'.($fila+5), $alumno[0]->diagnostico);
+
+      $f2 = $fila+9;
+
+       $this->phpexcel->setActiveSheetIndex(0)
+                   ->setCellValue('A'.($f2), '#')
+                   ->setCellValue('B'.($f2), 'Evaluacion')
+                   ->setCellValue('C'.($f2), 'Fecha')
+                   ->setCellValue('D'.($f2), 'Edad')
+                   ->setCellValue('E'.($f2), 'Peso')
+                   ->setCellValue('F'.($f2), 'Talla')
+                   ->setCellValue('G'.($f2), 'Diagnóstico');
+
+       $con = 1;
+       foreach ($evaluaciones as $e) {
+         if ($e->diagnostico_id == 7 || $e->diagnostico_id == '') continue;
+         $this->phpexcel->setActiveSheetIndex(0)
+                     ->setCellValue('A'.($f2+$con), $e->num)
+                     ->setCellValue('B'.($f2+$con), $e->evaluacion)
+                     ->setCellValue('C'.($f2+$con), $e->fecha)
+                     ->setCellValue('D'.($f2+$con), traducir_edad($e->edad))
+                     ->setCellValue('E'.($f2+$con), $e->peso)
+                     ->setCellValue('F'.($f2+$con), $e->talla)
+                     ->setCellValue('G'.($f2+$con), $e->diagnostico);
+        $con++;
+       }//end forreach $aula
+       $con--;
+      //GRAFICAS
+            $dataseriesLabels1 = array(
+                new PHPExcel_Chart_DataSeriesValues('String', 'Reporte!$E$'.($f2), NULL, 1),   // leyenda
+            );
+            $xAxisTickValues = array(
+                new PHPExcel_Chart_DataSeriesValues('String', 'Reporte!$A$'.($f2+1).':$A$'.($f2+$con), NULL, 5),//columnas
+            );
+            $dataSeriesValues1 = array(
+                new PHPExcel_Chart_DataSeriesValues('Number', 'Reporte!$E$'.($f2+1).':$E$'.($f2+$con), NULL, 5),//datos
+            );
+            //  Build the dataseries
+            $series1 = new PHPExcel_Chart_DataSeries(
+                PHPExcel_Chart_DataSeries::TYPE_LINECHART,       // plotType
+                PHPExcel_Chart_DataSeries::GROUPING_CLUSTERED,  // plotGrouping
+                range(0, count($dataSeriesValues1)-1),          // plotOrder
+                $dataseriesLabels1,                             // plotLabel
+                $xAxisTickValues,                               // plotCategory
+                $dataSeriesValues1                              // plotValues
+            );
+
+            $series1->setPlotDirection(PHPExcel_Chart_DataSeries::DIRECTION_COL);
+            //  Set the series in the plot area
+            $plotarea = new PHPExcel_Chart_PlotArea(NULL, array($series1));
+            //  Set the chart legend
+            $legend = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_BOTTOM, NULL, false);
+            $title = new PHPExcel_Chart_Title('Peso');
+            //  Create the chart
+            $chart = new PHPExcel_Chart(
+                'chart1',       // name
+                $title,         // title
+                $legend,        // legend
+                $plotarea,      // plotArea
+                true,           // plotVisibleOnly
+                0,              // displayBlanksAs
+                NULL,           // xAxisLabel
+                NULL            // yAxisLabel
+            );
+            $f3 = $f2+$con;
+            //  Set the position where the chart should appear in the worksheet
+            $chart->setTopLeftPosition('B'.($f3+2));
+            $chart->setBottomRightPosition('G'.($f3+12));
+            //  Add the chart to the worksheet
+            $sheet->addChart($chart);
+
+
+            //GRAFICA 2
+            $dataseriesLabels2 = array(
+                new PHPExcel_Chart_DataSeriesValues('String', 'Reporte!$F$'.($f2), NULL, 1),   // leyenda
+            );
+            $xAxisTickValues = array(
+                new PHPExcel_Chart_DataSeriesValues('String', 'Reporte!$A$'.($f2+1).':$A$'.($f2+$con), NULL, 5),//columnas
+            );
+            $dataSeriesValues2 = array(
+                new PHPExcel_Chart_DataSeriesValues('Number', 'Reporte!$F$'.($f2+1).':$F$'.($f2+$con), NULL, 5),//datos
+            );
+            //  Build the dataseries
+            $series2 = new PHPExcel_Chart_DataSeries(
+                PHPExcel_Chart_DataSeries::TYPE_LINECHART,       // plotType
+                PHPExcel_Chart_DataSeries::GROUPING_CLUSTERED,  // plotGrouping
+                range(0, count($dataSeriesValues2)-1),          // plotOrder
+                $dataseriesLabels2,                             // plotLabel
+                $xAxisTickValues,                               // plotCategory
+                $dataSeriesValues2                              // plotValues
+            );
+
+            $series2->setPlotDirection(PHPExcel_Chart_DataSeries::DIRECTION_COL);
+            //  Set the series in the plot area
+            $plotarea = new PHPExcel_Chart_PlotArea(NULL, array($series2));
+            //  Set the chart legend
+            $legend = new PHPExcel_Chart_Legend(PHPExcel_Chart_Legend::POSITION_BOTTOM, NULL, false);
+            $title = new PHPExcel_Chart_Title('Talla');
+            //  Create the chart
+            $chart2 = new PHPExcel_Chart(
+                'chart1',       // name
+                $title,         // title
+                $legend,        // legend
+                $plotarea,      // plotArea
+                true,           // plotVisibleOnly
+                0,              // displayBlanksAs
+                NULL,           // xAxisLabel
+                NULL            // yAxisLabel
+            );
+            $f4 = $f3+12;
+            //  Set the position where the chart should appear in the worksheet
+            $chart2->setTopLeftPosition('B'.($f4+2));
+            $chart2->setBottomRightPosition('G'.($f4+12));
+            //  Add the chart to the worksheet
+            $sheet->addChart($chart2);
+
+
+
+      // renombro la hoja de trabajo con el nombre del aula
+      $this->phpexcel->getActiveSheet()->setTitle('Reporte');
+
+      //ESTILOS
+      $sheet->getStyle("A".($f2).":G".($f2+$con))->applyFromArray($border_style);
+      $sheet->getStyle("A".($f2+1).":G".($f2))->applyFromArray($center_style)->getFont()->setBold(true);
+      $sheet->getStyle("A".($f2).":G".($f2))->applyFromArray($color1_style);
+
+      $this->phpexcel->setActiveSheetIndex(0);
+      //redireccionamos la salida al navegador del cliente (Excel2007)
+      header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      header('Content-Disposition: attachment;filename="Reporte Alumno.xlsx"');
+      header('Cache-Control: max-age=0');
+
+      $objWriter = PHPExcel_IOFactory::createWriter($this->phpexcel, 'Excel2007');
+        $objWriter->setIncludeCharts(TRUE);
+      $objWriter->save('php://output');
 
     }
 

@@ -212,7 +212,7 @@ class Alumno extends CI_Controller {
 		$data['evaluaciones'] = $evaluaciones;
 
 		foreach ($evaluaciones as $evaluacion) {
-			if ($evaluacion->diagnostico_id == 7) continue;
+			if ($evaluacion->diagnostico_id == 7 || $evaluacion->diagnostico_id == '') continue;
 			foreach ($evaluacion as $key => $value) {
 				if ($key == 'peso') {
 						$string_peso .= $value.',';
