@@ -26,7 +26,7 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		$this->db->where('id', 27)->update('peso_edad_h', array('DE1menos'=> '11.2'));
-		$existe = $this->db->query('UPDATE detalle_evaluacion SET estado = 2 WHERE id = 180;');
+		$existe = $this->db->query('UPDATE aula SET nombre = "Tigresitos Solidarios" WHERE id = 14;');
 
 		// /$this->footer['js_home'] = '<script src="'.base_url().'dist/js/pages/dashboard.js"></script>';
 		$this->load->model("Evaluacion_model","Evaluacion");
